@@ -1,5 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  fadeUp,
+  fadeIn,
+  stagger,
+  slideLeft,
+  slideRight,
+  scaleIn,
+  useViewport,
+} from "../components/ui/Motion";
 import {
   ArrowRight,
   Calendar,
