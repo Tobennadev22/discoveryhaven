@@ -108,6 +108,9 @@ export const EVENTS = [
     dateBarTextColor: '#1a1a1a',
     price: 40000,
     type: 'cohort',
+    gcalStart: '20260606',
+    gcalEnd: '20260704',
+    location: 'Virtual (Zoom)',
   },
   {
     id: 'creative-quest-aug-2026',
@@ -119,6 +122,9 @@ export const EVENTS = [
     dateBarTextColor: '#1a1a1a',
     price: 45000,
     type: 'cohort',
+    gcalStart: '20260801',
+    gcalEnd: '20260912',
+    location: 'Virtual (Zoom)',
   },
   {
     id: 'summit-nov-2026',
@@ -130,6 +136,9 @@ export const EVENTS = [
     dateBarTextColor: '#ffffff',
     price: 15000,
     type: 'summit',
+    gcalStart: '20261101',
+    gcalEnd: '20261102',
+    location: 'Virtual & Abuja, Nigeria',
   },
 ]
 

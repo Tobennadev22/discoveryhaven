@@ -7,6 +7,17 @@ import { EnrollModal } from '../components/ui/EnrollModal'
 import { EVENTS } from '../data/content'
 import { motion, fadeUp, stagger, slideLeft, slideRight, scaleIn, useViewport } from '../components/ui/Motion'
 
+function buildGoogleCalendarUrl(ev) {
+  const base = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+  const params = new URLSearchParams({
+    text: ev.title,
+    dates: `${ev.gcalStart}/${ev.gcalEnd}`,
+    details: ev.description,
+    location: ev.location || '',
+  })
+  return `${base}&${params.toString()}`
+}
+
 export default function Events() {
   const [enrollEvent, setEnrollEvent] = useState(null)
 
@@ -54,7 +65,17 @@ export default function Events() {
                   </li>
                 ))}
               </ul>
-              <Button variant="yellow" size="lg" onClick={() => setEnrollEvent(EVENTS[2])}>Register Your Interest</Button>
+              <div className="flex flex-wrap gap-4 items-center">
+                <Button variant="yellow" size="lg" onClick={() => setEnrollEvent(EVENTS[2])}>Register Your Interest</Button>
+                <a
+                  href={buildGoogleCalendarUrl(EVENTS[2])}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-gray-600 hover:text-dark font-body font-bold text-sm transition-colors"
+                >
+                  <Calendar size={16} /> Add to Google Calendar
+                </a>
+              </div>
             </motion.div>
             <motion.div
               className="bg-dark rounded-3xl p-10 text-center text-white"
@@ -100,9 +121,14 @@ export default function Events() {
                       <Button variant="primary" size="sm" className="w-full" onClick={() => setEnrollEvent(ev)}>
                         {ev.type === 'summit' ? 'Register Interest' : 'Register & Pay'}
                       </Button>
-                      <Button variant="ghost" size="sm" className="w-full text-gray-400 hover:text-dark">
-                        <Calendar size={14} /> Add to Calendar
-                      </Button>
+                      <a
+                        href={buildGoogleCalendarUrl(ev)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 w-full text-gray-400 hover:text-dark font-body font-bold text-sm py-2 rounded-full transition-colors"
+                      >
+                        <Calendar size={14} /> Add to Google Calendar
+                      </a>
                     </div>
                   </div>
                 </Card>
