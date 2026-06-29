@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { CheckCircle, ArrowRight } from 'lucide-react'
+import { CheckCircle } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { SectionLabel } from '../components/ui/SectionLabel'
 import { Card } from '../components/ui/Card'
 import { EnrollModal } from '../components/ui/EnrollModal'
 import { COURSES } from '../data/content'
+import { motion, fadeUp, fadeIn, stagger, slideLeft, slideRight, scaleIn, useViewport } from '../components/ui/Motion'
 
-function CourseSection({ course, reverse = false }) {
+function CourseSection({ course, reverse = false, index }) {
   const [modal, setModal] = useState(false)
   const event = {
     id: course.id,
@@ -23,7 +24,13 @@ function CourseSection({ course, reverse = false }) {
       <section className="py-20 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`grid lg:grid-cols-2 gap-16 items-center ${reverse ? 'lg:grid-flow-col-dense' : ''}`}>
-            <div className={reverse ? 'lg:col-start-2' : ''}>
+            <motion.div
+              className={reverse ? 'lg:col-start-2' : ''}
+              variants={reverse ? slideRight : slideLeft}
+              initial="hidden"
+              whileInView="show"
+              viewport={useViewport}
+            >
               <div className="inline-block px-4 py-2 rounded-2xl mb-4 text-sm font-bold font-body" style={{ backgroundColor: course.color + '20', color: course.color === '#ffec00' ? '#b45309' : course.color }}>
                 {course.subtitle}
               </div>
@@ -53,8 +60,14 @@ function CourseSection({ course, reverse = false }) {
                 </Button>
                 <span className="font-bold font-body text-aqua text-lg">₦{course.price?.toLocaleString()}</span>
               </div>
-            </div>
-            <div className={`${reverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+            </motion.div>
+            <motion.div
+              className={`${reverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}
+              variants={reverse ? slideLeft : slideRight}
+              initial="hidden"
+              whileInView="show"
+              viewport={useViewport}
+            >
               <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100">
                 <div className="absolute inset-0 flex items-center justify-center text-9xl">
                   {course.icon}
@@ -67,7 +80,7 @@ function CourseSection({ course, reverse = false }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -79,9 +92,13 @@ function CourseSection({ course, reverse = false }) {
 export default function HavenAcademy() {
   return (
     <>
-      {/* HERO */}
-      <section className="bg-dark py-28">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+      <section className="bg-dark py-28 overflow-hidden">
+        <motion.div
+          className="max-w-4xl mx-auto px-4 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+        >
           <SectionLabel className="text-aqua">HAVEN ACADEMY</SectionLabel>
           <h1 className="font-cherry text-5xl lg:text-7xl text-white mb-6">
             Four Tracks.<br />One Confident Child.
@@ -92,16 +109,21 @@ export default function HavenAcademy() {
           <Button variant="yellow" size="lg">
             View Courses & Enrol
           </Button>
-        </div>
+        </motion.div>
       </section>
 
       {COURSES.map((course, i) => (
-        <CourseSection key={course.id} course={course} reverse={i % 2 !== 0} />
+        <CourseSection key={course.id} course={course} reverse={i % 2 !== 0} index={i} />
       ))}
 
-      {/* ENROLMENT CTA */}
       <section className="py-24 bg-cream">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+        <motion.div
+          className="max-w-3xl mx-auto px-4 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={useViewport}
+        >
           <h2 className="font-cherry text-4xl lg:text-5xl text-dark mb-4">Ready to Begin?</h2>
           <p className="text-gray-600 font-body text-lg mb-10">
             Enrol your child in the programme that matches their spark. Each cohort is limited — don't miss the next intake.
@@ -110,7 +132,7 @@ export default function HavenAcademy() {
             <Button variant="primary" size="lg" onClick={() => window.scrollTo({ top: 400, behavior: 'smooth' })}>Enrol Now</Button>
             <Button variant="yellow" size="lg" onClick={() => window.location.href='/community-hour'}>Book a Free 15-Minute Call First</Button>
           </div>
-        </div>
+        </motion.div>
       </section>
     </>
   )

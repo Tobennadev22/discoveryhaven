@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Mail } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { SectionLabel } from '../components/ui/SectionLabel'
+import { motion, fadeUp, slideLeft, slideRight, useViewport } from '../components/ui/Motion'
 
 const ENQUIRY_TYPES = ['General Enquiry', 'Media & Press', 'Partnership', 'Enrolment Support']
 
@@ -17,18 +18,22 @@ export default function Contact() {
   return (
     <>
       <section className="bg-dark py-28">
-        <div className="max-w-2xl mx-auto px-4 text-center">
+        <motion.div
+          className="max-w-2xl mx-auto px-4 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+        >
           <SectionLabel className="text-aqua">CONTACT</SectionLabel>
           <h1 className="font-cherry text-5xl lg:text-7xl text-white mb-6">Get in Touch</h1>
           <p className="text-gray-300 font-body text-xl">We'd love to hear from you. Choose how you'd like to connect.</p>
-        </div>
+        </motion.div>
       </section>
 
       <section className="py-20 bg-cream">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16">
-            {/* FORM */}
-            <div>
+            <motion.div variants={slideLeft} initial="hidden" whileInView="show" viewport={useViewport}>
               <h2 className="font-cherry text-3xl text-dark mb-8">Send a Message</h2>
               {sent ? (
                 <div className="bg-aqua/10 border border-aqua/30 rounded-2xl p-8 text-center">
@@ -61,10 +66,9 @@ export default function Contact() {
                   <Button type="submit" variant="primary" size="lg" className="w-full">Send Message</Button>
                 </form>
               )}
-            </div>
+            </motion.div>
 
-            {/* CONTACT INFO */}
-            <div className="space-y-8">
+            <motion.div className="space-y-8" variants={slideRight} initial="hidden" whileInView="show" viewport={useViewport}>
               <div>
                 <h2 className="font-cherry text-3xl text-dark mb-8">Connect Directly</h2>
                 <div className="bg-white rounded-2xl p-6 border border-gray-100 flex items-center gap-4">
@@ -102,7 +106,7 @@ export default function Contact() {
                   Book Your Free Call →
                 </Button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

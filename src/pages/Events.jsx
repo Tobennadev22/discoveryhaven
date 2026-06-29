@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Calendar, MapPin, Clock } from 'lucide-react'
+import { Calendar } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { SectionLabel } from '../components/ui/SectionLabel'
 import { Card } from '../components/ui/Card'
 import { EnrollModal } from '../components/ui/EnrollModal'
 import { EVENTS } from '../data/content'
+import { motion, fadeUp, stagger, slideLeft, slideRight, scaleIn, useViewport } from '../components/ui/Motion'
 
 export default function Events() {
   const [enrollEvent, setEnrollEvent] = useState(null)
@@ -12,20 +13,24 @@ export default function Events() {
   return (
     <>
       <section className="bg-dark py-28">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+        <motion.div
+          className="max-w-3xl mx-auto px-4 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+        >
           <SectionLabel className="text-aqua">EVENTS</SectionLabel>
           <h1 className="font-cherry text-5xl lg:text-7xl text-white mb-6">What's Coming Up</h1>
           <p className="text-gray-300 font-body text-xl leading-relaxed">
             From weekly cohorts to our annual Children's Summit — every event is designed to spark something extraordinary in your child.
           </p>
-        </div>
+        </motion.div>
       </section>
 
-      {/* FLAGSHIP SUMMIT */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <motion.div variants={slideLeft} initial="hidden" whileInView="show" viewport={useViewport}>
               <SectionLabel>ANNUAL FLAGSHIP EVENT</SectionLabel>
               <h2 className="font-cherry text-4xl lg:text-5xl text-dark mb-4 leading-tight">Discovery Haven Children's Summit</h2>
               <div className="inline-block bg-crimson text-white px-4 py-2 rounded-full font-bold font-body text-sm mb-6">
@@ -50,47 +55,60 @@ export default function Events() {
                 ))}
               </ul>
               <Button variant="yellow" size="lg" onClick={() => setEnrollEvent(EVENTS[2])}>Register Your Interest</Button>
-            </div>
-            <div className="bg-dark rounded-3xl p-10 text-center text-white">
+            </motion.div>
+            <motion.div
+              className="bg-dark rounded-3xl p-10 text-center text-white"
+              variants={slideRight}
+              initial="hidden"
+              whileInView="show"
+              viewport={useViewport}
+            >
               <div className="text-8xl mb-6">🏆</div>
               <h3 className="font-cherry text-3xl mb-3">November 2026</h3>
               <p className="font-body text-gray-300 mb-2">Annual Flagship · Virtual & Abuja</p>
               <p className="font-body text-aqua font-bold">₦{EVENTS[2].price?.toLocaleString()} per delegate</p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* UPCOMING COHORTS */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
+          <motion.div className="text-center mb-14" variants={fadeUp} initial="hidden" whileInView="show" viewport={useViewport}>
             <SectionLabel>UPCOMING COHORTS</SectionLabel>
             <h2 className="font-cherry text-4xl text-dark mb-4">Book Your Child's Spot</h2>
             <p className="text-gray-600 font-body text-lg">Cohorts are capped at 15 learners. Spaces fill fast.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
             {EVENTS.map(ev => (
-              <Card key={ev.id} className="hover:shadow-lg transition-all duration-300">
-                <div className="px-6 py-3 font-bold font-body text-sm flex justify-between" style={{ backgroundColor: ev.dateBarColor, color: ev.dateBarTextColor }}>
-                  <span>{ev.date}</span><span>{ev.duration}</span>
-                </div>
-                <div className="p-7">
-                  <h3 className="font-cherry text-xl text-dark mb-3 leading-snug">{ev.title}</h3>
-                  <p className="text-gray-500 font-body text-sm leading-relaxed mb-5">{ev.description}</p>
-                  {ev.price && <p className="text-aqua font-bold font-body mb-5">₦{ev.price.toLocaleString()}</p>}
-                  <div className="flex flex-col gap-2">
-                    <Button variant="primary" size="sm" className="w-full" onClick={() => setEnrollEvent(ev)}>
-                      {ev.type === 'summit' ? 'Register Interest' : 'Register & Pay'}
-                    </Button>
-                    <Button variant="ghost" size="sm" className="w-full text-gray-400 hover:text-dark">
-                      <Calendar size={14} /> Add to Calendar
-                    </Button>
+              <motion.div key={ev.id} variants={scaleIn}>
+                <Card className="hover:shadow-lg transition-all duration-300 h-full">
+                  <div className="px-6 py-3 font-bold font-body text-sm flex justify-between" style={{ backgroundColor: ev.dateBarColor, color: ev.dateBarTextColor }}>
+                    <span>{ev.date}</span><span>{ev.duration}</span>
                   </div>
-                </div>
-              </Card>
+                  <div className="p-7">
+                    <h3 className="font-cherry text-xl text-dark mb-3 leading-snug">{ev.title}</h3>
+                    <p className="text-gray-500 font-body text-sm leading-relaxed mb-5">{ev.description}</p>
+                    {ev.price && <p className="text-aqua font-bold font-body mb-5">₦{ev.price.toLocaleString()}</p>}
+                    <div className="flex flex-col gap-2">
+                      <Button variant="primary" size="sm" className="w-full" onClick={() => setEnrollEvent(ev)}>
+                        {ev.type === 'summit' ? 'Register Interest' : 'Register & Pay'}
+                      </Button>
+                      <Button variant="ghost" size="sm" className="w-full text-gray-400 hover:text-dark">
+                        <Calendar size={14} /> Add to Calendar
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 

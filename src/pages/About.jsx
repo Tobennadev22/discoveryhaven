@@ -2,12 +2,18 @@ import { ArrowRight } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { SectionLabel } from '../components/ui/SectionLabel'
 import { VALUES } from '../data/content'
+import { motion, fadeUp, stagger, slideLeft, slideRight, scaleIn, useViewport } from '../components/ui/Motion'
 
 export default function About() {
   return (
     <>
       <section className="bg-dark py-28">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+        <motion.div
+          className="max-w-3xl mx-auto px-4 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+        >
           <SectionLabel className="text-aqua">ABOUT US</SectionLabel>
           <h1 className="font-cherry text-5xl lg:text-7xl text-white mb-6 leading-tight">
             Building Tomorrow's Leaders Today
@@ -15,55 +21,58 @@ export default function About() {
           <p className="text-gray-300 font-body text-xl leading-relaxed">
             Discovery Haven is a learning organisation built on the belief that every child carries extraordinary potential — and our job is to help them find it.
           </p>
-        </div>
+        </motion.div>
       </section>
 
-      {/* MISSION & VISION */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16">
-            <div>
+            <motion.div variants={slideLeft} initial="hidden" whileInView="show" viewport={useViewport}>
               <SectionLabel>OUR MISSION</SectionLabel>
               <h2 className="font-cherry text-4xl text-dark mb-6">Why We Exist</h2>
               <p className="text-gray-600 font-body text-lg leading-relaxed">
                 To cultivate intellectually curious, emotionally sovereign, and radically confident children — through programmes that honour their natural intelligence and prepare them for the real world.
               </p>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div variants={slideRight} initial="hidden" whileInView="show" viewport={useViewport}>
               <SectionLabel>OUR VISION</SectionLabel>
               <h2 className="font-cherry text-4xl text-dark mb-6">Where We're Going</h2>
               <p className="text-gray-600 font-body text-lg leading-relaxed">
                 A generation of African children who think clearly, speak fearlessly, and lead with empathy — children who know who they are and what they stand for.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* VALUES */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
+          <motion.div className="text-center mb-14" variants={fadeUp} initial="hidden" whileInView="show" viewport={useViewport}>
             <SectionLabel>OUR CORE VALUES</SectionLabel>
             <h2 className="font-cherry text-4xl text-dark mb-4">What We Stand For</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
             {VALUES.map((v, i) => (
-              <div key={i} className="text-center p-8">
+              <motion.div key={i} variants={scaleIn} className="text-center p-8">
                 <div className="text-5xl mb-5">{v.icon}</div>
                 <h3 className="font-cherry text-2xl text-dark mb-3">{v.title}</h3>
                 <p className="text-gray-600 font-body leading-relaxed">{v.description}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* FOUNDER'S STORY */}
       <section className="py-20 bg-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
+            <motion.div variants={slideLeft} initial="hidden" whileInView="show" viewport={useViewport}>
               <SectionLabel className="text-aqua">FOUNDER'S STORY</SectionLabel>
               <h2 className="font-cherry text-4xl text-white mb-6">Meet Stella</h2>
               <p className="text-gray-300 font-body text-lg leading-relaxed mb-6">
@@ -73,19 +82,30 @@ export default function About() {
                 Stella founded Discovery Haven to fill that gap — not just as an educator, but as a mother who refused to accept that confidence and critical thinking were luxuries. Every programme is built on lived experience, research, and a deep respect for each child's unique intelligence.
               </p>
               <Button variant="primary" size="lg">Read Stella's Full Story →</Button>
-            </div>
-            <div className="bg-aqua/10 rounded-3xl p-12 text-center">
+            </motion.div>
+            <motion.div
+              className="bg-aqua/10 rounded-3xl p-12 text-center"
+              variants={slideRight}
+              initial="hidden"
+              whileInView="show"
+              viewport={useViewport}
+            >
               <div className="w-32 h-32 rounded-full bg-aqua mx-auto flex items-center justify-center text-6xl mb-6">👩🏾‍🏫</div>
               <h3 className="font-cherry text-2xl text-white mb-2">Stella</h3>
               <p className="text-aqua font-bold font-body">Founder, Discovery Haven Kids Co.</p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* WHO WE SERVE */}
       <section className="py-20 bg-cream">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+        <motion.div
+          className="max-w-3xl mx-auto px-4 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={useViewport}
+        >
           <SectionLabel>WHO WE SERVE</SectionLabel>
           <h2 className="font-cherry text-4xl text-dark mb-6">Built for Every Curious Child</h2>
           <p className="text-gray-600 font-body text-lg leading-relaxed mb-10">
@@ -94,7 +114,7 @@ export default function About() {
           <Button variant="primary" size="lg" onClick={() => window.location.href='/haven-academy'}>
             Find the Right Programme <ArrowRight size={18} />
           </Button>
-        </div>
+        </motion.div>
       </section>
     </>
   )
