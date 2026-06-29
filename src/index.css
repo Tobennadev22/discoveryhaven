@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+  }
+  #root {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@layer utilities {
+  .font-cherry {
+    font-family: 'Cherry Bomb One', cursive;
+  }
+  .text-shadow {
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+}
