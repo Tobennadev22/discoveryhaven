@@ -25,21 +25,6 @@ import { Card } from "../components/ui/Card";
 import { EnrollModal } from "../components/ui/EnrollModal";
 import { COURSES, EVENTS, TESTIMONIALS, IMPACT_METRICS } from "../data/content";
 
-const HERO_IMAGES = {
-  left: "https://images.unsplash.com/photo-1497375638960-ca368c7231e4?w=600&q=80",
-  center:
-    "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&q=80",
-  right:
-    "https://images.unsplash.com/photo-1503676382389-4809596d5290?w=600&q=80",
-};
-
-const TRUST_LOGOS = [
-  "British Council",
-  "UNICEF",
-  "UNESCO",
-  "Ford Foundation",
-  "Oxford",
-];
 
 export default function Home() {
   const [enrollEvent, setEnrollEvent] = useState(null);
@@ -47,67 +32,144 @@ export default function Home() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-dark">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&q=80')] bg-cover bg-center opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/50 to-dark/80" />
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto py-20">
-          <Badge color="aqua" className="mb-6">
-            Where Intellectual Curiosity Meets Radical Confidence
-          </Badge>
-          <h1 className="font-cherry text-5xl sm:text-6xl lg:text-7xl text-white leading-tight mb-6 text-shadow">
-            Every Child Deserves
-            <br />
-            to Come Alive
-          </h1>
-          <p className="text-white/80 font-body text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Discovery Haven builds confident thinkers, fearless storytellers,
-            and curious leaders through transformative after-school programmes.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              variant="primary"
-              onClick={() => (window.location.href = "/haven-academy")}
-            >
+      {/* ─── HERO ─── */}
+      <section className="bg-cream pt-12 pb-0 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* top label */}
+          <motion.div className="flex justify-center mb-6" variants={fadeIn} initial="hidden" animate="show">
+            <span className="inline-flex items-center gap-2 bg-aqua/10 text-aqua text-xs font-bold font-body tracking-widest uppercase px-4 py-2 rounded-full">
+              Where Children Come Alive
+            </span>
+          </motion.div>
+
+          {/* heading */}
+          <motion.h1
+            className="font-cherry text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-dark text-center leading-none mb-6"
+            variants={fadeUp} initial="hidden" animate="show"
+          >
+            Every Child Deserves<br />
+            <span className="text-aqua">to Come Alive</span>
+          </motion.h1>
+
+          <motion.p
+            className="text-gray-500 font-body text-lg sm:text-xl text-center max-w-2xl mx-auto mb-10 leading-relaxed"
+            variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.15 }}
+          >
+            Discovery Haven builds confident thinkers, fearless storytellers, and curious leaders through transformative after-school programmes designed for children aged 4–15.
+          </motion.p>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.25 }}
+          >
+            <Button size="lg" variant="primary" onClick={() => window.location.href='/haven-academy'}>
               Explore Our Courses <ArrowRight size={18} />
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => (window.location.href = "/haven-tribe")}
-            >
-              Join the Haven Tribe
+            <Button size="lg" variant="outline-dark" onClick={() => window.location.href='/community-hour'}>
+              Book a Free 15-Min Call
             </Button>
-          </div>
-        </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full ${i === 0 ? "bg-aqua" : "bg-white/30"}`}
-            />
-          ))}
-        </div>
-      </section>
+          </motion.div>
 
-      {/* POSITIONING STRIP */}
-      <section className="bg-orange-700 py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="font-cherry text-4xl lg:text-5xl text-white mb-6 leading-tight">
-            We Don't Just Teach.
-            <br />
-            We Transform.
-          </h2>
-          <p className="text-gray-300 font-body text-lg leading-relaxed mb-10 max-w-3xl mx-auto">
-            Discovery Haven runs virtual and in-person learning programmes that
-            build the skills children need most — not just for school, but for
-            life. Confidence, communication, critical thinking, and emotional
-            intelligence.
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <Badge color="dark">SDG 4 — Quality Education</Badge>
-            <Badge color="dark">SDG 17 — Partnerships for the Goals</Badge>
+          {/* ── IMAGE COLLAGE ── */}
+          <motion.div
+            className="grid grid-cols-3 gap-4 items-stretch"
+            variants={stagger} initial="hidden" animate="show"
+          >
+            {/* LEFT — tall photo + bottom floating card */}
+            <motion.div variants={slideLeft} className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]">
+              <img
+                src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=700&q=80"
+                alt="Child learning"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-5 left-5 right-5 bg-white rounded-2xl shadow-lg p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-aqua/15 flex items-center justify-center text-lg flex-shrink-0">✍️</div>
+                  <div>
+                    <p className="font-bold font-body text-dark text-sm leading-tight">Learn anytime, anywhere</p>
+                    <p className="text-gray-400 font-body text-xs mt-0.5">with Discovery Haven programmes</p>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-aqua" />
+                  <span className="font-cherry text-xs text-aqua">Discovery Haven Kids Co.</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* CENTER — two stacked colour cards only */}
+            <motion.div variants={fadeUp} className="flex flex-col gap-4">
+              {/* aqua card with avatars */}
+              <div className="bg-aqua rounded-3xl p-6 flex-1">
+                <div className="flex items-center mb-4">
+                  {['bg-white/40','bg-white/60','bg-white/80','bg-white'].map((op, i) => (
+                    <div key={i} className={`w-8 h-8 rounded-full ${op} border-2 border-white/50 flex items-center justify-center text-aqua text-xs font-bold -ml-2 first:ml-0`}>
+                      {['A','B','C','D'][i]}
+                    </div>
+                  ))}
+                  <span className="ml-3 font-bold font-body text-white text-sm">40+</span>
+                </div>
+                <p className="font-cherry text-2xl text-white leading-tight">Professional</p>
+                <p className="font-cherry text-2xl text-white leading-tight">Educators</p>
+                <p className="font-body text-white/70 text-xs mt-2">across Nigeria & diaspora</p>
+              </div>
+
+              {/* lavender card */}
+              <div className="rounded-3xl p-6 flex-1" style={{ backgroundColor: '#e8e0f5' }}>
+                <p className="font-cherry text-xl text-dark leading-snug mb-4">
+                  Every child deserves the chance to learn
+                </p>
+                <div className="flex items-end justify-between">
+                  <span className="text-3xl">🌸</span>
+                  <span className="font-body text-xs font-bold text-dark/40 uppercase tracking-widest">Discovery Haven</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* RIGHT — tall photo + bottom floating card */}
+            <motion.div variants={slideRight} className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]">
+              <img
+                src="https://images.unsplash.com/photo-1503676382389-4809596d5290?w=700&q=80"
+                alt="Child reading"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-5 left-5 right-5 bg-white rounded-2xl shadow-lg p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-cherry text-base text-dark">Loud & Fearless</p>
+                    <p className="text-gray-400 font-body text-xs mt-0.5">For Ages 9–15</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-right">
+                      <p className="font-cherry text-lg text-dark leading-none">6</p>
+                      <p className="font-body text-xs text-gray-400">Weeks</p>
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-crimson flex items-center justify-center">
+                      <ArrowRight size={14} className="text-white" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* ── STATS STRIP ── */}
+        <div className="mt-12 bg-white border-t border-b border-gray-100 py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="flex flex-col sm:flex-row items-center justify-between gap-4"
+              variants={fadeIn} initial="hidden" whileInView="show" viewport={useViewport}
+            >
+              <p className="font-cherry text-2xl text-dark text-center">
+                2,400+ Students Empowered Since Launch
+              </p>
+              <div className="flex items-center gap-6 flex-wrap justify-center">
+                {['British Council','UNICEF','UNESCO','Ford Foundation','Oxford'].map((logo) => (
+                  <span key={logo} className="text-gray-300 font-body font-bold text-sm tracking-wide">{logo}</span>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -267,7 +329,7 @@ export default function Home() {
       </section>
 
       {/* IMPACT METRICS */}
-      <section className="bg-lime-800 py-16">
+      <section className="bg-aqua py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {IMPACT_METRICS.map((m) => (
