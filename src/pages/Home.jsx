@@ -26,46 +26,58 @@ import { Card } from "../components/ui/Card";
 import { EnrollModal } from "../components/ui/EnrollModal";
 import { COURSES, EVENTS, TESTIMONIALS, IMPACT_METRICS } from "../data/content";
 
-const HERO_IMAGES = {
-  left: "https://images.unsplash.com/photo-1497375638960-ca368c7231e4?w=600&q=80",
-  center:
-    "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&q=80",
-  right:
-    "https://images.unsplash.com/photo-1503676382389-4809596d5290?w=600&q=80",
-};
-
-const TRUST_LOGOS = [
-  "British Council",
-  "UNICEF",
-  "UNESCO",
-  "Ford Foundation",
-  "Oxford",
-];
-
 export default function Home() {
   const [enrollEvent, setEnrollEvent] = useState(null);
   const [email, setEmail] = useState("");
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-dark">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&q=80')] bg-cover bg-center opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/50 to-dark/80" />
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto py-20">
-          <Badge color="aqua" className="mb-6">
-            Where Intellectual Curiosity Meets Radical Confidence
-          </Badge>
-          <h1 className="font-cherry text-5xl sm:text-6xl lg:text-7xl text-white leading-tight mb-6 text-shadow">
+      {/* ─── HERO ─── */}
+      <section className="bg-cream pt-12 pb-0 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* top label */}
+          <motion.div
+            className="flex justify-center mb-6"
+            variants={fadeIn}
+            initial="hidden"
+            animate="show"
+          >
+            <span className="inline-flex items-center gap-2 bg-aqua/10 text-aqua text-xs font-bold font-body tracking-widest uppercase px-4 py-2 rounded-full">
+              Where Children Come Alive
+            </span>
+          </motion.div>
+
+          {/* heading */}
+          <motion.h1
+            className="font-cherry text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-dark text-center leading-none mb-6"
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+          >
             Every Child Deserves
             <br />
-            to Come Alive
-          </h1>
-          <p className="text-white/80 font-body text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            <span className="text-aqua">to Come Alive</span>
+          </motion.h1>
+
+          <motion.p
+            className="text-gray-500 font-body text-lg sm:text-xl text-center max-w-2xl mx-auto mb-10 leading-relaxed"
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            transition={{ delay: 0.15 }}
+          >
             Discovery Haven builds confident thinkers, fearless storytellers,
-            and curious leaders through transformative after-school programmes.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            and curious leaders through transformative after-school programmes
+            designed for children aged 4–15.
+          </motion.p>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            transition={{ delay: 0.25 }}
+          >
             <Button
               size="lg"
               variant="primary"
@@ -75,40 +87,180 @@ export default function Home() {
             </Button>
             <Button
               size="lg"
-              variant="outline"
-              onClick={() => (window.location.href = "/haven-tribe")}
+              variant="outline-dark"
+              onClick={() => (window.location.href = "/community-hour")}
             >
-              Join the Haven Tribe
+              Book a Free 15-Min Call
             </Button>
-          </div>
-        </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full ${i === 0 ? "bg-aqua" : "bg-white/30"}`}
-            />
-          ))}
-        </div>
-      </section>
+          </motion.div>
 
-      {/* POSITIONING STRIP */}
-      <section className="bg-orange-700 py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="font-cherry text-4xl lg:text-5xl text-white mb-6 leading-tight">
-            We Don't Just Teach.
-            <br />
-            We Transform.
-          </h2>
-          <p className="text-gray-300 font-body text-lg leading-relaxed mb-10 max-w-3xl mx-auto">
-            Discovery Haven runs virtual and in-person learning programmes that
-            build the skills children need most — not just for school, but for
-            life. Confidence, communication, critical thinking, and emotional
-            intelligence.
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <Badge color="dark">SDG 4 — Quality Education</Badge>
-            <Badge color="dark">SDG 17 — Partnerships for the Goals</Badge>
+          {/* ── IMAGE COLLAGE ── */}
+          <motion.div
+            className="grid grid-cols-3 gap-4 items-stretch"
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+          >
+            {/* LEFT — tall photo + bottom-left floating card */}
+            <motion.div
+              variants={slideLeft}
+              className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=700&q=80"
+                alt="Child learning"
+                className="w-full h-full object-cover"
+              />
+              {/* bottom-left white card — compact, speech-bubble style */}
+              <div className="absolute bottom-5 left-5 bg-white rounded-2xl shadow-xl p-3.5 max-w-[200px]">
+                <p className="font-bold font-body text-dark text-xs leading-snug">
+                  Learn anytime, anywhere with our online programmes
+                </p>
+                <div className="mt-2.5 flex items-center gap-1.5">
+                  <div className="w-5 h-5 rounded-full bg-aqua flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-[8px] font-bold">DH</span>
+                  </div>
+                  <span className="font-body text-[10px] text-gray-400 font-semibold">
+                    Discovery Haven
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* CENTER — two stacked colour cards, no photo */}
+            <motion.div
+              variants={fadeUp}
+              className="flex flex-col gap-4 h-[420px] lg:h-[500px]"
+            >
+              {/* TOP — lime green card with avatar row */}
+              <div
+                className="rounded-3xl p-6 flex flex-col justify-between flex-1"
+                style={{ backgroundColor: "#8bc34a" }}
+              >
+                <div>
+                  {/* overlapping avatar circles */}
+                  <div className="flex items-center mb-1">
+                    <div className="flex -space-x-2.5">
+                      {[
+                        { bg: "#f97316", letter: "A" },
+                        { bg: "#8b5cf6", letter: "B" },
+                        { bg: "#ec4899", letter: "C" },
+                        { bg: "#06b6d4", letter: "D" },
+                      ].map((av, i) => (
+                        <div
+                          key={i}
+                          className="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold"
+                          style={{ backgroundColor: av.bg }}
+                        >
+                          {av.letter}
+                        </div>
+                      ))}
+                      <div className="w-9 h-9 rounded-full border-2 border-white bg-white/30 flex items-center justify-center text-white text-xs font-bold">
+                        40+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <p className="font-cherry text-3xl text-white leading-tight">
+                    Professional
+                  </p>
+                  <p className="font-cherry text-3xl text-white leading-tight">
+                    Educators
+                  </p>
+                  <p className="font-body text-white/80 text-xs mt-1.5">
+                    Trained · Vetted · Passionate
+                  </p>
+                </div>
+              </div>
+
+              {/* BOTTOM — lavender card */}
+              <div
+                className="rounded-3xl p-6 flex flex-col justify-between flex-1"
+                style={{ backgroundColor: "#d8b4fe" }}
+              >
+                <p className="font-cherry text-2xl text-dark leading-snug">
+                  Every child deserves the chance to learn
+                </p>
+                <div className="flex items-end justify-between mt-4">
+                  <div className="text-5xl leading-none">🌸</div>
+                  <span className="font-body text-[10px] font-bold text-dark/50 uppercase tracking-widest">
+                    Discovery Haven
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* RIGHT — tall photo + bottom floating card */}
+            <motion.div
+              variants={slideRight}
+              className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1503676382389-4809596d5290?w=700&q=80"
+                alt="Child reading"
+                className="w-full h-full object-cover"
+              />
+              {/* bottom white card — course pill style */}
+              <div className="absolute bottom-5 left-5 right-5 bg-white rounded-2xl shadow-xl p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-cherry text-base text-dark leading-tight">
+                      Loud & Fearless
+                    </p>
+                    <p className="text-gray-400 font-body text-[11px] mt-0.5">
+                      For Ages 9–15
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-center">
+                      <p className="font-cherry text-2xl text-dark leading-none">
+                        6
+                      </p>
+                      <p className="font-body text-[10px] text-gray-400 leading-tight">
+                        Weeks
+                      </p>
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-dark flex items-center justify-center flex-shrink-0">
+                      <ArrowRight size={14} className="text-white" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* ── STATS STRIP ── */}
+        <div className="mt-12 bg-white border-t border-b border-gray-100 py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="flex flex-col sm:flex-row items-center justify-between gap-4"
+              variants={fadeIn}
+              initial="hidden"
+              whileInView="show"
+              viewport={useViewport}
+            >
+              <p className="font-cherry text-2xl text-dark text-center">
+                2,400+ Students Empowered Since Launch
+              </p>
+              <div className="flex items-center gap-6 flex-wrap justify-center">
+                {[
+                  "British Council",
+                  "UNICEF",
+                  "UNESCO",
+                  "Ford Foundation",
+                  "Oxford",
+                ].map((logo) => (
+                  <span
+                    key={logo}
+                    className="text-gray-300 font-body font-bold text-sm tracking-wide"
+                  >
+                    {logo}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
