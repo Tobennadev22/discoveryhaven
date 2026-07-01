@@ -17,6 +17,7 @@ import {
   BookOpen,
   Star,
   CheckCircle,
+  SearchAlert,
 } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
@@ -124,7 +125,7 @@ export default function Home() {
           >
             <motion.div variants={slideLeft}>
               <SectionLabel>OUR APPROACH</SectionLabel>
-              <h2 className="font-cherry text-4xl lg:text-5xl text-dark mb-6 leading-tight">
+              <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
                 Skills That Shape Tomorrow
               </h2>
               <p className="text-gray-500 font-body text-lg leading-relaxed mb-8">
@@ -151,15 +152,15 @@ export default function Home() {
                 {
                   title: "Join Haven Academy to Activate Your Teaching",
                   bg: "bg-yellow",
-                  text: "text-dark",
+                  text: "text-slate-900",
                   icon: "🎤",
                 },
                 {
                   title:
                     "Support Your Child's Learning Through Discovery Haven",
-                  bg: "bg-dark",
+                  bg: "bg-aqua",
                   text: "text-white",
-                  icon: "🔍",
+                  icon: "🪄",
                 },
               ].map((c, i) => (
                 <motion.div
@@ -202,7 +203,7 @@ export default function Home() {
             viewport={useViewport}
           >
             <SectionLabel>OUR FOUR STUDIO TRACKS</SectionLabel>
-            <h2 className="font-cherry text-4xl lg:text-5xl text-dark mb-4">
+            <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
               Haven Academy
             </h2>
             <p className="text-gray-600 font-body text-lg max-w-2xl mx-auto">
@@ -217,13 +218,13 @@ export default function Home() {
                 key={course.id}
                 className="group hover:shadow-lg transition-all duration-300"
               >
-                <div
+                {/* <div
                   className="h-3 w-full"
                   style={{ backgroundColor: course.color }}
-                />
+                /> */}
                 <div className="p-8">
                   <div className="text-4xl mb-4">{course.icon}</div>
-                  <h3 className="font-cherry text-2xl text-dark mb-1">
+                  <h3 className="font-cherry text-2xl text-slate-900 mb-1">
                     {course.title}
                   </h3>
                   <p className="text-aqua font-bold font-body text-sm uppercase tracking-wide mb-3">
@@ -267,86 +268,21 @@ export default function Home() {
       </section>
 
       {/* IMPACT METRICS */}
-      <section className="bg-lime-800 py-16">
+      <section className="bg-slate-50 py-16">
+        <h4 className="text-center font-bold">IMPACT METRICS</h4>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {IMPACT_METRICS.map((m) => (
               <div key={m.label} className="text-center">
-                <div className="font-cherry text-5xl lg:text-6xl text-white mb-2">
+                <div className="font-cherry text-5xl lg:text-6xl text-slate-900 mb-2">
                   {m.number}
                 </div>
-                <div className="font-body text-white/80 font-semibold text-sm uppercase tracking-wide">
+                <div className="font-body text-slate-900/80 font-semibold text-sm uppercase tracking-wide">
                   {m.label}
                 </div>
               </div>
             ))}
           </motion.div>
-        </div>
-      </section>
-
-      {/* ─── PERSONALIZED LEARNING — reference-style feature block ─── */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <SectionLabel>UPCOMING EVENTS</SectionLabel>
-            <h2 className="font-cherry text-4xl lg:text-5xl text-dark mb-4">
-              Don't Miss What's Coming
-            </h2>
-            <p className="text-gray-600 font-body text-lg max-w-xl mx-auto">
-              Cohorts fill fast. Secure your child's spot before registration
-              closes.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {EVENTS.map((ev) => (
-              <Card
-                key={ev.id}
-                className="hover:shadow-lg transition-all duration-300"
-              >
-                <div
-                  className="px-6 py-3 font-bold font-body text-sm flex justify-between items-center"
-                  style={{
-                    backgroundColor: ev.dateBarColor,
-                    color: ev.dateBarTextColor,
-                  }}
-                >
-                  <span>{ev.date}</span>
-                  <span>{ev.duration}</span>
-                </div>
-                <div className="p-7">
-                  <h3 className="font-cherry text-xl text-dark mb-3 leading-snug">
-                    {ev.title}
-                  </h3>
-                  <p className="text-gray-600 font-body text-sm leading-relaxed mb-6">
-                    {ev.description}
-                  </p>
-                  {ev.price && (
-                    <p className="text-aqua font-bold font-body text-sm mb-4">
-                      ₦{ev.price.toLocaleString()}
-                    </p>
-                  )}
-                  <div className="flex flex-col gap-2">
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      className="w-full"
-                      onClick={() => setEnrollEvent(ev)}
-                    >
-                      {ev.type === "summit" ? "Register Interest" : "Register"}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full text-gray-500 hover:text-dark"
-                    >
-                      <Calendar size={15} /> Add to Calendar
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -377,52 +313,11 @@ export default function Home() {
                   "{t.quote}"
                 </p>
                 <div>
-                  <p className="font-bold font-body text-dark">{t.name}</p>
+                  <p className="font-bold font-body text-slate-900">{t.name}</p>
                   <p className="text-gray-400 font-body text-sm">{t.role}</p>
                 </div>
               </div>
             ))}
-          </motion.div>
-
-          {/* text */}
-          <motion.div
-            variants={slideRight}
-            initial="hidden"
-            whileInView="show"
-            viewport={useViewport}
-          >
-            <SectionLabel>EXPERIENCE LEARNING</SectionLabel>
-            <h2 className="font-cherry text-4xl lg:text-5xl text-dark mb-6 leading-tight">
-              Experience Learning Like Never Before
-            </h2>
-            <p className="text-gray-500 font-body text-lg leading-relaxed mb-8">
-              Discover personalised, AI-powered learning that prepares students
-              for success in the real world. Every child gets a learning path
-              designed around their natural strengths.
-            </p>
-            <ul className="space-y-4 mb-10">
-              {[
-                "Courses built around each child's unique intelligence",
-                "Weekly live sessions with expert educators",
-                "Published outcomes — stories, speeches, and certificates",
-                "Parent progress reports after every session",
-              ].map((item, i) => (
-                <li key={i} className="flex gap-3 items-start">
-                  <CheckCircle
-                    size={20}
-                    className="text-aqua flex-shrink-0 mt-0.5"
-                  />
-                  <span className="text-gray-600 font-body">{item}</span>
-                </li>
-              ))}
-            </ul>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => (window.location.href = "/haven-academy")}
-            >
-              Start Your Journey →
-            </Button>
           </motion.div>
         </div>
       </section>
@@ -438,7 +333,7 @@ export default function Home() {
             viewport={useViewport}
           >
             <SectionLabel>UPCOMING EVENTS</SectionLabel>
-            <h2 className="font-cherry text-4xl lg:text-5xl text-dark mb-4">
+            <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
               Don't Miss What's Coming
             </h2>
             <p className="text-gray-500 font-body text-lg max-w-xl mx-auto">
@@ -468,7 +363,7 @@ export default function Home() {
                     <span>{ev.duration}</span>
                   </div>
                   <div className="p-7">
-                    <h3 className="font-cherry text-xl text-dark mb-3 leading-snug">
+                    <h3 className="font-cherry text-xl text-slate-900 mb-3 leading-snug">
                       {ev.title}
                     </h3>
                     <p className="text-gray-500 font-body text-sm leading-relaxed mb-5">
@@ -493,67 +388,13 @@ export default function Home() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="w-full text-gray-400 hover:text-dark"
+                        className="w-full text-gray-400 hover:text-slate-900"
                       >
                         <Calendar size={14} /> Add to Calendar
                       </Button>
                     </div>
                   </div>
                 </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── TESTIMONIALS ─── */}
-      <section className="py-24 bg-aqua">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-14"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={useViewport}
-          >
-            <h2 className="font-cherry text-4xl lg:text-5xl text-white mb-4">
-              Parents Are Talking
-            </h2>
-            <p className="text-white/70 font-body text-lg">
-              Real results from real families across Nigeria.
-            </p>
-          </motion.div>
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={useViewport}
-          >
-            {TESTIMONIALS.map((t, i) => (
-              <motion.div
-                key={i}
-                variants={scaleIn}
-                className="bg-white rounded-2xl p-8"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <Star
-                      key={j}
-                      size={15}
-                      className="fill-yellow text-yellow"
-                    />
-                  ))}
-                </div>
-                <p className="text-gray-700 font-body text-sm leading-relaxed italic mb-6">
-                  "{t.quote}"
-                </p>
-                <div>
-                  <p className="font-bold font-body text-dark text-sm">
-                    {t.name}
-                  </p>
-                  <p className="text-gray-400 font-body text-xs">{t.role}</p>
-                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -570,7 +411,7 @@ export default function Home() {
       >
         <div className="max-w-3xl mx-auto px-4 text-center">
           <div className="text-5xl mb-6">☕</div>
-          <h2 className="font-cherry text-4xl lg:text-5xl text-dark mb-4">
+          <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
             Not Sure Yet? Let's Talk.
           </h2>
           <p className="text-gray-600 font-body text-lg leading-relaxed mb-4">
@@ -592,7 +433,7 @@ export default function Home() {
       </motion.section>
 
       {/* ─── JOIN COMMUNITY BANNER ─── */}
-      <section className="py-16 bg-dark mx-4 sm:mx-8 lg:mx-16 rounded-3xl mb-16 overflow-hidden relative">
+      <section className="py-16 bg-slate-800 mx-4 sm:mx-8 lg:mx-16 rounded-3xl mb-16 overflow-hidden relative">
         <div className="absolute top-4 left-8 w-16 h-16 rounded-full border-2 border-white/10" />
         <div className="absolute bottom-4 right-12 w-8 h-8 rounded-full border-2 border-yellow/30" />
         <div className="absolute top-1/2 right-8 -translate-y-1/2 w-12 h-12 rounded-full bg-aqua/20" />
@@ -622,12 +463,12 @@ export default function Home() {
       </section>
 
       {/* ─── NEWSLETTER ─── */}
-      <section className="py-20 bg-yellow">
+      <section className="py-20 bg-slate-200">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="font-cherry text-4xl text-dark mb-3">
+          <h2 className="font-cherry text-4xl text-slate-900 mb-3">
             Stay in the Loop
           </h2>
-          <p className="text-dark/70 font-body text-lg mb-8">
+          <p className="text-slate-900/70 font-body text-lg mb-8">
             Get the Discovery Letter — weekly insights on child development,
             creative learning, and early programme access.
           </p>
@@ -645,13 +486,13 @@ export default function Home() {
               placeholder="Your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-5 py-4 rounded-full font-body text-dark bg-white border-0 focus:outline-none focus:ring-2 focus:ring-dark"
+              className="flex-1 px-5 py-4 rounded-full font-body text-slate-900 bg-white border-0 focus:outline-none focus:ring-2 focus:ring-dark"
             />
             <Button type="submit" variant="dark" size="lg">
               Join the Dispatch
             </Button>
           </form>
-          <p className="text-dark/50 font-body text-xs mt-4">
+          <p className="text-slate-900/50 font-body text-xs mt-4">
             We respect your privacy and your child's.
           </p>
         </div>
