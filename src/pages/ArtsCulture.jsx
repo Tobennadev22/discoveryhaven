@@ -38,7 +38,7 @@ export default function ArtsCulture() {
             viewport={useViewport}
           >
             <SectionLabel>PUBLISHED STORIES</SectionLabel>
-            <h2 className="font-cherry text-4xl text-dark mb-4">
+            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
               Little Voices Book Series
             </h2>
             <p className="text-gray-600 font-body text-lg max-w-xl mx-auto">
@@ -72,7 +72,7 @@ export default function ArtsCulture() {
             viewport={useViewport}
           >
             <SectionLabel>DEBATE & SPEECH</SectionLabel>
-            <h2 className="font-cherry text-4xl text-dark mb-4">
+            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
               Loud & Fearless Showcases
             </h2>
           </motion.div>

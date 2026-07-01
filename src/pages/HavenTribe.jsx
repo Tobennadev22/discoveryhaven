@@ -36,14 +36,14 @@ const TRIBE_BENEFITS = [
 export default function HavenTribe() {
   return (
     <>
-      <section className="bg-aqua py-28">
+      <section className="bg-dark py-28">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <h1 className="font-cherry text-5xl lg:text-7xl text-white mb-6">
+          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
             Haven Tribe
           </h1>
           <p className="text-white/85 font-body text-xl leading-relaxed">
@@ -62,7 +62,7 @@ export default function HavenTribe() {
             viewport={useViewport}
           >
             <SectionLabel>WHO BELONGS</SectionLabel>
-            <h2 className="font-cherry text-4xl text-dark mb-12">
+            <h2 className="font-cherry text-4xl text-slate-900 mb-12">
               This Is Your Community If…
             </h2>
           </motion.div>
@@ -145,8 +145,10 @@ export default function HavenTribe() {
           whileInView="show"
           viewport={useViewport}
         >
-          <h2 className="font-cherry text-4xl text-dark mb-4">How to Join</h2>
-          <p className="text-dark/70 font-body text-lg leading-relaxed mb-8">
+          <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+            How to Join
+          </h2>
+          <p className="text-slate-900/70 font-body text-lg leading-relaxed mb-8">
             Tribe membership is earned, not bought. Complete any Haven Academy
             programme and you're automatically welcomed into the community.
             Ready to start?

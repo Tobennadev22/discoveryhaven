@@ -25,6 +25,8 @@ import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
 import { EnrollModal } from "../components/ui/EnrollModal";
 import { COURSES, EVENTS, TESTIMONIALS, IMPACT_METRICS } from "../data/content";
+import discoveryhavenHeroImg from "../assets/discoveryhaven-Hero1.jpg";
+import discoveryhavenHeroImg1 from "../assets/discoveryhaven-haventribe.jpg";
 
 export default function Home() {
   const [enrollEvent, setEnrollEvent] = useState(null);
@@ -49,14 +51,16 @@ export default function Home() {
 
           {/* heading */}
           <motion.h1
-            className="font-cherry text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-dark text-center leading-none mb-6"
+            className="font-cherry text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-slate-900 text-center leading-none mb-6"
             variants={fadeUp}
             initial="hidden"
             animate="show"
           >
             Every Child Deserves
             <br />
-            <span className="text-aqua">to Come Alive</span>
+            <span className="bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent">
+              to Come Alive
+            </span>
           </motion.h1>
 
           <motion.p
@@ -107,13 +111,13 @@ export default function Home() {
               className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]"
             >
               <img
-                src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=700&q=80"
+                src={discoveryhavenHeroImg}
                 alt="Child learning"
                 className="w-full h-full object-cover"
               />
               {/* bottom-left white card — compact, speech-bubble style */}
               <div className="absolute bottom-5 left-5 bg-white rounded-2xl shadow-xl p-3.5 max-w-[200px]">
-                <p className="font-bold font-body text-dark text-xs leading-snug">
+                <p className="font-bold font-body text-slate-900 text-xs leading-snug">
                   Learn anytime, anywhere with our online programmes
                 </p>
                 <div className="mt-2.5 flex items-center gap-1.5">
@@ -134,15 +138,14 @@ export default function Home() {
             >
               {/* TOP — lime green card with avatar row */}
               <div
-                className="rounded-3xl p-6 flex flex-col justify-between flex-1"
-                style={{ backgroundColor: "#8bc34a" }}
+                className="rounded-3xl p-6 flex flex-col justify-between flex-1 bg-yellow text-slate-900"
+                // style={{ backgroundColor: "#8bc34a" }}
               >
                 <div>
                   {/* overlapping avatar circles */}
                   <div className="flex items-center mb-1">
                     <div className="flex -space-x-2.5">
                       {[
-                        { bg: "#f97316", letter: "A" },
                         { bg: "#8b5cf6", letter: "B" },
                         { bg: "#ec4899", letter: "C" },
                         { bg: "#06b6d4", letter: "D" },
@@ -150,7 +153,7 @@ export default function Home() {
                         <div
                           key={i}
                           className="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold"
-                          style={{ backgroundColor: av.bg }}
+                          // style={{ backgroundColor: av.bg }}
                         >
                           {av.letter}
                         </div>
@@ -162,13 +165,13 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <p className="font-cherry text-3xl text-white leading-tight">
+                  <p className="font-cherry text-3xl  leading-tight">
                     Professional
                   </p>
-                  <p className="font-cherry text-3xl text-white leading-tight">
+                  <p className="font-cherry text-3xl leading-tight">
                     Educators
                   </p>
-                  <p className="font-body text-white/80 text-xs mt-1.5">
+                  <p className="font-body text-slate-700 text-xs mt-1.5">
                     Trained · Vetted · Passionate
                   </p>
                 </div>
@@ -176,15 +179,15 @@ export default function Home() {
 
               {/* BOTTOM — lavender card */}
               <div
-                className="rounded-3xl p-6 flex flex-col justify-between flex-1"
-                style={{ backgroundColor: "#d8b4fe" }}
+                className="rounded-3xl p-6 flex flex-col justify-between flex-1 bg-orange-200"
+                // style={{ backgroundColor: "orange.300" }}
               >
-                <p className="font-cherry text-2xl text-dark leading-snug">
+                <p className="font-cherry text-2xl text-slate-900 leading-snug">
                   Every child deserves the chance to learn
                 </p>
                 <div className="flex items-end justify-between mt-4">
                   <div className="text-5xl leading-none">🌸</div>
-                  <span className="font-body text-[10px] font-bold text-dark/50 uppercase tracking-widest">
+                  <span className="font-body text-[10px] font-bold text-slate-900/50 uppercase tracking-widest">
                     Discovery Haven
                   </span>
                 </div>
@@ -197,7 +200,7 @@ export default function Home() {
               className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]"
             >
               <img
-                src="https://images.unsplash.com/photo-1503676382389-4809596d5290?w=700&q=80"
+                src={discoveryhavenHeroImg1}
                 alt="Child reading"
                 className="w-full h-full object-cover"
               />
@@ -205,7 +208,7 @@ export default function Home() {
               <div className="absolute bottom-5 left-5 right-5 bg-white rounded-2xl shadow-xl p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-cherry text-base text-dark leading-tight">
+                    <p className="font-cherry text-base text-slate-900 leading-tight">
                       Loud & Fearless
                     </p>
                     <p className="text-gray-400 font-body text-[11px] mt-0.5">
@@ -214,7 +217,7 @@ export default function Home() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="text-center">
-                      <p className="font-cherry text-2xl text-dark leading-none">
+                      <p className="font-cherry text-2xl text-slate-900 leading-none">
                         6
                       </p>
                       <p className="font-body text-[10px] text-gray-400 leading-tight">
@@ -235,16 +238,16 @@ export default function Home() {
         <div className="mt-12 bg-white border-t border-b border-gray-100 py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
-              className="flex flex-col sm:flex-row items-center justify-between gap-4"
+              className="items-center justify-between gap-4"
               variants={fadeIn}
               initial="hidden"
               whileInView="show"
               viewport={useViewport}
             >
-              <p className="font-cherry text-2xl text-dark text-center">
-                2,400+ Students Empowered Since Launch
+              <p className="font-cherry text-2xl text-slate-900 text-center">
+                2,400+ Childern Reached Since Launch
               </p>
-              <div className="flex items-center gap-6 flex-wrap justify-center">
+              {/* <div className="flex items-center gap-6 flex-wrap justify-center">
                 {[
                   "British Council",
                   "UNICEF",
@@ -259,7 +262,7 @@ export default function Home() {
                     {logo}
                   </span>
                 ))}
-              </div>
+              </div> */}
             </motion.div>
           </div>
         </div>
@@ -421,7 +424,7 @@ export default function Home() {
 
       {/* IMPACT METRICS */}
       <section className="bg-slate-50 py-16">
-        <h4 className="text-center font-bold">IMPACT METRICS</h4>
+        <SectionLabel className="text-center">IMPACT METRICS</SectionLabel>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {IMPACT_METRICS.map((m) => (

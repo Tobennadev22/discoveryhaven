@@ -31,7 +31,7 @@ export default function Advocacy() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div className="text-center mb-14" variants={fadeUp} initial="hidden" whileInView="show" viewport={useViewport}>
             <SectionLabel>SDG ALIGNMENT</SectionLabel>
-            <h2 className="font-cherry text-4xl text-dark mb-4">Our Global Framework</h2>
+            <h2 className="font-cherry text-4xl text-slate-900 mb-4">Our Global Framework</h2>
           </motion.div>
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -43,7 +43,7 @@ export default function Advocacy() {
             {SDGS.map((sdg, i) => (
               <motion.div key={i} variants={scaleIn} className={`rounded-2xl p-7 border ${sdg.primary ? 'bg-aqua text-white border-aqua' : 'bg-cream border-gray-100'}`}>
                 <div className={`font-bold font-body text-xs uppercase tracking-wide mb-3 ${sdg.primary ? 'text-white/70' : 'text-aqua'}`}>{sdg.num}</div>
-                <h3 className={`font-cherry text-2xl mb-3 ${sdg.primary ? 'text-white' : 'text-dark'}`}>{sdg.title}</h3>
+                <h3 className={`font-cherry text-2xl mb-3 ${sdg.primary ? 'text-white' : 'text-slate-900'}`}>{sdg.title}</h3>
                 <p className={`font-body text-sm leading-relaxed ${sdg.primary ? 'text-white/80' : 'text-gray-600'}`}>{sdg.desc}</p>
                 {sdg.primary && <span className="inline-block mt-4 bg-white/20 text-white text-xs font-bold font-body px-3 py-1 rounded-full">Primary SDG</span>}
               </motion.div>
