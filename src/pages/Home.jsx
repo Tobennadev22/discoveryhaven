@@ -75,53 +75,70 @@ export default function Home() {
             className="grid grid-cols-3 gap-4 items-stretch"
             variants={stagger} initial="hidden" animate="show"
           >
-            {/* LEFT — tall photo + bottom floating card */}
+            {/* LEFT — tall photo + bottom-left floating card */}
             <motion.div variants={slideLeft} className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]">
               <img
                 src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=700&q=80"
                 alt="Child learning"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-5 left-5 right-5 bg-white rounded-2xl shadow-lg p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-aqua/15 flex items-center justify-center text-lg flex-shrink-0">✍️</div>
-                  <div>
-                    <p className="font-bold font-body text-dark text-sm leading-tight">Learn anytime, anywhere</p>
-                    <p className="text-gray-400 font-body text-xs mt-0.5">with Discovery Haven programmes</p>
+              {/* bottom-left white card — compact, speech-bubble style */}
+              <div className="absolute bottom-5 left-5 bg-white rounded-2xl shadow-xl p-3.5 max-w-[200px]">
+                <p className="font-bold font-body text-dark text-xs leading-snug">
+                  Learn anytime, anywhere with our online programmes
+                </p>
+                <div className="mt-2.5 flex items-center gap-1.5">
+                  <div className="w-5 h-5 rounded-full bg-aqua flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-[8px] font-bold">DH</span>
                   </div>
-                </div>
-                <div className="mt-3 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-aqua" />
-                  <span className="font-cherry text-xs text-aqua">Discovery Haven Kids Co.</span>
+                  <span className="font-body text-[10px] text-gray-400 font-semibold">Discovery Haven</span>
                 </div>
               </div>
             </motion.div>
 
-            {/* CENTER — two stacked colour cards only */}
-            <motion.div variants={fadeUp} className="flex flex-col gap-4">
-              {/* aqua card with avatars */}
-              <div className="bg-aqua rounded-3xl p-6 flex-1">
-                <div className="flex items-center mb-4">
-                  {['bg-white/40','bg-white/60','bg-white/80','bg-white'].map((op, i) => (
-                    <div key={i} className={`w-8 h-8 rounded-full ${op} border-2 border-white/50 flex items-center justify-center text-aqua text-xs font-bold -ml-2 first:ml-0`}>
-                      {['A','B','C','D'][i]}
+            {/* CENTER — two stacked colour cards, no photo */}
+            <motion.div variants={fadeUp} className="flex flex-col gap-4 h-[420px] lg:h-[500px]">
+              {/* TOP — lime green card with avatar row */}
+              <div className="rounded-3xl p-6 flex flex-col justify-between flex-1" style={{ backgroundColor: '#8bc34a' }}>
+                <div>
+                  {/* overlapping avatar circles */}
+                  <div className="flex items-center mb-1">
+                    <div className="flex -space-x-2.5">
+                      {[
+                        { bg: '#f97316', letter: 'A' },
+                        { bg: '#8b5cf6', letter: 'B' },
+                        { bg: '#ec4899', letter: 'C' },
+                        { bg: '#06b6d4', letter: 'D' },
+                      ].map((av, i) => (
+                        <div
+                          key={i}
+                          className="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold"
+                          style={{ backgroundColor: av.bg }}
+                        >
+                          {av.letter}
+                        </div>
+                      ))}
+                      <div className="w-9 h-9 rounded-full border-2 border-white bg-white/30 flex items-center justify-center text-white text-xs font-bold">
+                        40+
+                      </div>
                     </div>
-                  ))}
-                  <span className="ml-3 font-bold font-body text-white text-sm">40+</span>
+                  </div>
                 </div>
-                <p className="font-cherry text-2xl text-white leading-tight">Professional</p>
-                <p className="font-cherry text-2xl text-white leading-tight">Educators</p>
-                <p className="font-body text-white/70 text-xs mt-2">across Nigeria & diaspora</p>
+                <div>
+                  <p className="font-cherry text-3xl text-white leading-tight">Professional</p>
+                  <p className="font-cherry text-3xl text-white leading-tight">Educators</p>
+                  <p className="font-body text-white/80 text-xs mt-1.5">Trained · Vetted · Passionate</p>
+                </div>
               </div>
 
-              {/* lavender card */}
-              <div className="rounded-3xl p-6 flex-1" style={{ backgroundColor: '#e8e0f5' }}>
-                <p className="font-cherry text-xl text-dark leading-snug mb-4">
+              {/* BOTTOM — lavender card */}
+              <div className="rounded-3xl p-6 flex flex-col justify-between flex-1" style={{ backgroundColor: '#d8b4fe' }}>
+                <p className="font-cherry text-2xl text-dark leading-snug">
                   Every child deserves the chance to learn
                 </p>
-                <div className="flex items-end justify-between">
-                  <span className="text-3xl">🌸</span>
-                  <span className="font-body text-xs font-bold text-dark/40 uppercase tracking-widest">Discovery Haven</span>
+                <div className="flex items-end justify-between mt-4">
+                  <div className="text-5xl leading-none">🌸</div>
+                  <span className="font-body text-[10px] font-bold text-dark/50 uppercase tracking-widest">Discovery Haven</span>
                 </div>
               </div>
             </motion.div>
@@ -133,18 +150,19 @@ export default function Home() {
                 alt="Child reading"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-5 left-5 right-5 bg-white rounded-2xl shadow-lg p-4">
+              {/* bottom white card — course pill style */}
+              <div className="absolute bottom-5 left-5 right-5 bg-white rounded-2xl shadow-xl p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-cherry text-base text-dark">Loud & Fearless</p>
-                    <p className="text-gray-400 font-body text-xs mt-0.5">For Ages 9–15</p>
+                    <p className="font-cherry text-base text-dark leading-tight">Loud & Fearless</p>
+                    <p className="text-gray-400 font-body text-[11px] mt-0.5">For Ages 9–15</p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="text-right">
-                      <p className="font-cherry text-lg text-dark leading-none">6</p>
-                      <p className="font-body text-xs text-gray-400">Weeks</p>
+                  <div className="flex items-center gap-3">
+                    <div className="text-center">
+                      <p className="font-cherry text-2xl text-dark leading-none">6</p>
+                      <p className="font-body text-[10px] text-gray-400 leading-tight">Weeks</p>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-crimson flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-dark flex items-center justify-center flex-shrink-0">
                       <ArrowRight size={14} className="text-white" />
                     </div>
                   </div>
