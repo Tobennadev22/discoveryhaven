@@ -25,6 +25,9 @@ export function Footer() {
               <Mail size={16} />
               {BRAND.email}
             </a>
+            <div className=" text-gray-400 font-body text-sm mb-6">
+              {BRAND.phoneNumber}
+            </div>
             <div className="flex gap-4">
               <a
                 href="#"

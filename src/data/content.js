@@ -2,8 +2,9 @@ export const BRAND = {
   name: "Discovery Haven Kids Co.",
   tagline: "Where Intellectual Curiosity Meets Radical Confidence.",
   taglineShort: "Where Children Come Alive.",
-  email: "info@discoveryhaven.org",
+  email: " info@discoveryhaven.org ",
   website: "discoveryhaven.org",
+  phoneNumber: "(+234) 0916-399-2614",
 };
 
 export const COLORS = {
@@ -112,7 +113,7 @@ export const EVENTS = [
       "A virtual Saturday programme for ages 6–12. Building self-awareness, empathy, and peaceful communication.",
     dateBarColor: "#ffec00",
     dateBarTextColor: "#1a1a1a",
-    price: 40000,
+    price: 4000000,
     type: "cohort",
     gcalStart: "20260606",
     gcalEnd: "20260704",

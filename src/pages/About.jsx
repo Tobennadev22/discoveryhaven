@@ -11,6 +11,7 @@ import {
   scaleIn,
   useViewport,
 } from "../components/ui/Motion";
+import FounderImg from "../assets/stellaChibuikeEzike.jpg";
 
 export default function About() {
   return (
@@ -122,7 +123,9 @@ export default function About() {
               whileInView="show"
               viewport={useViewport}
             >
-              <SectionLabel className="text-aqua">FOUNDER'S STORY</SectionLabel>
+              <SectionLabel className="text-yellow">
+                FOUNDER'S STORY
+              </SectionLabel>
               <h2 className="font-cherry text-4xl text-white mb-6">
                 Meet Stella
               </h2>
@@ -139,7 +142,7 @@ export default function About() {
                 lived experience, research, and a deep respect for each child's
                 unique intelligence.
               </p>
-              <Button variant="primary" size="lg">
+              <Button variant="yellow" size="lg">
                 Read Stella's Full Story →
               </Button>
             </motion.div>
@@ -150,11 +153,11 @@ export default function About() {
               whileInView="show"
               viewport={useViewport}
             >
-              <div className="w-32 h-32 rounded-full bg-aqua mx-auto flex items-center justify-center text-6xl mb-6">
-                👩🏾‍🏫
+              <div className="w-60 h-60  mx-auto flex items-center justify-center text-6xl mb-6">
+                <img src={FounderImg} alt="stella chibuike-ezike" />
               </div>
               <h3 className="font-cherry text-2xl text-white mb-2">Stella</h3>
-              <p className="text-aqua font-bold font-body">
+              <p className="text-yellow font-bold font-body">
                 Founder, Discovery Haven Kids Co.
               </p>
             </motion.div>
