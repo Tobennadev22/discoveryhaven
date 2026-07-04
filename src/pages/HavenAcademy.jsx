@@ -113,15 +113,22 @@ function CourseSection({ course, reverse = false, index }) {
               viewport={useViewport}
             >
               <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {(() => { const Icon = COURSE_ICONS[course.icon]; return Icon ? <Icon size={96} style={{ color: course.color, opacity: 0.7 }} /> : null; })()}
-                </div>
-                <div
-                  className="absolute inset-0 rounded-3xl"
-                  style={{
-                    background: `linear-gradient(135deg, ${course.color}15, ${course.color}30)`,
-                  }}
-                />
+                {course.image ? (
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div
+                    className="w-full h-full flex items-center justify-center"
+                    style={{ background: `linear-gradient(135deg, ${course.color}20, ${course.color}40)` }}
+                  >
+                    <p className="text-gray-400 font-body text-sm text-center px-8">
+                      Image coming soon
+                    </p>
+                  </div>
+                )}
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-white/95 backdrop-blur rounded-2xl p-4">
                     <p className="font-cherry text-lg text-slate-900">

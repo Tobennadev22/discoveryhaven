@@ -402,6 +402,73 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── SDG ALIGNMENT ── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <SectionLabel>GLOBAL ALIGNMENT</SectionLabel>
+            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+              Aligned to the UN Sustainable Development Goals
+            </h2>
+            <p className="text-gray-500 font-body text-lg max-w-xl mx-auto">
+              Every programme we run is purposefully designed around two global frameworks for change.
+            </p>
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            {[
+              {
+                number: "SDG 4",
+                title: "Quality Education",
+                desc: "We ensure inclusive and equitable quality education by providing creative, skills-based learning programmes that go beyond the traditional classroom.",
+                bg: "bg-aqua",
+                text: "text-white",
+                accent: "bg-white/20",
+              },
+              {
+                number: "SDG 17",
+                title: "Partnerships for the Goals",
+                desc: "We build purposeful relationships with schools, publishers, institutional partners, and the broader community to amplify our impact across Africa.",
+                bg: "bg-dark",
+                text: "text-white",
+                accent: "bg-white/10",
+              },
+            ].map((sdg, i) => (
+              <motion.div
+                key={i}
+                variants={scaleIn}
+                className={`${sdg.bg} ${sdg.text} rounded-3xl p-8 flex flex-col gap-4`}
+              >
+                <div className={`inline-flex items-center gap-2 ${sdg.accent} rounded-full px-4 py-2 w-fit`}>
+                  <span className="font-cherry text-lg">{sdg.number}</span>
+                </div>
+                <div>
+                  <h3 className="font-cherry text-2xl mb-3">{sdg.title}</h3>
+                  <p className="font-body text-sm leading-relaxed opacity-80">{sdg.desc}</p>
+                </div>
+                <button
+                  className={`mt-auto inline-flex items-center gap-2 ${sdg.accent} hover:opacity-90 transition-opacity font-body font-bold text-sm px-5 py-2.5 rounded-full w-fit`}
+                  onClick={() => (window.location.href = "/advocacy")}
+                >
+                  Learn More <ArrowRight size={15} />
+                </button>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* TESTIMONIALS */}
       <section className="py-24 bg-aqua">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

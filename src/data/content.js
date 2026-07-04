@@ -36,6 +36,7 @@ export const COURSES = [
     format: "Virtual · Saturdays",
     color: "#05c3dd",
     icon: "SearchCheck",
+    image: "",
     outcomes: [
       "Explore data filtration and basic logic deduction",
       "Collaborate on gamified problem-solving challenges",
@@ -55,6 +56,7 @@ export const COURSES = [
     format: "Virtual · Saturdays",
     color: "#05c3dd",
     icon: "Brain",
+    image: "",
     outcomes: [
       "Learn how the brain reacts to anger and fear",
       "Practice empathy mapping and understanding others' perspectives",
@@ -75,6 +77,7 @@ export const COURSES = [
     format: "Virtual · Saturdays",
     color: "#05c3dd",
     icon: "PenLine",
+    image: "",
     outcomes: [
       "Write creative fiction, non-fiction, and flash fiction pieces",
       "Edit their own work and give constructive feedback to peers",
@@ -94,6 +97,7 @@ export const COURSES = [
     format: "Virtual · Saturdays",
     color: "#05c3dd",
     icon: "Mic2",
+    image: "",
     outcomes: [
       "Voice modulation exercises and body language training",
       "Quick-thinking debate games and impromptu speaking challenges",

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calendar, Trophy, CheckCircle } from "lucide-react";
+import { Calendar, Trophy, CheckCircle, PlayCircle, Images, BookOpen, ChevronDown } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
@@ -24,6 +24,55 @@ function buildGoogleCalendarUrl(ev) {
     location: ev.location || "",
   });
   return `${base}&${params.toString()}`;
+}
+
+const GALLERY_COUNT = 9;
+
+function PhotoGallery() {
+  const [showAll, setShowAll] = useState(false);
+  const visible = showAll ? GALLERY_COUNT : 9;
+
+  return (
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={useViewport}
+    >
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-10 h-10 rounded-xl bg-yellow/20 flex items-center justify-center">
+          <Images size={22} className="text-yellow" />
+        </div>
+        <div>
+          <h3 className="font-cherry text-2xl text-white">Photo Gallery</h3>
+          <p className="text-gray-400 font-body text-sm">Snapshots from our events, cohorts, and community moments</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-3 gap-3">
+        {Array.from({ length: visible }).map((_, i) => (
+          <div
+            key={i}
+            className="aspect-square bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 hover:border-yellow/40 transition-colors"
+          >
+            <div className="text-center">
+              <Images size={24} className="text-white/20 mx-auto mb-1" />
+              <p className="text-white/20 font-body text-[10px]">Photo {i + 1}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {!showAll && (
+        <div className="text-center mt-8">
+          <button
+            onClick={() => setShowAll(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white/40 font-body font-bold text-sm transition-all"
+          >
+            <ChevronDown size={16} /> Load More Photos
+          </button>
+        </div>
+      )}
+    </motion.div>
+  );
 }
 
 export default function Explore() {
@@ -203,6 +252,159 @@ export default function Explore() {
                 </Card>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── PAST EVENTS ── */}
+      <section className="py-20 bg-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-14"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <SectionLabel>PAST EVENTS</SectionLabel>
+            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+              What We've Done Together
+            </h2>
+            <p className="text-gray-600 font-body text-lg max-w-xl mx-auto">
+              A look back at the cohorts, summits, and showcases that shaped our community.
+            </p>
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            {[
+              { title: "Creative Quest — Cohort 1", date: "March 2024", tag: "Writing Studio", color: "#05c3dd" },
+              { title: "Loud & Fearless — Cohort 3", date: "October 2024", tag: "Public Speaking", color: "#de2d10" },
+              { title: "Discovery Haven Children's Summit 2024", date: "November 2024", tag: "Annual Summit", color: "#1a1a1a" },
+              { title: "The Curiosity Box — Cohort 2", date: "January 2025", tag: "Critical Thinking", color: "#ffec00" },
+              { title: "The EQ Lab — Cohort 1", date: "April 2025", tag: "Emotional Intelligence", color: "#7c3aed" },
+              { title: "Creative Quest — Cohort 4", date: "June 2025", tag: "Writing Studio", color: "#05c3dd" },
+            ].map((ev, i) => (
+              <motion.div
+                key={i}
+                variants={scaleIn}
+                className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
+              >
+                <div
+                  className="h-2 w-full"
+                  style={{ backgroundColor: ev.color }}
+                />
+                <div className="p-6">
+                  <span
+                    className="text-xs font-bold font-body uppercase tracking-wide px-3 py-1 rounded-full"
+                    style={{
+                      backgroundColor: ev.color + "20",
+                      color: ev.color === "#ffec00" ? "#b45309" : ev.color,
+                    }}
+                  >
+                    {ev.tag}
+                  </span>
+                  <h3 className="font-cherry text-lg text-slate-900 mt-3 mb-1 leading-snug">
+                    {ev.title}
+                  </h3>
+                  <p className="text-gray-400 font-body text-sm">{ev.date}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── ARTIFACTS FROM EVENTS ── */}
+      <section className="py-20 bg-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-16"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <SectionLabel className="text-aqua">ARTIFACTS FROM EVENTS</SectionLabel>
+            <h2 className="font-cherry text-4xl text-white mb-4">
+              Moments Worth Remembering
+            </h2>
+            <p className="text-gray-400 font-body text-lg max-w-xl mx-auto">
+              Highlights, stories, and memories captured from every event.
+            </p>
+          </motion.div>
+
+          {/* Loud & Fearless Videos */}
+          <motion.div
+            className="mb-16"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-10 h-10 rounded-xl bg-crimson/20 flex items-center justify-center">
+                <PlayCircle size={22} className="text-crimson" />
+              </div>
+              <div>
+                <h3 className="font-cherry text-2xl text-white">Loud & Fearless</h3>
+                <p className="text-gray-400 font-body text-sm">Performance clips from our public speaking showcases</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="aspect-video bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 hover:border-aqua/40 transition-colors cursor-pointer group"
+                >
+                  <div className="text-center">
+                    <PlayCircle size={40} className="text-white/30 group-hover:text-aqua transition-colors mx-auto mb-2" />
+                    <p className="text-white/30 font-body text-xs group-hover:text-white/60 transition-colors">
+                      Video #{i} — Coming Soon
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Photo Gallery */}
+          <PhotoGallery />
+
+          {/* Books by Kids */}
+          <motion.div
+            className="mt-16"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-10 h-10 rounded-xl bg-aqua/20 flex items-center justify-center">
+                <BookOpen size={22} className="text-aqua" />
+              </div>
+              <div>
+                <h3 className="font-cherry text-2xl text-white">Books by Kids</h3>
+                <p className="text-gray-400 font-body text-sm">Stories written and published by our Creative Quest scholars</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="aspect-[3/4] bg-gradient-to-br from-aqua/20 to-aqua/5 rounded-2xl flex items-center justify-center border border-white/10 hover:border-aqua/40 transition-colors"
+                >
+                  <div className="text-center px-4">
+                    <BookOpen size={36} className="text-aqua/50 mx-auto mb-2" />
+                    <p className="text-white/30 font-body text-xs">Book cover #{i}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
