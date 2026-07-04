@@ -210,16 +210,13 @@ export const FOOTER_LINKS = {
   programmes: [
     { label: "Haven Academy", href: "/haven-academy" },
     { label: "Haven Tribe", href: "/haven-tribe" },
-    { label: "Events Calendar", href: "/events" },
-    { label: "Arts & Culture", href: "/arts-culture" },
-    { label: "Explorers", href: "/explorers" },
+    { label: "Events", href: "/events" },
+    { label: "Explore", href: "/explore" },
   ],
   organisation: [
     { label: "About Us", href: "/about" },
-    { label: "Reports & Impact", href: "/impact" },
-    { label: "Advocacy & SDGs", href: "/advocacy" },
-    { label: "Little Voices Books", href: "/arts-culture" },
-    { label: "Friends of Discovery Haven", href: "/friends" },
+    { label: "Partnerships", href: "/friends" },
+    { label: "Impact", href: "/impact" },
     { label: "Contact", href: "/contact" },
   ],
 };
