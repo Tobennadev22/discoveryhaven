@@ -17,7 +17,13 @@ import {
   CheckCircle,
   Coffee,
   Globe,
+  PenLine,
+  Mic2,
+  SearchCheck,
+  Brain,
 } from "lucide-react";
+
+const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
@@ -331,7 +337,9 @@ export default function Home() {
                   style={{ backgroundColor: course.color }}
                 /> */}
                 <div className="p-8">
-                  <div className="text-4xl mb-4">{course.icon}</div>
+                  <div className="mb-4 flex justify-center">
+                    {(() => { const Icon = COURSE_ICONS[course.icon]; return Icon ? <Icon size={40} style={{ color: course.color }} /> : null; })()}
+                  </div>
                   <h3 className="font-cherry text-2xl text-slate-900 mb-1">
                     {course.title}
                   </h3>

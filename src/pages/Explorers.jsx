@@ -1,4 +1,6 @@
-import { BookOpen } from "lucide-react";
+import { BookOpen, PenLine, Mic2, SearchCheck, Brain } from "lucide-react";
+
+const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { COURSES } from "../data/content";
@@ -58,7 +60,9 @@ export default function Explorers() {
                 className="rounded-3xl p-6 text-center"
                 style={{ backgroundColor: c.color + "20" }}
               >
-                <div className="text-5xl mb-4">{c.icon}</div>
+                <div className="mb-4 flex justify-center">
+                  {(() => { const Icon = COURSE_ICONS[c.icon]; return Icon ? <Icon size={48} style={{ color: c.color }} /> : null; })()}
+                </div>
                 <h3 className="font-cherry text-lg text-slate-900">
                   {c.title}
                 </h3>

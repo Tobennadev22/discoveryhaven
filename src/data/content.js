@@ -35,7 +35,7 @@ export const COURSES = [
     duration: "6 Weeks",
     format: "Virtual · Saturdays",
     color: "#05c3dd",
-    icon: "😋",
+    icon: "PenLine",
     outcomes: [
       "Write creative fiction, non-fiction, and flash fiction pieces",
       "Edit their own work and give constructive feedback to peers",
@@ -54,7 +54,7 @@ export const COURSES = [
     duration: "6 Weeks",
     format: "Virtual · Saturdays",
     color: "#de2d10",
-    icon: "🎤",
+    icon: "Mic2",
     outcomes: [
       "Voice modulation exercises and body language training",
       "Quick-thinking debate games and impromptu speaking challenges",
@@ -74,7 +74,7 @@ export const COURSES = [
     duration: "6 Weeks",
     format: "Virtual · Saturdays",
     color: "#ffec00",
-    icon: "🔍",
+    icon: "SearchCheck",
     outcomes: [
       "Explore data filtration and basic logic deduction",
       "Collaborate on gamified problem-solving challenges",
@@ -93,7 +93,7 @@ export const COURSES = [
     duration: "4 Weeks",
     format: "Virtual · Saturdays",
     color: "#7c3aed",
-    icon: "💡",
+    icon: "Brain",
     outcomes: [
       "Learn how the brain reacts to anger and fear",
       "Practice empathy mapping and understanding others' perspectives",
@@ -185,19 +185,19 @@ export const VALUES = [
     title: "Autonomy",
     description:
       "We respect the independent voice, logic, and natural learning cadence of every child.",
-    icon: "🌱",
+    icon: "Sprout",
   },
   {
     title: "Intellectual Integrity",
     description:
       "We train investigators to seek empirical evidence and verify truth over trends.",
-    icon: "🔬",
+    icon: "FlaskConical",
   },
   {
     title: "Emotional Sovereignty",
     description:
       "We teach self-regulation, ensuring children choose their responses rather than reacting to pressure.",
-    icon: "💎",
+    icon: "Heart",
   },
 ];
 

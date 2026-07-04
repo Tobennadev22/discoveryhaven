@@ -1,4 +1,6 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sprout, FlaskConical, Heart } from "lucide-react";
+
+const VALUES_ICONS = { Sprout, FlaskConical, Heart };
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { VALUES } from "../data/content";
@@ -101,7 +103,9 @@ export default function About() {
                 variants={scaleIn}
                 className="text-center p-8"
               >
-                <div className="text-5xl mb-5">{v.icon}</div>
+                <div className="mb-5 flex justify-center">
+                  {(() => { const Icon = VALUES_ICONS[v.icon]; return Icon ? <Icon size={48} className="text-aqua" /> : null; })()}
+                </div>
                 <h3 className="font-cherry text-2xl text-slate-900 mb-3">
                   {v.title}
                 </h3>
