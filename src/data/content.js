@@ -16,9 +16,9 @@ export const COLORS = {
 
 export const NAV_LINKS = [
   { label: "About Us", href: "/about" },
+  { label: "Explore", href: "/explore" },
   { label: "Haven Academy", href: "/haven-academy" },
   { label: "Haven Tribe", href: "/haven-tribe" },
-  { label: "Events", href: "/events" },
   { label: "Arts & Culture", href: "/arts-culture" },
   { label: "Impact", href: "/impact" },
 ];

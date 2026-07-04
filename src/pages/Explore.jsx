@@ -26,7 +26,7 @@ function buildGoogleCalendarUrl(ev) {
   return `${base}&${params.toString()}`;
 }
 
-export default function Events() {
+export default function Explore() {
   const [enrollEvent, setEnrollEvent] = useState(null);
 
   return (

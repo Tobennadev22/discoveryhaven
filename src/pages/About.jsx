@@ -147,14 +147,18 @@ export default function About() {
               </Button>
             </motion.div>
             <motion.div
-              className="bg-aqua/10 rounded-3xl p-12 text-center"
+              className=" p-12 text-center"
               variants={slideRight}
               initial="hidden"
               whileInView="show"
               viewport={useViewport}
             >
-              <div className="w-60 h-60  mx-auto flex items-center justify-center text-6xl mb-6">
-                <img src={FounderImg} alt="stella chibuike-ezike" />
+              <div className="mx-auto flex items-center  justify-center text-6xl mb-6">
+                <img
+                  src={FounderImg}
+                  alt="stella chibuike-ezike"
+                  className="rounded-full w-80"
+                />
               </div>
               <h3 className="font-cherry text-2xl text-white mb-2">Stella</h3>
               <p className="text-yellow font-bold font-body">
