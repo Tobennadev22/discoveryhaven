@@ -21,28 +21,6 @@ function FAQ({ q, a }) {
   );
 }
 
-async function sendLeadEmail({ parentName, parentEmail, courseName, amount }) {
-  try {
-    await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        service_id: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-        template_params: {
-          to_email: "gamzkenny@gmail.com",
-          parent_name: parentName,
-          parent_email: parentEmail,
-          course_name: courseName,
-          amount: `₦${amount.toLocaleString()}`,
-        },
-      }),
-    });
-  } catch {
-    // silent — never block payment flow
-  }
-}
 
 export default function CourseLandingPage({ course }) {
   const { pay } = usePaystack();
@@ -51,7 +29,7 @@ export default function CourseLandingPage({ course }) {
   const [name, setName] = useState("");
   const [showForm, setShowForm] = useState(false);
 
-  const handleEnrol = async () => {
+  const handleEnrol = () => {
     if (!showForm) {
       setShowForm(true);
       return;
@@ -59,9 +37,6 @@ export default function CourseLandingPage({ course }) {
     if (!email || !name) return;
 
     if (window.fbq) window.fbq("track", "InitiateCheckout", { content_name: course.title, value: course.price, currency: "NGN" });
-
-    // Fire lead email in background — do not await, never blocks Paystack
-    sendLeadEmail({ parentName: name, parentEmail: email, courseName: course.title, amount: course.price });
 
     pay({
       email,
