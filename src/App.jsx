@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route, ScrollRestoration } from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import ReactGA from 'react-ga4'
 import { Layout } from './components/layout/Layout'
 import Home from './pages/Home'
 import HavenAcademy from './pages/HavenAcademy'
@@ -13,14 +15,20 @@ import Friends from './pages/Friends'
 import CommunityHour from './pages/CommunityHour'
 import Contact from './pages/Contact'
 
-function ScrollToTop() {
-  const { pathname } = window.location
+ReactGA.initialize('G-2QSYVG9JZE')
+
+function AnalyticsTracker() {
+  const location = useLocation()
+  useEffect(() => {
+    ReactGA.send({ hitType: 'pageview', page: location.pathname + location.search })
+  }, [location])
   return null
 }
 
 export default function App() {
   return (
     <BrowserRouter>
+      <AnalyticsTracker />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
