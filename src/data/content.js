@@ -26,12 +26,51 @@ export const NAV_LINKS = [
 
 export const COURSES = [
   {
+    id: "curiosity-box",
+    title: "The Curiosity Box",
+    subtitle: "Critical Thinking & Problem-Solving",
+    description:
+      "A programme built for young investigators. Children explore logic, deduction, and collaborative problem-solving.",
+    ages: "7–11 & 12-16",
+    duration: "6 Weeks",
+    format: "Virtual · Saturdays",
+    color: "#05c3dd",
+    icon: "SearchCheck",
+    outcomes: [
+      "Explore data filtration and basic logic deduction",
+      "Collaborate on gamified problem-solving challenges",
+      "Build and present a step-by-step investigation report",
+    ],
+    bonus: "Children receive a personalised Investigator Certificate.",
+    price: 45000,
+  },
+  {
+    id: "eq-lab",
+    title: "The EQ Lab",
+    subtitle: "Emotional Intelligence & Leadership",
+    description:
+      "A programme that builds self-awareness, empathy, and peaceful communication for young leaders.",
+    ages: "7–11 & 12-16",
+    duration: "4 Weeks",
+    format: "Virtual · Saturdays",
+    color: "#05c3dd",
+    icon: "Brain",
+    outcomes: [
+      "Learn how the brain reacts to anger and fear",
+      "Practice empathy mapping and understanding others' perspectives",
+      "Learn peaceful diplomacy and leadership frameworks",
+    ],
+    bonus: "Children graduate as certified Young Diplomats.",
+    price: 40000,
+  },
+
+  {
     id: "creative-quest",
     title: "Creative Quest",
     subtitle: "Writing & Storytelling Studio",
     description:
       "A programme for young storytellers. Children write, edit, and publish creative fiction, non-fiction, and flash fiction pieces.",
-    ages: "8–14",
+    ages: "7–11 & 12-16",
     duration: "6 Weeks",
     format: "Virtual · Saturdays",
     color: "#05c3dd",
@@ -50,10 +89,10 @@ export const COURSES = [
     subtitle: "Public Speaking & Debate",
     description:
       "A programme that transforms shy children into confident communicators. Voice modulation, debate, and public speaking.",
-    ages: "9–15",
+    ages: "7–11 & 12-16",
     duration: "6 Weeks",
     format: "Virtual · Saturdays",
-    color: "#de2d10",
+    color: "#05c3dd",
     icon: "Mic2",
     outcomes: [
       "Voice modulation exercises and body language training",
@@ -63,44 +102,6 @@ export const COURSES = [
     bonus:
       "Final speech delivered before a live audience of parents and guests.",
     price: 45000,
-  },
-  {
-    id: "curiosity-box",
-    title: "The Curiosity Box",
-    subtitle: "Critical Thinking & Problem-Solving",
-    description:
-      "A programme built for young investigators. Children explore logic, deduction, and collaborative problem-solving.",
-    ages: "7–13",
-    duration: "6 Weeks",
-    format: "Virtual · Saturdays",
-    color: "#ffec00",
-    icon: "SearchCheck",
-    outcomes: [
-      "Explore data filtration and basic logic deduction",
-      "Collaborate on gamified problem-solving challenges",
-      "Build and present a step-by-step investigation report",
-    ],
-    bonus: "Children receive a personalised Investigator Certificate.",
-    price: 45000,
-  },
-  {
-    id: "eq-lab",
-    title: "The EQ Lab",
-    subtitle: "Emotional Intelligence & Leadership",
-    description:
-      "A programme that builds self-awareness, empathy, and peaceful communication for young leaders.",
-    ages: "6–12",
-    duration: "4 Weeks",
-    format: "Virtual · Saturdays",
-    color: "#7c3aed",
-    icon: "Brain",
-    outcomes: [
-      "Learn how the brain reacts to anger and fear",
-      "Practice empathy mapping and understanding others' perspectives",
-      "Learn peaceful diplomacy and leadership frameworks",
-    ],
-    bonus: "Children graduate as certified Young Diplomats.",
-    price: 40000,
   },
 ];
 
