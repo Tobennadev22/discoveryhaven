@@ -1,4 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+function TypingText({ text, className }) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    let i = 0;
+    const id = setInterval(() => {
+      i++;
+      setDisplayed(text.slice(0, i));
+      if (i >= text.length) { clearInterval(id); setDone(true); }
+    }, 60);
+    return () => clearInterval(id);
+  }, [text]);
+
+  return (
+    <span className={className}>
+      {displayed}
+      {!done && <span className="animate-pulse">|</span>}
+    </span>
+  );
+}
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -68,9 +90,10 @@ export default function Home() {
           >
             Every Child Deserves
             <br />
-            <span className="bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent">
-              to Come Alive
-            </span>
+            <TypingText
+              text="to Come Alive"
+              className="bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent"
+            />
           </motion.h1>
 
           <motion.p
