@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { usePaystack } from "../../hooks/usePaystack";
@@ -21,6 +21,29 @@ function FAQ({ q, a }) {
   );
 }
 
+async function sendLeadEmail({ parentName, parentEmail, courseName, amount }) {
+  try {
+    await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        service_id: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        template_params: {
+          to_email: "gamzkenny@gmail.com",
+          parent_name: parentName,
+          parent_email: parentEmail,
+          course_name: courseName,
+          amount: `₦${amount.toLocaleString()}`,
+        },
+      }),
+    });
+  } catch {
+    // silent — never block payment flow
+  }
+}
+
 export default function CourseLandingPage({ course }) {
   const { pay } = usePaystack();
   const navigate = useNavigate();
@@ -28,10 +51,18 @@ export default function CourseLandingPage({ course }) {
   const [name, setName] = useState("");
   const [showForm, setShowForm] = useState(false);
 
-  const handleEnrol = () => {
-    if (!showForm) { setShowForm(true); return; }
+  const handleEnrol = async () => {
+    if (!showForm) {
+      setShowForm(true);
+      return;
+    }
     if (!email || !name) return;
+
     if (window.fbq) window.fbq("track", "InitiateCheckout", { content_name: course.title, value: course.price, currency: "NGN" });
+
+    // Fire lead email in background — do not await, never blocks Paystack
+    sendLeadEmail({ parentName: name, parentEmail: email, courseName: course.title, amount: course.price });
+
     pay({
       email,
       amount: course.price,
@@ -44,33 +75,36 @@ export default function CourseLandingPage({ course }) {
     });
   };
 
-  const EnrolButton = ({ variant = "yellow", label, className = "" }) => (
-    <div className={`flex flex-col items-center gap-3 ${className}`}>
-      {showForm && (
-        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
-          <input
-            type="text"
-            placeholder="Parent's name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="flex-1 px-4 py-3 rounded-full font-body text-slate-900 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-aqua text-sm"
-          />
-          <input
-            type="email"
-            placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 px-4 py-3 rounded-full font-body text-slate-900 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-aqua text-sm"
-          />
-        </div>
-      )}
+  // Shared inline form — rendered directly (not as a sub-component) to preserve input focus
+  const enrollForm = showForm ? (
+    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md mx-auto">
+      <input
+        type="text"
+        placeholder="Parent's name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="flex-1 px-4 py-3 rounded-full font-body text-slate-900 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-aqua text-sm"
+      />
+      <input
+        type="email"
+        placeholder="Email address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="flex-1 px-4 py-3 rounded-full font-body text-slate-900 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-aqua text-sm"
+      />
+    </div>
+  ) : null;
+
+  const enrolBtn = (variant = "yellow", label) => (
+    <div className="flex flex-col items-center gap-3 w-full">
+      {enrollForm}
       <button
         onClick={handleEnrol}
         className={`px-8 py-4 rounded-full font-cherry text-lg font-bold transition-all hover:scale-105 active:scale-95 ${
           variant === "yellow" ? "bg-yellow text-dark" : "bg-aqua text-white"
         }`}
       >
-        {showForm ? `Pay ₦${course.price.toLocaleString()} & Secure My Spot` : label || `Enrol My Child Now — ₦${course.price.toLocaleString()}`}
+        {showForm ? `Secure My Spot — ₦${course.price.toLocaleString()}` : label || `Enrol My Child Now — ₦${course.price.toLocaleString()}`}
       </button>
     </div>
   );
@@ -104,7 +138,7 @@ export default function CourseLandingPage({ course }) {
           <p className="font-body text-white/90 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
             {course.subheadline}
           </p>
-          <EnrolButton variant="yellow" />
+          {enrolBtn("yellow")}
           <p className="mt-3 text-white/70 font-body text-xs">{course.smallText}</p>
         </motion.div>
       </section>
@@ -228,7 +262,7 @@ export default function CourseLandingPage({ course }) {
               </div>
             </div>
             <div className="px-6 py-5">
-              <EnrolButton variant="aqua" label="Reserve My Child's Spot →" className="w-full" />
+              {enrolBtn("aqua", "Reserve My Child's Spot →")}
             </div>
           </div>
         </motion.div>
@@ -290,7 +324,7 @@ export default function CourseLandingPage({ course }) {
           <h2 className="font-cherry text-4xl lg:text-5xl text-white mb-10 leading-tight">
             {course.finalCTA}
           </h2>
-          <EnrolButton variant="yellow" />
+          {enrolBtn("yellow")}
           <div className="mt-6">
             <Link
               to="/community-hour"
