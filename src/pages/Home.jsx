@@ -2,33 +2,22 @@ import { useState, useEffect } from "react";
 
 function TypingText({ text, className }) {
   const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     let i = 0;
-    let typing = true;
-    let id;
-
-    const tick = () => {
-      if (typing) {
-        i++;
-        setDisplayed(text.slice(0, i));
-        if (i >= text.length) { typing = false; id = setTimeout(tick, 1400); return; }
-      } else {
-        i--;
-        setDisplayed(text.slice(0, i));
-        if (i <= 0) { typing = true; id = setTimeout(tick, 400); return; }
-      }
-      id = setTimeout(tick, typing ? 60 : 35);
-    };
-
-    id = setTimeout(tick, 60);
-    return () => clearTimeout(id);
+    const id = setInterval(() => {
+      i++;
+      setDisplayed(text.slice(0, i));
+      if (i >= text.length) { clearInterval(id); setDone(true); }
+    }, 60);
+    return () => clearInterval(id);
   }, [text]);
 
   return (
     <span className={className}>
       {displayed}
-      <span className="animate-pulse">|</span>
+      {!done && <span className="animate-pulse">|</span>}
     </span>
   );
 }
