@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle, Gift, PenLine, Mic2, SearchCheck, Brain } from "lucide-react";
+import {
+  CheckCircle,
+  Gift,
+  PenLine,
+  Mic2,
+  SearchCheck,
+  Brain,
+} from "lucide-react";
 
 const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
 const COURSE_ROUTES = {
@@ -120,7 +127,9 @@ function CourseSection({ course, reverse = false, index }) {
                 ) : (
                   <div
                     className="w-full h-full flex items-center justify-center"
-                    style={{ background: `linear-gradient(135deg, ${course.color}20, ${course.color}40)` }}
+                    style={{
+                      background: `linear-gradient(135deg, ${course.color}20, ${course.color}40)`,
+                    }}
                   >
                     <p className="text-gray-400 font-body text-sm text-center px-8">
                       Image coming soon
@@ -167,9 +176,9 @@ export default function HavenAcademy() {
             dimension of your child's potential — communication, creativity,
             logic, and emotional intelligence.
           </p>
-          <Button variant="primary" size="lg">
+          {/* <Button variant="primary" size="lg">
             View Courses & Enrol
-          </Button>
+          </Button> */}
         </motion.div>
       </section>
 

@@ -137,7 +137,7 @@ export default function HavenTribe() {
         </div>
       </section>
 
-      <section className="py-24 bg-yellow">
+      <section className="py-24 bg-slate-50">
         <motion.div
           className="max-w-2xl mx-auto px-4 text-center"
           variants={fadeUp}
