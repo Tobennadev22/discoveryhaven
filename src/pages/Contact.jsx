@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail } from "lucide-react";
+import { Mail, CheckCircle } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import {
@@ -64,7 +64,7 @@ export default function Contact() {
               </h2>
               {sent ? (
                 <div className="bg-aqua/10 border border-aqua/30 rounded-2xl p-8 text-center">
-                  <div className="text-4xl mb-4">✅</div>
+                  <div className="flex justify-center mb-4"><CheckCircle size={40} className="text-aqua" /></div>
                   <h3 className="font-cherry text-2xl text-slate-900 mb-2">
                     Message Received!
                   </h3>

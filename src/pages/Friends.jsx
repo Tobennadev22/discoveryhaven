@@ -1,3 +1,4 @@
+import { Building2, Handshake, School } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import {
@@ -12,19 +13,19 @@ const TIERS = [
   {
     title: "Institutional Funding",
     desc: "Apply for grant funding to support Discovery Haven programmes and scholarship pathways.",
-    icon: "🏛️",
+    icon: Building2,
     cta: "Apply for Funding",
   },
   {
     title: "Event Partnership",
     desc: "Co-host, sponsor, or collaborate on the Discovery Haven Children's Summit and annual events.",
-    icon: "🤝",
+    icon: Handshake,
     cta: "Request Event Partnership",
   },
   {
     title: "School & Network Access",
     desc: "Integrate Discovery Haven into your school's enrichment programme or educator network.",
-    icon: "🏫",
+    icon: School,
     cta: "Explore School Access",
   },
 ];
@@ -84,7 +85,7 @@ export default function Friends() {
                 variants={scaleIn}
                 className="bg-white rounded-2xl p-8 text-center border border-gray-100 hover:shadow-md transition-shadow"
               >
-                <div className="text-3xl mb-3">🤝</div>
+                <div className="flex justify-center mb-3"><Handshake size={32} className="text-aqua" /></div>
                 <p className="font-bold font-body text-slate-900 text-sm">
                   {p}
                 </p>
@@ -117,7 +118,7 @@ export default function Friends() {
                 variants={scaleIn}
                 className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-md transition-shadow text-center"
               >
-                <div className="text-4xl mb-4">{t.icon}</div>
+                <div className="flex justify-center mb-4"><t.icon size={40} className="text-aqua" /></div>
                 <h3 className="font-cherry text-2xl text-slate-900 mb-3">
                   {t.title}
                 </h3>

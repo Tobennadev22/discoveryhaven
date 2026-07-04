@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calendar } from "lucide-react";
+import { Calendar, Trophy, CheckCircle } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
@@ -83,8 +83,8 @@ export default function Explore() {
                   "Parent and community networking",
                 ].map((item, i) => (
                   <li key={i} className="flex gap-3 items-start">
-                    <span className="w-5 h-5 rounded-full bg-aqua text-white flex-shrink-0 mt-0.5 flex items-center justify-center text-xs font-bold">
-                      ✓
+                    <span className="w-5 h-5 rounded-full bg-aqua text-white flex-shrink-0 mt-0.5 flex items-center justify-center">
+                      <CheckCircle size={12} />
                     </span>
                     <span className="text-gray-600 font-body text-sm">
                       {item}
@@ -117,7 +117,7 @@ export default function Explore() {
               whileInView="show"
               viewport={useViewport}
             >
-              <div className="text-8xl mb-6">🏆</div>
+              <div className="flex justify-center mb-6"><Trophy size={72} className="text-yellow" /></div>
               <h3 className="font-cherry text-3xl mb-3">November 2026</h3>
               <p className="font-body text-gray-300 mb-2">
                 Annual Flagship · Virtual & Abuja

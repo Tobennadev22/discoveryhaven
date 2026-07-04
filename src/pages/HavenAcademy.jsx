@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Gift } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
@@ -83,8 +83,8 @@ function CourseSection({ course, reverse = false, index }) {
                 ))}
               </ul>
               <div className="bg-cream rounded-2xl p-4 mb-8">
-                <p className="text-sm font-bold font-body text-slate-900">
-                  🎁 Bonus Outcome
+                <p className="text-sm font-bold font-body text-slate-900 flex items-center gap-2">
+                  <Gift size={16} className="text-aqua" /> Bonus Outcome
                 </p>
                 <p className="text-sm font-body text-gray-600 mt-1">
                   {course.bonus}

@@ -1,3 +1,4 @@
+import { FileText } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { IMPACT_METRICS } from "../data/content";
@@ -88,7 +89,7 @@ export default function Impact() {
                 variants={scaleIn}
                 className="bg-white rounded-2xl p-8 border border-gray-100 text-center hover:shadow-md transition-shadow"
               >
-                <div className="text-4xl mb-4">📄</div>
+                <div className="flex justify-center mb-4"><FileText size={40} className="text-aqua" /></div>
                 <h3 className="font-cherry text-xl text-slate-900 mb-3">{r}</h3>
                 <Button variant="outline-dark" size="sm">
                   Download PDF

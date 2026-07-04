@@ -13,14 +13,12 @@ import {
 import {
   ArrowRight,
   Calendar,
-  Users,
-  BookOpen,
   Star,
   CheckCircle,
-  SearchAlert,
+  Coffee,
+  Globe,
 } from "lucide-react";
 import { Button } from "../components/ui/Button";
-import { Badge } from "../components/ui/Badge";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
 import { EnrollModal } from "../components/ui/EnrollModal";
@@ -100,7 +98,7 @@ export default function Home() {
 
           {/* ── IMAGE COLLAGE ── */}
           <motion.div
-            className="grid grid-cols-3 gap-4 items-stretch"
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch"
             variants={stagger}
             initial="hidden"
             animate="show"
@@ -108,7 +106,7 @@ export default function Home() {
             {/* LEFT — tall photo + bottom-left floating card */}
             <motion.div
               variants={slideLeft}
-              className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]"
+              className="relative rounded-3xl overflow-hidden h-[300px] md:h-[420px] lg:h-[500px]"
             >
               <img
                 src={discoveryhavenHeroImg}
@@ -134,7 +132,7 @@ export default function Home() {
             {/* CENTER — two stacked colour cards, no photo */}
             <motion.div
               variants={fadeUp}
-              className="flex flex-col gap-4 h-[420px] lg:h-[500px]"
+              className="flex flex-col gap-4 h-[420px] md:h-[420px] lg:h-[500px]"
             >
               {/* TOP — lime green card with avatar row */}
               <div
@@ -197,7 +195,7 @@ export default function Home() {
             {/* RIGHT — tall photo + bottom floating card */}
             <motion.div
               variants={slideRight}
-              className="relative rounded-3xl overflow-hidden h-[420px] lg:h-[500px]"
+              className="relative rounded-3xl overflow-hidden h-[300px] md:h-[420px] lg:h-[500px]"
             >
               <img
                 src={discoveryhavenHeroImg1}
@@ -288,60 +286,15 @@ export default function Home() {
                 and in-person programmes that build the skills children need
                 most. Not just for school, but for life.
               </p>
-              <div className="flex flex-wrap gap-3">
-                <Badge color="yellow">SDG 4 — Quality Education</Badge>
-                <Badge color="yellow">SDG 17 — Partnerships</Badge>
-              </div>
             </motion.div>
-            <motion.div
-              variants={slideRight}
-              className="grid grid-cols-1 gap-4"
-            >
-              {[
-                {
-                  title: "Join My EdSkills To Activate Your Learning",
-                  bg: "bg-aqua",
-                  text: "text-white",
-                  icon: "✍️",
-                },
-                {
-                  title: "Join Haven Academy to Activate Your Teaching",
-                  bg: "bg-yellow",
-                  text: "text-slate-900",
-                  icon: "🎤",
-                },
-                {
-                  title:
-                    "Support Your Child's Learning Through Discovery Haven",
-                  bg: "bg-aqua",
-                  text: "text-white",
-                  icon: "🪄",
-                },
-              ].map((c, i) => (
-                <motion.div
-                  key={i}
-                  variants={fadeUp}
-                  className={`${c.bg} ${c.text} rounded-2xl p-6 flex items-center justify-between group cursor-pointer hover:scale-[1.02] transition-transform`}
-                  onClick={() =>
-                    (window.location.href =
-                      i === 0
-                        ? "/haven-academy"
-                        : i === 1
-                          ? "/haven-tribe"
-                          : "/contact")
-                  }
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="text-3xl">{c.icon}</span>
-                    <p className="font-cherry text-lg leading-tight max-w-xs">
-                      {c.title}
-                    </p>
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
-                    <ArrowRight size={18} />
-                  </div>
-                </motion.div>
-              ))}
+            <motion.div variants={slideRight}>
+              <video
+                className="w-full rounded-3xl aspect-video object-cover bg-dark"
+                controls
+                poster=""
+              >
+                <source src="" type="video/mp4" />
+              </video>
             </motion.div>
           </motion.div>
         </div>
@@ -565,7 +518,7 @@ export default function Home() {
         viewport={useViewport}
       >
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <div className="text-5xl mb-6">☕</div>
+          <div className="flex justify-center mb-6"><Coffee size={48} className="text-slate-900/40" /></div>
           <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
             Not Sure Yet? Let's Talk.
           </h2>
@@ -599,7 +552,7 @@ export default function Home() {
           whileInView="show"
           viewport={useViewport}
         >
-          <div className="text-4xl mb-4">🌍</div>
+          <div className="flex justify-center mb-4"><Globe size={40} className="text-white/60" /></div>
           <h2 className="font-cherry text-4xl text-white mb-3">
             Join Our Community
           </h2>

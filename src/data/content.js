@@ -19,7 +19,8 @@ export const NAV_LINKS = [
   { label: "Explore", href: "/explore" },
   { label: "Haven Academy", href: "/haven-academy" },
   { label: "Haven Tribe", href: "/haven-tribe" },
-  { label: "Arts & Culture", href: "/arts-culture" },
+  { label: "Events", href: "/events" },
+  { label: "Partnerships", href: "/friends" },
   { label: "Impact", href: "/impact" },
 ];
 
