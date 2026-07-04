@@ -24,6 +24,12 @@ import {
 } from "lucide-react";
 
 const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
+const COURSE_ROUTES = {
+  "creative-quest": "/creative-quest",
+  "loud-fearless": "/loud-fearless",
+  "curiosity-box": "/the-curiosity-box",
+  "eq-lab": "/the-eq-lab",
+};
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
@@ -361,7 +367,7 @@ export default function Home() {
                     </span>
                   </div>
                   <Link
-                    to="/haven-academy"
+                    to={COURSE_ROUTES[course.id] || "/haven-academy"}
                     className="inline-flex items-center gap-1 text-aqua font-bold font-body text-sm hover:gap-2 transition-all"
                   >
                     Learn More <ArrowRight size={15} />

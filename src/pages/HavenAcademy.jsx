@@ -1,7 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CheckCircle, Gift, PenLine, Mic2, SearchCheck, Brain } from "lucide-react";
 
 const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
+const COURSE_ROUTES = {
+  "creative-quest": "/creative-quest",
+  "loud-fearless": "/loud-fearless",
+  "curiosity-box": "/the-curiosity-box",
+  "eq-lab": "/the-eq-lab",
+};
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
@@ -19,17 +26,8 @@ import {
 } from "../components/ui/Motion";
 
 function CourseSection({ course, reverse = false, index }) {
-  const [modal, setModal] = useState(false);
-  const event = {
-    id: course.id,
-    title: course.title,
-    date: "Next Cohort",
-    duration: course.duration,
-    description: course.description,
-    price: course.price,
-    dateBarColor: course.color,
-    dateBarTextColor: course.color === "#ffec00" ? "#1a1a1a" : "#ffffff",
-  };
+  const navigate = useNavigate();
+  const courseRoute = COURSE_ROUTES[course.id] || "/haven-academy";
   return (
     <>
       <section className="py-20 border-b border-gray-100">
@@ -96,7 +94,7 @@ function CourseSection({ course, reverse = false, index }) {
                 <Button
                   variant="primary"
                   size="lg"
-                  onClick={() => setModal(true)}
+                  onClick={() => navigate(courseRoute)}
                 >
                   Enrol in {course.title} →
                 </Button>
@@ -144,11 +142,6 @@ function CourseSection({ course, reverse = false, index }) {
           </div>
         </div>
       </section>
-      <EnrollModal
-        isOpen={modal}
-        onClose={() => setModal(false)}
-        event={event}
-      />
     </>
   );
 }
