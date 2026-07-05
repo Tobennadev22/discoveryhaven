@@ -12,7 +12,13 @@ function WobbleChar({ char, delay }) {
     <motion.span
       className="inline-block"
       animate={{ y: [0, -18, 0], rotate: [0, -6, 6, 0] }}
-      transition={{ duration: 1.4, delay, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" }}
+      transition={{
+        duration: 1.4,
+        delay,
+        repeat: Infinity,
+        repeatDelay: 1.8,
+        ease: "easeInOut",
+      }}
     >
       {char}
     </motion.span>
@@ -21,7 +27,12 @@ function WobbleChar({ char, delay }) {
 
 const SUGGESTIONS = [
   { label: "Go Back Home", href: "/", bg: "bg-aqua", text: "text-white" },
-  { label: "Haven Academy", href: "/haven-academy", bg: "bg-yellow", text: "text-dark" },
+  {
+    label: "Haven Academy",
+    href: "/haven-academy",
+    bg: "bg-yellow",
+    text: "text-dark",
+  },
   { label: "Explore", href: "/explore", bg: "bg-dark", text: "text-white" },
   { label: "About Us", href: "/about", bg: "bg-cream", text: "text-slate-900" },
 ];
@@ -44,12 +55,12 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-cream flex flex-col">
       {/* minimal header */}
-      <header className="py-4 px-6 bg-white border-b border-gray-100">
+      {/* <header className="py-4 px-6 bg-white border-b border-gray-100">
         <Link to="/" className="inline-flex items-center gap-2">
           <img src={discoveryHavenLogo} alt="Discovery Haven" className="w-9 h-9" />
           <span className="font-cherry text-xl text-slate-900">Discovery Haven</span>
         </Link>
-      </header>
+      </header> */}
 
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-20 text-center">
         {/* big bouncy 404 */}
@@ -109,19 +120,7 @@ export default function NotFound() {
           variants={stagger}
           initial="hidden"
           animate="show"
-        >
-          {SUGGESTIONS.map((s) => (
-            <motion.div key={s.href} variants={scaleIn}>
-              <Link
-                to={s.href}
-                className={`flex flex-col items-center justify-center gap-2 ${s.bg} ${s.text} rounded-2xl px-4 py-5 font-cherry text-base hover:scale-105 active:scale-95 transition-all`}
-              >
-                {s.label}
-                <ArrowRight size={16} className="opacity-70" />
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
+        ></motion.div>
       </div>
     </div>
   );

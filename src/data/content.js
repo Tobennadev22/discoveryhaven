@@ -209,7 +209,7 @@ export const FOOTER_LINKS = {
   programmes: [
     { label: "Haven Academy", href: "/haven-academy" },
     { label: "Haven Tribe", href: "/haven-tribe" },
-    { label: "Events", href: "/events" },
+    // { label: "Events", href: "/events" },
     { label: "Explore", href: "/explore" },
   ],
   organisation: [
