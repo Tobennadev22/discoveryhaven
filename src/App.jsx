@@ -20,6 +20,7 @@ import CuriosityBox from "./pages/courses/CuriosityBox";
 import EQLab from "./pages/courses/EQLab";
 import ThankYou from "./pages/ThankYou";
 import Partnership from "./pages/Partnership";
+import NotFound from "./pages/NotFound";
 
 ReactGA.initialize("G-2QSYVG9JZE");
 
@@ -61,6 +62,7 @@ export default function App() {
                 <Route path="/partnership" element={<Partnership />} />
                 <Route path="/community-hour" element={<CommunityHour />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
           }
