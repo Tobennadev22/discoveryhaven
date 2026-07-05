@@ -20,7 +20,7 @@ export const NAV_LINKS = [
   { label: "Haven Academy", href: "/haven-academy" },
   { label: "Haven Tribe", href: "/haven-tribe" },
   // { label: "Events", href: "/events" },
-  { label: "Partnerships", href: "/friends" },
+  { label: "Partnerships", href: "/partnership" },
   { label: "Impact", href: "/impact" },
 ];
 

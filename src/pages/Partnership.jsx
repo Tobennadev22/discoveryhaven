@@ -30,7 +30,7 @@ const TIERS = [
   },
 ];
 
-export default function Friends() {
+export default function Partnership() {
   return (
     <>
       <section className="bg-dark py-28">
@@ -85,7 +85,9 @@ export default function Friends() {
                 variants={scaleIn}
                 className="bg-white rounded-2xl p-8 text-center border border-gray-100 hover:shadow-md transition-shadow"
               >
-                <div className="flex justify-center mb-3"><Handshake size={32} className="text-aqua" /></div>
+                <div className="flex justify-center mb-3">
+                  <Handshake size={32} className="text-aqua" />
+                </div>
                 <p className="font-bold font-body text-slate-900 text-sm">
                   {p}
                 </p>
@@ -118,7 +120,9 @@ export default function Friends() {
                 variants={scaleIn}
                 className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-md transition-shadow text-center"
               >
-                <div className="flex justify-center mb-4"><t.icon size={40} className="text-aqua" /></div>
+                <div className="flex justify-center mb-4">
+                  <t.icon size={40} className="text-aqua" />
+                </div>
                 <h3 className="font-cherry text-2xl text-slate-900 mb-3">
                   {t.title}
                 </h3>

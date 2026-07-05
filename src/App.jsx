@@ -11,7 +11,7 @@ import Explorers from "./pages/Explorers";
 import ArtsCulture from "./pages/ArtsCulture";
 import Impact from "./pages/Impact";
 import Advocacy from "./pages/Advocacy";
-import Friends from "./pages/Friends";
+// import Partnership from "./pages/Partnership";
 import CommunityHour from "./pages/CommunityHour";
 import Contact from "./pages/Contact";
 import CreativeQuest from "./pages/courses/CreativeQuest";
@@ -19,6 +19,7 @@ import LoudFearless from "./pages/courses/LoudFearless";
 import CuriosityBox from "./pages/courses/CuriosityBox";
 import EQLab from "./pages/courses/EQLab";
 import ThankYou from "./pages/ThankYou";
+import Partnership from "./pages/Partnership";
 
 ReactGA.initialize("G-2QSYVG9JZE");
 
@@ -57,7 +58,7 @@ export default function App() {
                 <Route path="/arts-culture" element={<ArtsCulture />} />
                 <Route path="/impact" element={<Impact />} />
                 <Route path="/advocacy" element={<Advocacy />} />
-                <Route path="/friends" element={<Friends />} />
+                <Route path="/partnership" element={<Partnership />} />
                 <Route path="/community-hour" element={<CommunityHour />} />
                 <Route path="/contact" element={<Contact />} />
               </Routes>
