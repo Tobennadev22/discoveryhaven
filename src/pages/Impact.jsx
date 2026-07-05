@@ -137,10 +137,10 @@ export default function Impact() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" onClick={() => window.location.href = "/contact"}>
               Download Our Latest Impact Report →
             </Button>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" onClick={() => window.location.href = "/partnership"}>
               View Our SDG Mapping →
             </Button>
           </div>
@@ -226,7 +226,7 @@ export default function Impact() {
           </motion.div>
 
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={useViewport}>
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" onClick={() => window.location.href = "/contact"}>
               Download Our Latest Impact Report →
             </Button>
           </motion.div>
@@ -307,7 +307,7 @@ export default function Impact() {
             whileInView="show"
             viewport={useViewport}
           >
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" onClick={() => window.location.href = "/partnership"}>
               View Our Full SDG Mapping Document →
             </Button>
           </motion.div>
@@ -361,7 +361,7 @@ export default function Impact() {
           </motion.div>
 
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={useViewport}>
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" onClick={() => window.location.href = "/explore"}>
               Explore Our Outreach Footprint →
             </Button>
           </motion.div>
