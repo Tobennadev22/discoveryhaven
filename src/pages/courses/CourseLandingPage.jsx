@@ -272,18 +272,12 @@ export default function CourseLandingPage({ course }) {
                 { label: "Duration", value: course.schedule.duration },
                 { label: "Schedule", value: course.schedule.sessionSchedule },
                 { label: "Ages", value: course.schedule.ages },
+                course.schedule.tracks ? { label: "Tracks", value: course.schedule.tracks } : null,
                 { label: "Format", value: course.schedule.format },
-              ].map(({ label, value }) => (
-                <div
-                  key={label}
-                  className="flex items-center justify-between px-6 py-4"
-                >
-                  <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">
-                    {label}
-                  </span>
-                  <span className="font-body text-sm font-bold text-slate-900">
-                    {value}
-                  </span>
+              ].filter(Boolean).map(({ label, value }) => (
+                <div key={label} className="flex items-center justify-between px-6 py-4">
+                  <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">{label}</span>
+                  <span className="font-body text-sm font-bold text-slate-900">{value}</span>
                 </div>
               ))}
               <div className="flex items-center justify-between px-6 py-4 bg-gray-50">
@@ -352,7 +346,7 @@ export default function CourseLandingPage({ course }) {
             Common questions
           </h2>
           <div className="flex flex-col gap-3">
-            {[course.faqSpecific, ...course.faqCommon].map((faq, i) => (
+            {[...(Array.isArray(course.faqSpecific) ? course.faqSpecific : [course.faqSpecific]), ...course.faqCommon].map((faq, i) => (
               <FAQ key={i} q={faq.q} a={faq.a} />
             ))}
           </div>
