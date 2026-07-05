@@ -2,7 +2,13 @@ import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { usePaystack } from "../../hooks/usePaystack";
-import { motion, fadeUp, stagger, scaleIn, useViewport } from "../../components/ui/Motion";
+import {
+  motion,
+  fadeUp,
+  stagger,
+  scaleIn,
+  useViewport,
+} from "../../components/ui/Motion";
 import discoveryHavenLogo from "../../assets/dh.png";
 
 function FAQ({ q, a }) {
@@ -14,13 +20,20 @@ function FAQ({ q, a }) {
     >
       <div className="flex items-center justify-between gap-4">
         <span className="font-bold font-body text-slate-900 text-sm">{q}</span>
-        {open ? <ChevronUp size={18} className="text-gray-400 flex-shrink-0" /> : <ChevronDown size={18} className="text-gray-400 flex-shrink-0" />}
+        {open ? (
+          <ChevronUp size={18} className="text-gray-400 flex-shrink-0" />
+        ) : (
+          <ChevronDown size={18} className="text-gray-400 flex-shrink-0" />
+        )}
       </div>
-      {open && <p className="mt-3 font-body text-gray-600 text-sm leading-relaxed">{a}</p>}
+      {open && (
+        <p className="mt-3 font-body text-gray-600 text-sm leading-relaxed">
+          {a}
+        </p>
+      )}
     </button>
   );
 }
-
 
 export default function CourseLandingPage({ course }) {
   const { pay } = usePaystack();
@@ -36,7 +49,12 @@ export default function CourseLandingPage({ course }) {
     }
     if (!email || !name) return;
 
-    if (window.fbq) window.fbq("track", "InitiateCheckout", { content_name: course.title, value: course.price, currency: "NGN" });
+    if (window.fbq)
+      window.fbq("track", "InitiateCheckout", {
+        content_name: course.title,
+        value: course.price,
+        currency: "NGN",
+      });
 
     pay({
       email,
@@ -44,7 +62,12 @@ export default function CourseLandingPage({ course }) {
       name,
       metadata: { course: course.title, cohort: course.cohort },
       onSuccess: () => {
-        if (window.fbq) window.fbq("track", "Purchase", { content_name: course.title, value: course.price, currency: "NGN" });
+        if (window.fbq)
+          window.fbq("track", "Purchase", {
+            content_name: course.title,
+            value: course.price,
+            currency: "NGN",
+          });
         navigate(`/thank-you/${course.slug}`);
       },
     });
@@ -76,10 +99,14 @@ export default function CourseLandingPage({ course }) {
       <button
         onClick={handleEnrol}
         className={`px-8 py-4 rounded-full font-cherry text-lg font-bold transition-all hover:scale-105 active:scale-95 ${
-          variant === "yellow" ? "bg-yellow text-dark" : "bg-aqua text-white"
+          variant === "yellow"
+            ? "bg-yellow text-slate-900"
+            : "bg-aqua text-white"
         }`}
       >
-        {showForm ? `Secure My Spot — ₦${course.price.toLocaleString()}` : label || `Enrol My Child Now — ₦${course.price.toLocaleString()}`}
+        {showForm
+          ? `Secure My Spot — ₦${course.price.toLocaleString()}`
+          : label || `Enrol My Child Now — ₦${course.price.toLocaleString()}`}
       </button>
     </div>
   );
@@ -90,8 +117,14 @@ export default function CourseLandingPage({ course }) {
       <header className="bg-white border-b border-gray-100 py-4 px-6">
         <div className="max-w-7xl mx-auto">
           <Link to="/" className="inline-flex items-center gap-2">
-            <img src={discoveryHavenLogo} alt="Discovery Haven" className="w-9 h-9" />
-            <span className="font-cherry text-xl text-slate-900">Discovery Haven</span>
+            <img
+              src={discoveryHavenLogo}
+              alt="Discovery Haven"
+              className="w-9 h-9"
+            />
+            <span className="font-cherry text-xl text-slate-900">
+              Discovery Haven
+            </span>
           </Link>
         </div>
       </header>
@@ -104,7 +137,7 @@ export default function CourseLandingPage({ course }) {
           initial="hidden"
           animate="show"
         >
-          <span className="inline-block bg-yellow text-dark font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
+          <span className="inline-block bg-yellow text-slate-900 font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
             {course.tag}
           </span>
           <h1 className="font-cherry text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
@@ -114,7 +147,9 @@ export default function CourseLandingPage({ course }) {
             {course.subheadline}
           </p>
           {enrolBtn("yellow")}
-          <p className="mt-3 text-white/70 font-body text-xs">{course.smallText}</p>
+          <p className="mt-3 text-white/70 font-body text-xs">
+            {course.smallText}
+          </p>
         </motion.div>
       </section>
 
@@ -130,7 +165,9 @@ export default function CourseLandingPage({ course }) {
           <h2 className="font-cherry text-3xl lg:text-4xl text-slate-900 mb-6 leading-tight">
             {course.problemHeading}
           </h2>
-          <p className="font-body text-gray-600 text-lg leading-relaxed">{course.problemBody}</p>
+          <p className="font-body text-gray-600 text-lg leading-relaxed">
+            {course.problemBody}
+          </p>
         </motion.div>
       </section>
 
@@ -146,7 +183,9 @@ export default function CourseLandingPage({ course }) {
           <h2 className="font-cherry text-3xl lg:text-4xl text-slate-900 mb-6 leading-tight">
             {course.whatItIsHeading}
           </h2>
-          <p className="font-body text-gray-600 text-lg leading-relaxed">{course.whatItIsBody}</p>
+          <p className="font-body text-gray-600 text-lg leading-relaxed">
+            {course.whatItIsBody}
+          </p>
         </motion.div>
       </section>
 
@@ -175,8 +214,13 @@ export default function CourseLandingPage({ course }) {
                 variants={scaleIn}
                 className="flex gap-3 items-start bg-gray-50 rounded-2xl p-5"
               >
-                <CheckCircle size={20} className="text-aqua flex-shrink-0 mt-0.5" />
-                <span className="font-body text-gray-700 text-sm leading-relaxed">{o}</span>
+                <CheckCircle
+                  size={20}
+                  className="text-aqua flex-shrink-0 mt-0.5"
+                />
+                <span className="font-body text-gray-700 text-sm leading-relaxed">
+                  {o}
+                </span>
               </motion.div>
             ))}
           </motion.div>
@@ -198,7 +242,9 @@ export default function CourseLandingPage({ course }) {
           <h2 className="font-cherry text-3xl lg:text-4xl text-white mb-6 leading-tight">
             {course.bonusHeading}
           </h2>
-          <p className="font-body text-white/85 text-lg leading-relaxed">{course.bonusBody}</p>
+          <p className="font-body text-white/85 text-lg leading-relaxed">
+            {course.bonusBody}
+          </p>
         </motion.div>
       </section>
 
@@ -216,7 +262,9 @@ export default function CourseLandingPage({ course }) {
           </h2>
           <div className="border-2 border-aqua rounded-2xl overflow-hidden">
             <div className="bg-aqua px-6 py-4">
-              <p className="font-cherry text-2xl text-white text-center">{course.schedule.course}</p>
+              <p className="font-cherry text-2xl text-white text-center">
+                {course.schedule.course}
+              </p>
             </div>
             <div className="divide-y divide-gray-100">
               {[
@@ -226,14 +274,25 @@ export default function CourseLandingPage({ course }) {
                 { label: "Ages", value: course.schedule.ages },
                 { label: "Format", value: course.schedule.format },
               ].map(({ label, value }) => (
-                <div key={label} className="flex items-center justify-between px-6 py-4">
-                  <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">{label}</span>
-                  <span className="font-body text-sm font-bold text-slate-900">{value}</span>
+                <div
+                  key={label}
+                  className="flex items-center justify-between px-6 py-4"
+                >
+                  <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">
+                    {label}
+                  </span>
+                  <span className="font-body text-sm font-bold text-slate-900">
+                    {value}
+                  </span>
                 </div>
               ))}
               <div className="flex items-center justify-between px-6 py-4 bg-gray-50">
-                <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">Investment</span>
-                <span className="font-cherry text-2xl text-aqua">{course.schedule.investment}</span>
+                <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">
+                  Investment
+                </span>
+                <span className="font-cherry text-2xl text-aqua">
+                  {course.schedule.investment}
+                </span>
               </div>
             </div>
             <div className="px-6 py-5">
@@ -244,7 +303,7 @@ export default function CourseLandingPage({ course }) {
       </section>
 
       {/* S7 — TESTIMONIAL */}
-      <section className="bg-dark py-20 px-4">
+      <section className="bg-orange-50 py-20 px-4">
         <motion.div
           className="max-w-2xl mx-auto text-center"
           variants={fadeUp}
@@ -252,11 +311,20 @@ export default function CourseLandingPage({ course }) {
           whileInView="show"
           viewport={useViewport}
         >
-          <h2 className="font-cherry text-3xl text-white mb-10">What parents are saying</h2>
+          <h2 className="font-cherry text-3xl text-slate-900 mb-10">
+            What parents are saying
+          </h2>
           <div className="bg-white rounded-3xl p-8 sm:p-10">
             <div className="flex gap-1 justify-center mb-6">
               {[...Array(5)].map((_, i) => (
-                <svg key={i} width="18" height="18" viewBox="0 0 18 18" fill="#ffec00" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  key={i}
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="#ffec00"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M9 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L9 13.27l-4.77 2.44.91-5.32L1.27 6.62l5.34-.78L9 1z" />
                 </svg>
               ))}
@@ -264,7 +332,9 @@ export default function CourseLandingPage({ course }) {
             <p className="font-body text-gray-700 text-lg leading-relaxed italic mb-6">
               {course.testimonial.quote}
             </p>
-            <p className="font-body font-bold text-slate-900 text-sm">{course.testimonial.author}</p>
+            <p className="font-body font-bold text-slate-900 text-sm">
+              {course.testimonial.author}
+            </p>
           </div>
         </motion.div>
       </section>
@@ -278,7 +348,9 @@ export default function CourseLandingPage({ course }) {
           whileInView="show"
           viewport={useViewport}
         >
-          <h2 className="font-cherry text-3xl text-slate-900 mb-10 text-center">Common questions</h2>
+          <h2 className="font-cherry text-3xl text-slate-900 mb-10 text-center">
+            Common questions
+          </h2>
           <div className="flex flex-col gap-3">
             {[course.faqSpecific, ...course.faqCommon].map((faq, i) => (
               <FAQ key={i} q={faq.q} a={faq.a} />
@@ -288,7 +360,7 @@ export default function CourseLandingPage({ course }) {
       </section>
 
       {/* S9 — FINAL CTA */}
-      <section className="bg-crimson py-24 px-4 text-center text-white">
+      <section className="bg-dark py-24 px-4 text-center text-white">
         <motion.div
           className="max-w-2xl mx-auto"
           variants={fadeUp}
