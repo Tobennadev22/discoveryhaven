@@ -209,12 +209,12 @@ export const FOOTER_LINKS = {
   programmes: [
     { label: "Haven Academy", href: "/haven-academy" },
     { label: "Haven Tribe", href: "/haven-tribe" },
-    { label: "Events", href: "/events" },
+    { label: "Community Hour", href: "/community-hour" },
     { label: "Explore", href: "/explore" },
   ],
   organisation: [
     { label: "About Us", href: "/about" },
-    { label: "Partnerships", href: "/friends" },
+    { label: "Partnership", href: "/partnership" },
     { label: "Impact", href: "/impact" },
     { label: "Contact", href: "/contact" },
   ],

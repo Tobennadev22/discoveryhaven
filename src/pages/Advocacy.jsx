@@ -62,7 +62,7 @@ export default function Advocacy() {
         >
           <h2 className="font-cherry text-4xl text-white mb-4">Align Your Organisation</h2>
           <p className="text-gray-400 font-body text-lg mb-8">Partner with Discovery Haven to advance quality education and build the next generation of African leaders.</p>
-          <Button variant="primary" size="lg" onClick={() => window.location.href='/friends'}>Explore Partnership →</Button>
+          <Button variant="primary" size="lg" onClick={() => window.location.href='/partnership'}>Explore Partnership →</Button>
         </motion.div>
       </section>
     </>
