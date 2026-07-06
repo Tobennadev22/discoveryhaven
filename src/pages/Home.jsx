@@ -419,10 +419,10 @@ export default function Home() {
           <motion.div className="flex flex-wrap justify-center gap-6">
             {IMPACT_METRICS.map((m) => (
               <div key={m.label} className="text-center min-w-[120px]">
-                <div className="font-cherry text-4xl text-slate-900 mb-1">
+                <div className="font-cherry text-5xl text-slate-900 mb-1">
                   {m.number}
                 </div>
-                <div className="font-body text-slate-900/70 font-semibold text-xs uppercase tracking-wide">
+                <div className="font-body text-slate-900/70 font-semibold text-sm uppercase tracking-wide">
                   {m.label}
                 </div>
               </div>
