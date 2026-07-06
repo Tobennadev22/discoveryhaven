@@ -182,7 +182,10 @@ function TierCard({ tier }) {
   );
 }
 
-const PARTNERS = ["Our Nigeria Publishing", "Camping Nigeria"];
+const PARTNERS = [
+  { name: "Our Nigeria Publishing", logo: null },
+  { name: "Camping Nigeria", logo: "/assets/campingNigerialogo.webp" },
+];
 
 export default function Partnership() {
   return (
@@ -233,9 +236,18 @@ export default function Partnership() {
               <motion.div
                 key={i}
                 variants={scaleIn}
-                className="bg-gray-50 border border-gray-200 rounded-2xl px-8 py-5 flex items-center"
+                className="bg-gray-50 border border-gray-200 rounded-2xl px-8 py-5 flex items-center justify-center min-w-[180px]"
               >
-                <span className="font-bold font-body text-slate-900 text-sm">{p}</span>
+                {p.logo ? (
+                  <img
+                    src={p.logo}
+                    alt={p.name}
+                    className="h-10 w-auto"
+                    style={{ filter: "brightness(0) saturate(100%) invert(22%) sepia(13%) saturate(757%) hue-rotate(175deg) brightness(94%) contrast(85%)" }}
+                    onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "block"; }}
+                  />
+                ) : null}
+                <span className={`font-bold font-body text-slate-700 text-sm${p.logo ? " hidden" : ""}`}>{p.name}</span>
               </motion.div>
             ))}
           </motion.div>
