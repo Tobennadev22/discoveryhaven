@@ -1,3 +1,4 @@
+import { Timer, MonitorSmartphone, Gift } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import {
@@ -23,7 +24,7 @@ export default function CommunityHour() {
             Access the Sanctuary
           </h1>
           <p className="font-cherry text-2xl text-aqua mb-6">
-            A Private, 15-Minute Conversation with Our Founder
+            A Private, 20-Minute Conversation with Our Founder
           </p>
           <p className="text-gray-300 font-body text-xl leading-relaxed">
             No sales pitch. No pressure. Just an honest conversation about your
@@ -43,17 +44,17 @@ export default function CommunityHour() {
           >
             {[
               {
-                icon: "⏱",
-                title: "15 Minutes",
+                Icon: Timer,
+                title: "20 Minutes",
                 desc: "A focused, purposeful conversation — no fluff.",
               },
               {
-                icon: "💻",
+                Icon: MonitorSmartphone,
                 title: "Zoom or Phone",
                 desc: "Whatever works best for you.",
               },
               {
-                icon: "🎁",
+                Icon: Gift,
                 title: "Completely Free",
                 desc: "No obligation, no follow-up pressure.",
               },
@@ -63,7 +64,9 @@ export default function CommunityHour() {
                 variants={scaleIn}
                 className="bg-white rounded-2xl p-7 text-center shadow-sm"
               >
-                <div className="text-4xl mb-3">{f.icon}</div>
+                <div className="flex justify-center mb-3">
+                  <f.Icon size={40} className="text-aqua" />
+                </div>
                 <h3 className="font-cherry text-xl text-slate-900 mb-2">
                   {f.title}
                 </h3>

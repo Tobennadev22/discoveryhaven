@@ -127,7 +127,7 @@ export default function Home() {
               variant="outline-dark"
               onClick={() => (window.location.href = "/community-hour")}
             >
-              Book a Free 15-Min Call
+              Book a Free 20-Min Call
             </Button>
           </motion.div>
 
@@ -627,19 +627,19 @@ export default function Home() {
             Not Sure Yet? Let's Talk.
           </h2>
           <p className="text-gray-600 font-body text-lg leading-relaxed mb-4">
-            Book a free 15-minute conversation with our founder. No pitch, no
+            Book a free 20-minute conversation with our founder. No pitch, no
             pressure — just an honest conversation about your child's learning
             journey.
           </p>
           <p className="text-gray-400 font-body text-sm mb-8">
-            15-Minute Sprint · Zoom or Phone · No obligation
+            20-Minute Sprint · Zoom or Phone · No obligation
           </p>
           <Button
             variant="yellow"
             size="lg"
             onClick={() => (window.location.href = "/community-hour")}
           >
-            Book Your Free 15-Minute Call →
+            Book Your Free 20-Minute Call →
           </Button>
         </div>
       </motion.section>

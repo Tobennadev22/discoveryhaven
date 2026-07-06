@@ -11,7 +11,7 @@ const FAQ_COMMON = [
   },
   {
     q: "What if I'm not sure this is the right fit?",
-    a: "Book a free 15-minute call with our founder before enrolling — we'll help you decide.",
+    a: "Book a free 20-minute call with our founder before enrolling — we'll help you decide.",
   },
 ];
 

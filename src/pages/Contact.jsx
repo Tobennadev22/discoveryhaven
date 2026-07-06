@@ -203,7 +203,7 @@ export default function Contact() {
                   Not sure where to start?
                 </h3>
                 <p className="text-gray-400 font-body text-sm leading-relaxed mb-6">
-                  Book a free 15-minute call with our founder. It's the fastest
+                  Book a free 20-minute call with our founder. It's the fastest
                   way to find the right programme for your child.
                 </p>
                 <Button

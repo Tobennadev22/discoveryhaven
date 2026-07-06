@@ -219,7 +219,7 @@ export default function HavenAcademy() {
               size="lg"
               onClick={() => (window.location.href = "/community-hour")}
             >
-              Book a Free 15-Minute Call First
+              Book a Free 20-Minute Call First
             </Button>
           </div>
         </motion.div>

@@ -3,7 +3,7 @@ import CourseLandingPage from "./CourseLandingPage";
 const FAQ_COMMON = [
   { q: "Is this in-person or virtual?", a: "Fully virtual, live on Zoom — your child can join from anywhere in the world." },
   { q: "What if my child misses a session?", a: "Session recordings are shared so your child never falls behind." },
-  { q: "What if I'm not sure this is the right fit?", a: "Book a free 15-minute call with our founder before enrolling — we will help you decide." },
+  { q: "What if I'm not sure this is the right fit?", a: "Book a free 20-minute call with our founder before enrolling — we will help you decide." },
 ];
 
 const COURSE = {

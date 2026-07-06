@@ -371,7 +371,7 @@ export default function CourseLandingPage({ course }) {
               to="/community-hour"
               className="font-body text-white/70 hover:text-white text-sm underline transition-colors"
             >
-              Not sure yet? Book a free 15-minute call with our founder first →
+              Not sure yet? Book a free 20-minute call with our founder first →
             </Link>
           </div>
         </motion.div>
