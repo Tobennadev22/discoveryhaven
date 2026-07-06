@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import {
@@ -42,6 +43,73 @@ const TEAM = [
     bio: "Elizabeth brings Discovery Haven's studio curriculum to life in every session. As our Resident Facilitator, she works directly with scholars — guiding investigations, drawing out voices, and creating the kind of learning environment where every child feels safe enough to take real intellectual and creative risks.",
   },
 ];
+
+function FounderStorySection() {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <section id="founders-story" className="py-24 bg-dark">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            variants={slideLeft}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <SectionLabel className="text-yellow">FOUNDER'S STORY</SectionLabel>
+            <h2 className="font-cherry text-4xl text-white mb-6 mt-2">
+              The Story Behind Discovery Haven
+            </h2>
+            <p className="text-gray-300 font-body text-lg leading-relaxed mb-5">
+              Stella Chibuike-Ezike was the child who loved learning. She read voraciously, excelled academically, and was by every measure a true scholar. But as she grew, she recognised something that no grade had taught her — that knowing a lot of information is not the same as knowing yourself. That academic success, without identity, without voice, without emotional tools, leaves a child only partially prepared for the world they are walking into.
+            </p>
+
+            {expanded && (
+              <>
+                <p className="text-gray-300 font-body text-lg leading-relaxed mb-5">
+                  That recognition became a conviction. And that conviction became Discovery Haven.
+                </p>
+                <p className="text-gray-300 font-body text-lg leading-relaxed mb-5">
+                  Stella built Discovery Haven not just as an educator but as a mother. Her two daughters, Zika and Kaima, are living proof of her methodology — children who are growing up knowing who they are, using their voices, and already daring to make their mark. Every programme Discovery Haven builds is rooted in the belief that potential is not something a child develops later. It is something that must be nurtured now, in the early years, before the world tells them who they should be.
+                </p>
+                <p className="text-gray-300 font-body text-lg leading-relaxed mb-8">
+                  Stella is a family life educator, author of <span className="italic">Family Time Unplugged: Play, Connect, Explore</span>, and creator of the Shine Bright Affirmation Deck — 150 identity-building cards for children aged 4 to 12. She has spent over a decade studying how children learn, grow, and discover themselves — and Discovery Haven is the fullest expression of that work.
+                </p>
+                <p className="text-aqua font-body text-sm italic mb-5">
+                  Her story is not separate from her work. It is the reason for it.
+                </p>
+              </>
+            )}
+
+            <button
+              onClick={() => setExpanded((e) => !e)}
+              className="font-cherry text-aqua text-lg hover:text-aqua/70 transition-colors"
+            >
+              {expanded ? "See less ↑" : "See more ↓"}
+            </button>
+          </motion.div>
+          <motion.div
+            className="flex flex-col items-center text-center"
+            variants={slideRight}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <img
+              src={FounderImg}
+              alt="Stella Chibuike-Ezike"
+              className="rounded-full w-72 h-72 object-cover mb-6 ring-4 ring-yellow/30"
+            />
+            <h3 className="font-cherry text-2xl text-white mb-1">Stella Chibuike-Ezike</h3>
+            <p className="text-yellow font-bold font-body text-sm">
+              Founder, Discovery Haven Kids Co. Ltd
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function About() {
   return (
@@ -155,55 +223,7 @@ export default function About() {
       </section>
 
       {/* FOUNDER'S STORY */}
-      <section id="founders-story" className="py-24 bg-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              variants={slideLeft}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
-            >
-              <SectionLabel className="text-yellow">FOUNDER'S STORY</SectionLabel>
-              <h2 className="font-cherry text-4xl text-white mb-6 mt-2">
-                The Story Behind Discovery Haven
-              </h2>
-              <p className="text-gray-300 font-body text-lg leading-relaxed mb-5">
-                Stella Chibuike-Ezike was the child who loved learning. She read voraciously, excelled academically, and was by every measure a true scholar. But as she grew, she recognised something that no grade had taught her — that knowing a lot of information is not the same as knowing yourself. That academic success, without identity, without voice, without emotional tools, leaves a child only partially prepared for the world they are walking into.
-              </p>
-              <p className="text-gray-300 font-body text-lg leading-relaxed mb-5">
-                That recognition became a conviction. And that conviction became Discovery Haven.
-              </p>
-              <p className="text-gray-300 font-body text-lg leading-relaxed mb-5">
-                Stella built Discovery Haven not just as an educator but as a mother. Her two daughters, Zika and Kaima, are living proof of her methodology — children who are growing up knowing who they are, using their voices, and already daring to make their mark. Every programme Discovery Haven builds is rooted in the belief that potential is not something a child develops later. It is something that must be nurtured now, in the early years, before the world tells them who they should be.
-              </p>
-              <p className="text-gray-300 font-body text-lg leading-relaxed mb-8">
-                Stella is a family life educator, author of <span className="italic">Family Time Unplugged: Play, Connect, Explore</span>, and creator of the Shine Bright Affirmation Deck — 150 identity-building cards for children aged 4 to 12. She has spent over a decade studying how children learn, grow, and discover themselves — and Discovery Haven is the fullest expression of that work.
-              </p>
-              <p className="text-aqua font-body text-sm italic mb-1">
-                Her story is not separate from her work. It is the reason for it.
-              </p>
-            </motion.div>
-            <motion.div
-              className="flex flex-col items-center text-center"
-              variants={slideRight}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
-            >
-              <img
-                src={FounderImg}
-                alt="Stella Chibuike-Ezike"
-                className="rounded-full w-72 h-72 object-cover mb-6 ring-4 ring-yellow/30"
-              />
-              <h3 className="font-cherry text-2xl text-white mb-1">Stella Chibuike-Ezike</h3>
-              <p className="text-yellow font-bold font-body text-sm">
-                Founder, Discovery Haven Kids Co. Ltd
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <FounderStorySection />
 
       {/* MEET THE TEAM */}
       <section className="py-24 bg-white">
