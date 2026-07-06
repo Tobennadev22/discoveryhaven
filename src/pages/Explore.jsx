@@ -292,23 +292,28 @@ export default function Explore() {
               <motion.div
                 key={i}
                 variants={scaleIn}
-                className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
+                className="bg-white rounded-2xl overflow-hidden border border-gray-200 opacity-60 grayscale pointer-events-none select-none"
               >
                 <div
                   className="h-2 w-full"
                   style={{ backgroundColor: ev.color }}
                 />
                 <div className="p-6">
-                  <span
-                    className="text-xs font-bold font-body uppercase tracking-wide px-3 py-1 rounded-full"
-                    style={{
-                      backgroundColor: ev.color + "20",
-                      color: ev.color === "#ffec00" ? "#b45309" : ev.color,
-                    }}
-                  >
-                    {ev.tag}
-                  </span>
-                  <h3 className="font-cherry text-lg text-slate-900 mt-3 mb-1 leading-snug">
+                  <div className="flex items-center justify-between mb-3">
+                    <span
+                      className="text-xs font-bold font-body uppercase tracking-wide px-3 py-1 rounded-full"
+                      style={{
+                        backgroundColor: ev.color + "20",
+                        color: ev.color === "#ffec00" ? "#b45309" : ev.color,
+                      }}
+                    >
+                      {ev.tag}
+                    </span>
+                    <span className="text-xs font-bold font-body uppercase tracking-wide px-3 py-1 rounded-full bg-gray-100 text-gray-400">
+                      Past Event
+                    </span>
+                  </div>
+                  <h3 className="font-cherry text-lg text-slate-900 mb-1 leading-snug">
                     {ev.title}
                   </h3>
                   <p className="text-gray-400 font-body text-sm">{ev.date}</p>
