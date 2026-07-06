@@ -86,17 +86,16 @@ export default function CommunityHour() {
               Select a time that works for you. Stella will personally host the
               call — no assistants, no sales team.
             </p>
-            <div className="bg-cream rounded-2xl border-2 border-dashed border-gray-200 p-16 mb-6">
-              <p className="text-gray-400 font-body text-sm">
-                Calendly booking widget will be embedded here.
-              </p>
-              <p className="text-gray-400 font-body text-xs mt-2">
-                Connect your Calendly account at calendly.com
-              </p>
+            <div className="rounded-2xl overflow-hidden" style={{ minHeight: 660 }}>
+              <iframe
+                src="https://calendly.com/stella-chibuikeezike"
+                width="100%"
+                height="660"
+                frameBorder="0"
+                title="Book a Community Hour with Stella"
+                className="w-full"
+              />
             </div>
-            <Button variant="primary" size="lg">
-              Secure Your 15-Minute Slot
-            </Button>
           </motion.div>
         </div>
       </section>
