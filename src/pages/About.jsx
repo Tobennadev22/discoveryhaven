@@ -125,7 +125,7 @@ export default function About() {
           <SectionLabel className="text-aqua">
             Discovery Haven · Our Story, Mission &amp; People
           </SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-7xl text-white mb-6 leading-tight">
+          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6 leading-tight">
             We Believe Every Child Carries Extraordinary Potential. Our Job Is to Help Them Find It.
           </h1>
           <p className="text-gray-300 font-body text-xl max-w-3xl mx-auto mb-10 leading-relaxed">

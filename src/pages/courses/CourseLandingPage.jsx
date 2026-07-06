@@ -140,7 +140,7 @@ export default function CourseLandingPage({ course }) {
           <span className="inline-block bg-yellow text-slate-900 font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
             {course.tag}
           </span>
-          <h1 className="font-cherry text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
+          <h1 className="font-cherry text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent leading-tight mb-6">
             {course.headline}
           </h1>
           <p className="font-body text-white/90 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10">

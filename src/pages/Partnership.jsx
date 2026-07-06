@@ -198,7 +198,7 @@ export default function Partnership() {
           <SectionLabel className="text-aqua">
             Friends of Discovery Haven · Partnerships & Collaborations
           </SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-7xl text-white mb-6 leading-tight">
+          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6 leading-tight">
             Build the Future of Learning. With Us.
           </h1>
           <p className="text-gray-300 font-body text-xl max-w-3xl mx-auto mb-6 leading-relaxed">

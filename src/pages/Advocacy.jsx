@@ -22,7 +22,7 @@ export default function Advocacy() {
           animate="show"
         >
           <SectionLabel className="text-aqua">ADVOCACY & SDGs</SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-6xl text-white mb-6">Global Impact, Local Execution</h1>
+          <h1 className="font-cherry text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">Global Impact, Local Execution</h1>
           <p className="text-gray-300 font-body text-xl">How Discovery Haven maps to the United Nations Sustainable Development Goals.</p>
         </motion.div>
       </section>

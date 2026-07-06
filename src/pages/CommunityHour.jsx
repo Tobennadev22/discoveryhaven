@@ -20,7 +20,7 @@ export default function CommunityHour() {
           animate="show"
         >
           <SectionLabel className="text-aqua">COMMUNITY HOUR</SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-6xl text-white mb-4 leading-tight">
+          <h1 className="font-cherry text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-4 leading-tight">
             Access the Sanctuary
           </h1>
           <p className="font-cherry text-2xl text-aqua mb-6">

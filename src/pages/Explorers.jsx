@@ -22,7 +22,7 @@ export default function Explorers() {
           initial="hidden"
           animate="show"
         >
-          <h1 className="font-cherry text-5xl lg:text-7xl text-slate-900 mb-4">
+          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-4">
             Hey Explorer! 👋
           </h1>
           <p className="font-cherry text-3xl text-slate-900/70 mb-6">

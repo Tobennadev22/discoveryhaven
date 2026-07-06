@@ -19,7 +19,7 @@ export default function ArtsCulture() {
           animate="show"
         >
           <SectionLabel className="text-aqua">ARTS & CULTURE</SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-7xl  bg-gradient-to-r from-lime-200 to-blue-400 bg-clip-text text-transparent mb-6">
+          <h1 className="font-cherry text-5xl lg:text-7xl  bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
             The Student Gallery
           </h1>
           <p className="text-gray-300 font-body text-xl">
