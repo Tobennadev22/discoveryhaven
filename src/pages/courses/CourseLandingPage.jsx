@@ -130,7 +130,7 @@ export default function CourseLandingPage({ course }) {
       </header>
 
       {/* S1 — HERO */}
-      <section className="bg-aqua py-24 px-4 text-center text-white">
+      <section className="bg-dark py-24 px-4 text-center text-white">
         <motion.div
           className="max-w-3xl mx-auto"
           variants={fadeUp}
