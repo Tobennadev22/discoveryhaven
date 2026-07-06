@@ -178,10 +178,11 @@ export const TESTIMONIALS = [
 ];
 
 export const IMPACT_METRICS = [
-  { number: "2,400+", label: "Children Reached" },
-  { number: "18", label: "Programmes Delivered" },
-  { number: "6", label: "Countries" },
-  { number: "94%", label: "Parent Satisfaction" },
+  { number: "200+", label: "Children Reached" },
+  { number: "12+", label: "Programmes Delivered" },
+  { number: "4", label: "Studio Tracks" },
+  { number: "3+", label: "Countries Represented" },
+  { number: "2", label: "Years of Measurable Impact" },
 ];
 
 export const VALUES = [
