@@ -98,6 +98,10 @@ function FounderStorySection() {
             <img
               src={FounderImg}
               alt="Stella Chibuike-Ezike"
+              loading="lazy"
+              decoding="async"
+              width="288"
+              height="288"
               className="rounded-full w-72 h-72 object-cover mb-6 ring-4 ring-yellow/30"
             />
             <h3 className="font-cherry text-2xl text-white mb-1">Stella Chibuike-Ezike</h3>

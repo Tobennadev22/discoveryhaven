@@ -146,6 +146,8 @@ export default function Home() {
               <img
                 src={discoveryhavenHeroImg}
                 alt="Child learning"
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
               {/* bottom-left white card — compact, speech-bubble style */}
@@ -235,6 +237,8 @@ export default function Home() {
               <img
                 src={discoveryhavenHeroImg1}
                 alt="Child reading"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
               {/* bottom white card — course pill style */}
