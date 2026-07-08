@@ -5,7 +5,7 @@ import discoveryHavenLogo from "../assets/dh.png";
 
 const COURSE_NAMES = {
   "creative-quest": { name: "Creative Quest", month: "August 2026", price: 75000 },
-  "loud-fearless": { name: "Loud & Fearless", month: "October 2026", price: 75000 },
+  "loud-and-fearless": { name: "Loud & Fearless", month: "October 2026", price: 75000 },
   "curiosity-box": { name: "The Curiosity Box", month: "February 2026", price: 50000 },
   "eq-lab": { name: "The EQ Lab", month: "June 2026", price: 50000 },
 };

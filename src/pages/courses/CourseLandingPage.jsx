@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { usePaystack } from "../../hooks/usePaystack";
 import {
@@ -37,7 +37,6 @@ function FAQ({ q, a }) {
 
 export default function CourseLandingPage({ course }) {
   const { pay } = usePaystack();
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -61,14 +60,25 @@ export default function CourseLandingPage({ course }) {
       amount: course.price,
       name,
       metadata: { course: course.title, cohort: course.cohort },
-      onSuccess: () => {
+      onSuccess: (response) => {
         if (window.fbq)
           window.fbq("track", "Purchase", {
             content_name: course.title,
             value: course.price,
             currency: "NGN",
           });
-        navigate(`/thank-you/${course.slug}`);
+
+        fetch("/api/verify-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            reference: response.reference,
+            course: course.title,
+            email,
+          }),
+        }).catch(() => {});
+
+        window.location.href = `https://discoveryhaven.org/thank-you/${course.slug}`;
       },
     });
   };

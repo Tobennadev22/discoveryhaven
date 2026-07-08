@@ -16,7 +16,7 @@ const FAQ_COMMON = [
 ];
 
 const COURSE = {
-  slug: "loud-fearless",
+  slug: "loud-and-fearless",
   title: "Loud & Fearless",
   cohort: "October 2026",
   price: 75000,
