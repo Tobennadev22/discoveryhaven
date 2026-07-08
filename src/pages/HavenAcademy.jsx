@@ -8,6 +8,17 @@ import {
   SearchCheck,
   Brain,
 } from "lucide-react";
+import imgCreativeQuest from "../assets/creative_quest.png";
+import imgLoudFearless from "../assets/loud_&_fearless.png";
+import imgCuriosityBox from "../assets/curiosity_box.png";
+import imgEQLab from "../assets/The_EQ_lab.png";
+
+const COURSE_IMAGES = {
+  "creative-quest": imgCreativeQuest,
+  "loud-fearless": imgLoudFearless,
+  "curiosity-box": imgCuriosityBox,
+  "eq-lab": imgEQLab,
+};
 
 const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
 const COURSE_ROUTES = {
@@ -117,12 +128,14 @@ function CourseSection({ course, reverse = false, index }) {
               whileInView="show"
               viewport={useViewport}
             >
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100">
+              <div className="relative rounded-3xl overflow-hidden aspect-[3/4] bg-dark">
                 {course.image ? (
                   <img
                     src={course.image}
                     alt={course.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div
@@ -185,7 +198,7 @@ export default function HavenAcademy() {
       {COURSES.map((course, i) => (
         <CourseSection
           key={course.id}
-          course={course}
+          course={{ ...course, image: COURSE_IMAGES[course.id] || course.image }}
           reverse={i % 2 !== 0}
           index={i}
         />
