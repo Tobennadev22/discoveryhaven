@@ -49,10 +49,10 @@ export default function App() {
       <AnalyticsTracker />
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route path="/creative-quest" element={<CreativeQuest />} />
-          <Route path="/loud-fearless" element={<LoudFearless />} />
-          <Route path="/the-curiosity-box" element={<CuriosityBox />} />
-          <Route path="/the-eq-lab" element={<EQLab />} />
+          <Route path="/courses/creative-quest" element={<CreativeQuest />} />
+          <Route path="/courses/loud-fearless" element={<LoudFearless />} />
+          <Route path="/courses/curiosity-box" element={<CuriosityBox />} />
+          <Route path="/courses/eq-lab" element={<EQLab />} />
           <Route path="/thank-you/:slug" element={<ThankYou />} />
           <Route
             path="*"

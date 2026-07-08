@@ -7,7 +7,7 @@ const FAQ_COMMON = [
 ];
 
 const COURSE = {
-  slug: "the-curiosity-box",
+  slug: "curiosity-box",
   title: "The Curiosity Box",
   cohort: "February 2027",
   price: 50000,

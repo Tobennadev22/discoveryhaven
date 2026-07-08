@@ -16,7 +16,7 @@ const FAQ_COMMON = [
 ];
 
 const COURSE = {
-  slug: "the-eq-lab",
+  slug: "eq-lab",
   title: "The EQ Lab",
   cohort: "June 2026",
   price: 50000,

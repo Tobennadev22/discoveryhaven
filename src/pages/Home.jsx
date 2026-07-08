@@ -47,10 +47,10 @@ import {
 
 const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
 const COURSE_ROUTES = {
-  "creative-quest": "/creative-quest",
-  "loud-fearless": "/loud-fearless",
-  "curiosity-box": "/the-curiosity-box",
-  "eq-lab": "/the-eq-lab",
+  "creative-quest": "/courses/creative-quest",
+  "loud-fearless": "/courses/loud-fearless",
+  "curiosity-box": "/courses/curiosity-box",
+  "eq-lab": "/courses/eq-lab",
 };
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
