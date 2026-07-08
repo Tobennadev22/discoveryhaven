@@ -18,8 +18,9 @@ const FAQ_COMMON = [
 const COURSE = {
   slug: "eq-lab",
   title: "The EQ Lab",
-  cohort: "June 2026",
+  cohort: "June 2027",
   price: 50000,
+  paymentUrl: "https://paystack.com/pay/dh-eq-lab-2027",
   tag: "Haven Academy · Emotional Intelligence & Leadership",
   headline: "The EQ Lab: Where Your Child Learns to Lead from the Inside Out.",
   subheadline:

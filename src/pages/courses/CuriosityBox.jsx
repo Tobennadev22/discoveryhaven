@@ -8,6 +8,7 @@ const FAQ_COMMON = [
 
 const COURSE = {
   slug: "curiosity-box",
+  paymentUrl: "https://paystack.com/pay/dh-curiosity-box-2027",
   title: "The Curiosity Box",
   cohort: "February 2027",
   price: 50000,

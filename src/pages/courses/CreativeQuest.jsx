@@ -20,6 +20,7 @@ const COURSE = {
   title: "Creative Quest",
   cohort: "August 2026",
   price: 75000,
+  paymentUrl: "https://paystack.com/pay/dh-creative-quest-2026",
   tag: "Haven Academy · Writing Studio",
   headline: "Creative Quest: Where Your Child Becomes a Published Author.",
   subheadline:

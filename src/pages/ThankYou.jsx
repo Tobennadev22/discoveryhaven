@@ -6,8 +6,8 @@ import discoveryHavenLogo from "../assets/dh.png";
 const COURSE_NAMES = {
   "creative-quest": { name: "Creative Quest", month: "August 2026", price: 75000 },
   "loud-and-fearless": { name: "Loud & Fearless", month: "October 2026", price: 75000 },
-  "curiosity-box": { name: "The Curiosity Box", month: "February 2026", price: 50000 },
-  "eq-lab": { name: "The EQ Lab", month: "June 2026", price: 50000 },
+  "curiosity-box": { name: "The Curiosity Box", month: "February 2027", price: 50000 },
+  "eq-lab": { name: "The EQ Lab", month: "June 2027", price: 50000 },
 };
 
 export default function ThankYou() {
@@ -15,6 +15,8 @@ export default function ThankYou() {
   const course = COURSE_NAMES[slug] || { name: "your course", month: "2026", price: 0 };
 
   useEffect(() => {
+    // Paystack payment page redirects here after confirmed payment —
+    // this is the authoritative place to fire the Purchase event.
     if (window.fbq) {
       window.fbq("track", "Purchase", {
         content_name: course.name,
@@ -22,7 +24,7 @@ export default function ThankYou() {
         currency: "NGN",
       });
     }
-  }, [course.name, course.price]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-aqua flex flex-col">

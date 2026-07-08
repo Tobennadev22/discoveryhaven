@@ -17,6 +17,7 @@ const FAQ_COMMON = [
 
 const COURSE = {
   slug: "loud-and-fearless",
+  paymentUrl: "https://paystack.com/pay/dh-loud-and-fearless-2026",
   title: "Loud & Fearless",
   cohort: "October 2026",
   price: 75000,

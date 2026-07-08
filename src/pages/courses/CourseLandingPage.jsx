@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
-import { usePaystack } from "../../hooks/usePaystack";
 import {
   motion,
   fadeUp,
@@ -36,89 +34,27 @@ function FAQ({ q, a }) {
 }
 
 export default function CourseLandingPage({ course }) {
-  const { pay } = usePaystack();
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [showForm, setShowForm] = useState(false);
-
   const handleEnrol = () => {
-    if (!showForm) {
-      setShowForm(true);
-      return;
-    }
-    if (!email || !name) return;
-
     if (window.fbq)
       window.fbq("track", "InitiateCheckout", {
         content_name: course.title,
         value: course.price,
         currency: "NGN",
       });
-
-    pay({
-      email,
-      amount: course.price,
-      name,
-      metadata: { course: course.title, cohort: course.cohort },
-      onSuccess: (response) => {
-        if (window.fbq)
-          window.fbq("track", "Purchase", {
-            content_name: course.title,
-            value: course.price,
-            currency: "NGN",
-          });
-
-        fetch("/api/verify-payment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            reference: response.reference,
-            course: course.title,
-            email,
-          }),
-        }).catch(() => {});
-
-        window.location.href = `https://discoveryhaven.org/thank-you/${course.slug}`;
-      },
-    });
+    window.location.href = course.paymentUrl;
   };
 
-  // Shared inline form — rendered directly (not as a sub-component) to preserve input focus
-  const enrollForm = showForm ? (
-    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md mx-auto">
-      <input
-        type="text"
-        placeholder="Parent's name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="flex-1 px-4 py-3 rounded-full font-body text-slate-900 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-aqua text-sm"
-      />
-      <input
-        type="email"
-        placeholder="Email address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 px-4 py-3 rounded-full font-body text-slate-900 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-aqua text-sm"
-      />
-    </div>
-  ) : null;
-
   const enrolBtn = (variant = "yellow", label) => (
-    <div className="flex flex-col items-center gap-3 w-full">
-      {enrollForm}
-      <button
-        onClick={handleEnrol}
-        className={`px-8 py-4 rounded-full font-cherry text-lg font-bold transition-all hover:scale-105 active:scale-95 ${
-          variant === "yellow"
-            ? "bg-yellow text-slate-900"
-            : "bg-aqua text-white"
-        }`}
-      >
-        {showForm
-          ? `Secure My Spot — ₦${course.price.toLocaleString()}`
-          : label || `Enrol My Child Now — ₦${course.price.toLocaleString()}`}
-      </button>
-    </div>
+    <button
+      onClick={handleEnrol}
+      className={`px-8 py-4 rounded-full font-cherry text-lg font-bold transition-all hover:scale-105 active:scale-95 ${
+        variant === "yellow"
+          ? "bg-yellow text-slate-900"
+          : "bg-aqua text-white"
+      }`}
+    >
+      {label || `Enrol My Child Now — ₦${course.price.toLocaleString()}`}
+    </button>
   );
 
   return (
