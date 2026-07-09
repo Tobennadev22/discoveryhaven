@@ -228,7 +228,7 @@ export default function HavenAcademy() {
               Enrol Now
             </Button>
             <Button
-              variant="outline"
+              variant="outline-dark"
               size="lg"
               onClick={() => (window.location.href = "/community-hour")}
             >
