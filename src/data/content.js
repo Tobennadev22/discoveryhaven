@@ -110,21 +110,6 @@ export const COURSES = [
 
 export const EVENTS = [
   {
-    id: "eq-lab-june-2026",
-    title: "The EQ Lab — Emotional Intelligence & Leadership",
-    date: "June 2026",
-    duration: "4 Weeks",
-    description:
-      "A virtual Saturday programme for ages 6–12. Building self-awareness, empathy, and peaceful communication.",
-    dateBarColor: "#ffec00",
-    dateBarTextColor: "#1a1a1a",
-    price: 4000000,
-    type: "cohort",
-    gcalStart: "20260606",
-    gcalEnd: "20260704",
-    location: "Virtual (Zoom)",
-  },
-  {
     id: "creative-quest-aug-2026",
     title: "Creative Quest — Summer Writing Studio",
     date: "August 2026",
@@ -140,13 +125,29 @@ export const EVENTS = [
     location: "Virtual (Zoom)",
   },
   {
+    id: "eq-lab-june-2026",
+    title: "The EQ Lab — Emotional Intelligence & Leadership",
+    date: "June 2026",
+    duration: "4 Weeks",
+    description:
+      "A virtual Saturday programme for ages 6–12. Building self-awareness, empathy, and peaceful communication.",
+    dateBarColor: "#de2d10",
+    dateBarTextColor: "#1a1a1a",
+    price: 4000000,
+    type: "cohort",
+    gcalStart: "20260606",
+    gcalEnd: "20260704",
+    location: "Virtual (Zoom)",
+  },
+
+  {
     id: "summit-nov-2026",
     title: "Discovery Haven Children's Summit — The Confident Generation",
     date: "November 2026",
     duration: "Annual Flagship",
     description:
       "Our annual flagship summit. Virtual and Abuja. Performances, panels, awards, and the Little Voices book launch.",
-    dateBarColor: "#de2d10",
+    dateBarColor: "#ffec00",
     dateBarTextColor: "#ffffff",
     price: 15000,
     type: "summit",
