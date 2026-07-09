@@ -27,11 +27,11 @@ export const COURSES = [
   {
     id: "curiosity-box",
     title: "The Curiosity Box",
-    subtitle: "Critical Thinking & Problem-Solving",
+    subtitle: "Science, Art & Critical Thinking",
     description:
-      "A programme built for young investigators. Children explore logic, deduction, and collaborative problem-solving.",
-    ages: "7–11 & 12-16",
-    duration: "6 Weeks",
+      "A programme built for young investigators and creators. Where scientific thinking meets artistic expression — children explore logic, deduction, and problem-solving through the lens of art and design. Classes grouped by age: 7–11 and 12–16.",
+    ages: "7–11 & 12–16",
+    duration: "4 Weeks",
     format: "Virtual · Saturdays",
     color: "#05c3dd",
     icon: "SearchCheck",
@@ -49,8 +49,8 @@ export const COURSES = [
     title: "The EQ Lab",
     subtitle: "Emotional Intelligence & Leadership",
     description:
-      "A programme that builds self-awareness, empathy, and peaceful communication for young leaders.",
-    ages: "7–11 & 12-16",
+      "A programme that builds self-awareness, empathy, and peaceful communication for young leaders. Classes grouped by age: 7–11 and 12–16.",
+    ages: "7–11 & 12–16",
     duration: "4 Weeks",
     format: "Virtual · Saturdays",
     color: "#05c3dd",
@@ -70,8 +70,8 @@ export const COURSES = [
     title: "Creative Quest",
     subtitle: "Writing & Storytelling Studio",
     description:
-      "A programme for young storytellers. Children write, edit, and publish creative fiction, non-fiction, and flash fiction pieces.",
-    ages: "7–11 & 12-16",
+      "A programme for young storytellers. Children write, edit, and publish creative fiction, non-fiction, and flash fiction pieces. Classes grouped by age: 7–11 and 12–16.",
+    ages: "7–11 & 12–16",
     duration: "6 Weeks",
     format: "Virtual · Saturdays",
     color: "#05c3dd",
@@ -90,8 +90,8 @@ export const COURSES = [
     title: "Loud & Fearless",
     subtitle: "Public Speaking & Debate",
     description:
-      "A programme that transforms shy children into confident communicators. Voice modulation, debate, and public speaking.",
-    ages: "7–11 & 12-16",
+      "A programme that transforms shy children into confident communicators. Voice modulation, debate, and public speaking. Classes grouped by age: 7–11 and 12–16.",
+    ages: "7–11 & 12–16",
     duration: "6 Weeks",
     format: "Virtual · Saturdays",
     color: "#05c3dd",

@@ -77,7 +77,7 @@ export default function CourseLandingPage({ course }) {
       </header>
 
       {/* S1 — HERO */}
-      <section className="bg-dark py-24 px-4 text-center text-white">
+      <section className="bg-aqua py-24 px-4 text-center text-white">
         <motion.div
           className="max-w-3xl mx-auto"
           variants={fadeUp}
@@ -219,7 +219,7 @@ export default function CourseLandingPage({ course }) {
                 { label: "Duration", value: course.schedule.duration },
                 { label: "Schedule", value: course.schedule.sessionSchedule },
                 { label: "Ages", value: course.schedule.ages },
-                course.schedule.tracks ? { label: "Tracks", value: course.schedule.tracks } : null,
+                { label: "Grouping", value: course.schedule.grouping },
                 { label: "Format", value: course.schedule.format },
               ].filter(Boolean).map(({ label, value }) => (
                 <div key={label} className="flex items-center justify-between px-6 py-4">
@@ -244,7 +244,7 @@ export default function CourseLandingPage({ course }) {
       </section>
 
       {/* S7 — TESTIMONIAL */}
-      <section className="bg-orange-50 py-20 px-4">
+      <section className="py-20 px-4 text-white" style={{ backgroundColor: "#1a1a1a" }}>
         <motion.div
           className="max-w-2xl mx-auto text-center"
           variants={fadeUp}
@@ -252,7 +252,7 @@ export default function CourseLandingPage({ course }) {
           whileInView="show"
           viewport={useViewport}
         >
-          <h2 className="font-cherry text-3xl text-slate-900 mb-10">
+          <h2 className="font-cherry text-3xl text-white mb-10">
             What parents are saying
           </h2>
           <div className="bg-white rounded-3xl p-8 sm:p-10">
@@ -301,7 +301,7 @@ export default function CourseLandingPage({ course }) {
       </section>
 
       {/* S9 — FINAL CTA */}
-      <section className="bg-dark py-24 px-4 text-center text-white">
+      <section className="py-24 px-4 text-center text-white" style={{ backgroundColor: "#de2d10" }}>
         <motion.div
           className="max-w-2xl mx-auto"
           variants={fadeUp}
@@ -318,7 +318,7 @@ export default function CourseLandingPage({ course }) {
               to="/community-hour"
               className="font-body text-white/70 hover:text-white text-sm underline transition-colors"
             >
-              Not sure yet? Book a free 20-minute call with our founder first →
+              Not sure yet? Book a free 15-minute call with our founder first →
             </Link>
           </div>
         </motion.div>
