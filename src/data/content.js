@@ -127,7 +127,7 @@ export const EVENTS = [
   {
     id: "loud-&-fearless-Oct-2026",
     title: "Loud & Fearless — Public Speaking & Debate",
-    date: "June 2026",
+    date: "Oct 2026",
     duration: "4 Weeks",
     description:
       "A programme that transforms shy children into confident communicators. Voice modulation, debate, and public speaking. Classes grouped by age: 7–11 and 12–16.",
