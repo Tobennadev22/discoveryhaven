@@ -1,4 +1,5 @@
 import { useState } from "react";
+import campingNigeriaLogo from "../assets/campingNigerialogo.webp";
 import { Users, Landmark, Handshake, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
@@ -184,7 +185,7 @@ function TierCard({ tier }) {
 
 const PARTNERS = [
   { name: "Our Nigeria Publishing", logo: null },
-  { name: "Camping Nigeria", logo: "/assets/campingNigerialogo.webp" },
+  { name: "Camping Nigeria", logo: campingNigeriaLogo },
 ];
 
 export default function Partnership() {
@@ -244,10 +245,10 @@ export default function Partnership() {
                     alt={p.name}
                     className="h-10 w-auto"
                     style={{ filter: "brightness(0) saturate(100%) invert(22%) sepia(13%) saturate(757%) hue-rotate(175deg) brightness(94%) contrast(85%)" }}
-                    onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "block"; }}
                   />
-                ) : null}
-                <span className={`font-bold font-body text-slate-700 text-sm${p.logo ? " hidden" : ""}`}>{p.name}</span>
+                ) : (
+                  <span className="font-bold font-body text-slate-700 text-sm">{p.name}</span>
+                )}
               </motion.div>
             ))}
           </motion.div>
