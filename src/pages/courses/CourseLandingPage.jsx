@@ -49,9 +49,7 @@ export default function CourseLandingPage({ course }) {
     <button
       onClick={handleEnrol}
       className={`px-8 py-4 rounded-full font-cherry text-lg font-bold transition-all hover:scale-105 active:scale-95 ${
-        variant === "yellow"
-          ? "bg-yellow text-slate-900"
-          : "bg-aqua text-white"
+        variant === "yellow" ? "bg-yellow text-slate-900" : "bg-aqua text-white"
       }`}
     >
       {label || `Enrol My Child Now — ₦${course.price.toLocaleString()}`}
@@ -77,7 +75,7 @@ export default function CourseLandingPage({ course }) {
       </header>
 
       {/* S1 — HERO */}
-      <section className="bg-aqua py-24 px-4 text-center text-white">
+      <section className="bg-dark py-24 px-4 text-center text-white">
         <motion.div
           className="max-w-3xl mx-auto"
           variants={fadeUp}
@@ -221,12 +219,21 @@ export default function CourseLandingPage({ course }) {
                 { label: "Ages", value: course.schedule.ages },
                 { label: "Grouping", value: course.schedule.grouping },
                 { label: "Format", value: course.schedule.format },
-              ].filter(Boolean).map(({ label, value }) => (
-                <div key={label} className="flex items-center justify-between px-6 py-4">
-                  <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">{label}</span>
-                  <span className="font-body text-sm font-bold text-slate-900">{value}</span>
-                </div>
-              ))}
+              ]
+                .filter(Boolean)
+                .map(({ label, value }) => (
+                  <div
+                    key={label}
+                    className="flex items-center justify-between px-6 py-4"
+                  >
+                    <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">
+                      {label}
+                    </span>
+                    <span className="font-body text-sm font-bold text-slate-900">
+                      {value}
+                    </span>
+                  </div>
+                ))}
               <div className="flex items-center justify-between px-6 py-4 bg-gray-50">
                 <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">
                   Investment
@@ -244,7 +251,10 @@ export default function CourseLandingPage({ course }) {
       </section>
 
       {/* S7 — TESTIMONIAL */}
-      <section className="py-20 px-4 text-white" style={{ backgroundColor: "#1a1a1a" }}>
+      <section
+        className="py-20 px-4 text-white"
+        style={{ backgroundColor: "#1a1a1a" }}
+      >
         <motion.div
           className="max-w-2xl mx-auto text-center"
           variants={fadeUp}
@@ -293,7 +303,12 @@ export default function CourseLandingPage({ course }) {
             Common questions
           </h2>
           <div className="flex flex-col gap-3">
-            {[...(Array.isArray(course.faqSpecific) ? course.faqSpecific : [course.faqSpecific]), ...course.faqCommon].map((faq, i) => (
+            {[
+              ...(Array.isArray(course.faqSpecific)
+                ? course.faqSpecific
+                : [course.faqSpecific]),
+              ...course.faqCommon,
+            ].map((faq, i) => (
               <FAQ key={i} q={faq.q} a={faq.a} />
             ))}
           </div>
@@ -301,7 +316,7 @@ export default function CourseLandingPage({ course }) {
       </section>
 
       {/* S9 — FINAL CTA */}
-      <section className="py-24 px-4 text-center text-white" style={{ backgroundColor: "#de2d10" }}>
+      <section className="py-24 px-4 text-center text-white bg-dark">
         <motion.div
           className="max-w-2xl mx-auto"
           variants={fadeUp}
