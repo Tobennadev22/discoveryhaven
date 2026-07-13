@@ -32,9 +32,22 @@ async function getRawBody(req) {
   });
 }
 
-async function addContactToSysteme({ email, firstName, tags }) {
+async function addContactToSysteme({ email, firstName, lastName, tags }) {
   const apiKey = process.env.SYSTEME_API_KEY;
-  if (!apiKey) return;
+  if (!apiKey) {
+    console.error("[systeme] SYSTEME_API_KEY is not set — skipping contact creation");
+    return;
+  }
+
+  const body = {
+    email,
+    ...(firstName ? { firstName } : {}),
+    ...(lastName ? { lastName } : {}),
+    fields: [],
+    tags: tags.map((name) => ({ name })),
+  };
+
+  console.log("[systeme] POST /api/contacts request:", JSON.stringify(body));
 
   const res = await fetch("https://api.systeme.io/api/contacts", {
     method: "POST",
@@ -42,23 +55,21 @@ async function addContactToSysteme({ email, firstName, tags }) {
       "Content-Type": "application/json",
       "X-API-Key": apiKey,
     },
-    body: JSON.stringify({
-      email,
-      fields: firstName
-        ? [{ slug: "first_name", value: firstName }]
-        : [],
-      tags: tags.map((name) => ({ name })),
-    }),
+    body: JSON.stringify(body),
   });
 
+  const text = await res.text();
+  console.log(`[systeme] response status=${res.status} body=${text}`);
+
   if (!res.ok) {
-    const text = await res.text();
     throw new Error(`Systeme.io error ${res.status}: ${text}`);
   }
-  return res.json();
+  return text ? JSON.parse(text) : null;
 }
 
 export default async function handler(req, res) {
+  console.log(`[webhook] hit: method=${req.method} at ${new Date().toISOString()}`);
+
   if (req.method !== "POST") {
     return res.status(405).end();
   }
@@ -68,6 +79,7 @@ export default async function handler(req, res) {
   const secretKey = process.env.PAYSTACK_SECRET_KEY;
 
   if (!secretKey) {
+    console.error("[webhook] PAYSTACK_SECRET_KEY is not set");
     return res.status(500).json({ error: "Server misconfigured" });
   }
 
@@ -78,6 +90,9 @@ export default async function handler(req, res) {
     .digest("hex");
 
   if (signature !== expectedSig) {
+    console.error("[webhook] signature mismatch — rejecting", {
+      hasSignatureHeader: Boolean(signature),
+    });
     return res.status(401).json({ error: "Invalid signature" });
   }
 
@@ -85,8 +100,11 @@ export default async function handler(req, res) {
   try {
     payload = JSON.parse(rawBody.toString());
   } catch {
+    console.error("[webhook] failed to parse JSON body");
     return res.status(400).json({ error: "Invalid JSON" });
   }
+
+  console.log(`[webhook] verified event=${payload.event}`);
 
   if (payload.event !== "charge.success") {
     return res.status(200).json({ received: true });
@@ -95,18 +113,36 @@ export default async function handler(req, res) {
   const data = payload.data;
   const email = data?.customer?.email;
   const firstName = data?.customer?.first_name || "";
+  const lastName = data?.customer?.last_name || "";
   const pageSlug = data?.source?.identifier;
   const course = pageSlug ? COURSE_TAG_MAP[pageSlug] : null;
 
+  // Full dump so a real test payment tells us exactly which field actually
+  // carries the course/page info — source.identifier is unconfirmed for
+  // hosted Payment Page checkouts.
+  console.log("[webhook] charge.success data:", JSON.stringify({
+    reference: data?.reference,
+    amount: data?.amount,
+    email,
+    firstName,
+    lastName,
+    source: data?.source,
+    metadata: data?.metadata,
+    pageSlug,
+    matchedCourse: course?.name || null,
+  }));
+
   if (!email || !course) {
+    console.warn(`[webhook] no Systeme.io call made — email=${Boolean(email)} matchedCourse=${Boolean(course)} pageSlug=${pageSlug}`);
     return res.status(200).json({ received: true, tagged: false });
   }
 
   try {
-    await addContactToSysteme({ email, firstName, tags: course.tags });
+    await addContactToSysteme({ email, firstName, lastName, tags: course.tags });
+    console.log(`[webhook] tagged ${email} for course=${course.name}`);
     return res.status(200).json({ received: true, tagged: true, course: course.name });
   } catch (err) {
-    console.error("Systeme.io tagging failed:", err.message);
+    console.error("[webhook] Systeme.io tagging failed:", err.message);
     // Return 200 so Paystack doesn't retry — log the failure for investigation
     return res.status(200).json({ received: true, tagged: false, error: err.message });
   }
