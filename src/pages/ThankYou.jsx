@@ -26,7 +26,7 @@ export default function ThankYou() {
   const { slug } = useParams();
   const course = COURSE_NAMES[slug] || {
     name: "your course",
-    month: "7th August 2026",
+    month: "August 2026",
     price: 0,
   };
 
@@ -81,7 +81,7 @@ export default function ThankYou() {
               {[
                 "Check your email for your confirmation and onboarding details",
                 "Join our Haven Tribe WhatsApp community for parent updates",
-                `Mark your calendar — ${course.name} begins ${course.month}, Friday`,
+                `Mark your calendar — ${course.name} begins ${course.month}, Starting from Friday, 7th August 2026`,
               ].map((step, i) => (
                 <div key={i} className="flex gap-3 items-start">
                   <div className="w-7 h-7 rounded-full bg-aqua flex items-center justify-center flex-shrink-0 mt-0.5">

@@ -79,7 +79,7 @@ const SDGS = [
     ],
     actions: [
       { label: "Explore Partnership Opportunities →", href: "/partnership" },
-      { label: "Download Our Partnership Proposal →", href: "/partnership" },
+      { label: "Download Our Sponsorship Kit →", href: "/partnership" },
     ],
   },
 ];
@@ -103,8 +103,13 @@ const ADVOCACY_ITEMS = [
 ];
 
 const FUNDERS = [
-  "British Council", "UNICEF", "Goethe-Institut", "Ford Foundation",
-  "Tony Elumelu Foundation", "African Development Bank", "Commonwealth Education Trust",
+  "British Council",
+  "UNICEF",
+  "Goethe-Institut",
+  "Ford Foundation",
+  "Tony Elumelu Foundation",
+  "African Development Bank",
+  "Commonwealth Education Trust",
 ];
 
 export default function Impact() {
@@ -125,22 +130,37 @@ export default function Impact() {
             We Do Not Just Believe in What We Build. We Measure It.
           </h1>
           <p className="text-gray-300 font-body text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
-            Discovery Haven is not a feel-good programme. It is a measurable, evidence-based learning institute whose work is anchored in global standards, driven by real data, and accountable to the children, families, and communities it serves. Every studio we run, every scholar we develop, and every community we enter is tracked, evaluated, and reported with full transparency.
+            Discovery Haven is not a feel-good programme. It is a measurable,
+            evidence-based learning institute whose work is anchored in global
+            standards, driven by real data, and accountable to the children,
+            families, and communities it serves. Every studio we run, every
+            scholar we develop, and every community we enter is tracked,
+            evaluated, and reported with full transparency.
           </p>
           {/* SDG positioning strip */}
           <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 mb-10 max-w-3xl mx-auto text-left">
             <p className="font-body text-yellow text-sm font-bold mb-1">
-              Primary Alignment: SDG 4 — Quality Education · SDG 17 — Partnerships for the Goals
+              Primary Alignment: SDG 4 — Quality Education · SDG 17 —
+              Partnerships for the Goals
             </p>
             <p className="font-body text-white/60 text-sm">
-              Secondary Alignment: SDG 5 — Gender Equality · SDG 10 — Reduced Inequalities · SDG 16 — Peace, Justice and Strong Institutions
+              Secondary Alignment: SDG 5 — Gender Equality · SDG 10 — Reduced
+              Inequalities · SDG 16 — Peace, Justice and Strong Institutions
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg" onClick={() => window.location.href = "/contact"}>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => (window.location.href = "/contact")}
+            >
               Download Our Latest Impact Report →
             </Button>
-            <Button variant="outline" size="lg" onClick={() => window.location.href = "/partnership"}>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => (window.location.href = "/partnership")}
+            >
               View Our SDG Mapping →
             </Button>
           </div>
@@ -160,7 +180,13 @@ export default function Impact() {
             Impact, advocacy, and global alignment — three parts of one mission.
           </h2>
           <p className="text-gray-600 font-body text-lg leading-relaxed">
-            At Discovery Haven, impact is not a department. It is a way of operating. Everything we measure, every partnership we build, and every community we advocate for is rooted in the same conviction that drove Stella to start this organisation — that every child carries extraordinary potential, and that potential deserves to be nurtured, documented, and amplified. This page tells the story of what that looks like in practice.
+            At Discovery Haven, impact is not a department. It is a way of
+            operating. Everything we measure, every partnership we build, and
+            every community we advocate for is rooted in the same conviction
+            that drove Stella to start this organisation — that every child
+            carries extraordinary potential, and that potential deserves to be
+            nurtured, documented, and amplified. This page tells the story of
+            what that looks like in practice.
           </p>
         </motion.div>
       </section>
@@ -176,9 +202,17 @@ export default function Impact() {
             viewport={useViewport}
           >
             {METRICS.map((m) => (
-              <motion.div key={m.label} variants={scaleIn} className="text-center">
-                <div className="font-cherry text-5xl lg:text-6xl text-white mb-2">{m.number}</div>
-                <div className="font-body text-white/80 font-semibold text-sm uppercase tracking-wide">{m.label}</div>
+              <motion.div
+                key={m.label}
+                variants={scaleIn}
+                className="text-center"
+              >
+                <div className="font-cherry text-5xl lg:text-6xl text-white mb-2">
+                  {m.number}
+                </div>
+                <div className="font-body text-white/80 font-semibold text-sm uppercase tracking-wide">
+                  {m.label}
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -195,13 +229,28 @@ export default function Impact() {
             viewport={useViewport}
           >
             <SectionLabel>PART ONE · IMPACT REPORTS AND INSIGHTS</SectionLabel>
-            <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-3 mt-4">Data That Proves the Work.</h2>
-            <p className="font-body text-aqua font-bold text-lg mb-6">We do not just believe in our programmes. We measure them.</p>
+            <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-3 mt-4">
+              Data That Proves the Work.
+            </h2>
+            <p className="font-body text-aqua font-bold text-lg mb-6">
+              We do not just believe in our programmes. We measure them.
+            </p>
             <p className="text-gray-600 font-body text-lg leading-relaxed mb-4">
-              At Discovery Haven, every cohort ends with a comprehensive evaluation. We track how scholars grow across three core dimensions — critical thinking and logical reasoning, communication and self-expression, and emotional intelligence and self-regulation. Our seasonal impact reports translate what happens inside our virtual studios into hard, honest metrics that tell us what is working, what needs to evolve, and how far each child has come from where they started.
+              At Discovery Haven, every cohort ends with a comprehensive
+              evaluation. We track how scholars grow across three core
+              dimensions — critical thinking and logical reasoning,
+              communication and self-expression, and emotional intelligence and
+              self-regulation. Our seasonal impact reports translate what
+              happens inside our virtual studios into hard, honest metrics that
+              tell us what is working, what needs to evolve, and how far each
+              child has come from where they started.
             </p>
             <p className="text-gray-600 font-body text-lg leading-relaxed mb-10">
-              We open-license our insights deliberately. We want our models to serve as transparent blueprints for educators, researchers, and policymakers who are working toward the same goal — a generation of children who are genuinely prepared for the world they are inheriting.
+              We open-license our insights deliberately. We want our models to
+              serve as transparent blueprints for educators, researchers, and
+              policymakers who are working toward the same goal — a generation
+              of children who are genuinely prepared for the world they are
+              inheriting.
             </p>
           </motion.div>
 
@@ -212,21 +261,36 @@ export default function Impact() {
             whileInView="show"
             viewport={useViewport}
           >
-            <h3 className="font-cherry text-2xl text-slate-900 mb-6">What Our Reports Contain</h3>
+            <h3 className="font-cherry text-2xl text-slate-900 mb-6">
+              What Our Reports Contain
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {REPORT_ITEMS.map((item, i) => (
                 <div key={i} className="flex gap-3 items-start">
                   <div className="w-5 h-5 rounded-full bg-aqua flex-shrink-0 mt-0.5 flex items-center justify-center">
-                    <span className="text-white font-bold text-xs">{i + 1}</span>
+                    <span className="text-white font-bold text-xs">
+                      {i + 1}
+                    </span>
                   </div>
-                  <span className="font-body text-gray-700 text-sm leading-relaxed">{item}</span>
+                  <span className="font-body text-gray-700 text-sm leading-relaxed">
+                    {item}
+                  </span>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={useViewport}>
-            <Button variant="primary" size="lg" onClick={() => window.location.href = "/contact"}>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => (window.location.href = "/contact")}
+            >
               Download Our Latest Impact Report →
             </Button>
           </motion.div>
@@ -243,18 +307,39 @@ export default function Impact() {
             viewport={useViewport}
             className="mb-16"
           >
-            <SectionLabel>PART TWO · GLOBAL ALIGNMENT AND SDG MAPPING</SectionLabel>
+            <SectionLabel>
+              PART TWO · GLOBAL ALIGNMENT AND SDG MAPPING
+            </SectionLabel>
             <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-3 mt-4 leading-tight">
               Local Execution. Global Standards. Measurable Impact.
             </h2>
             <p className="font-body text-aqua font-bold text-lg mb-6">
-              Discovery Haven maps every learning outcome against the United Nations Sustainable Development Goals — because local execution must meet global accountability.
+              Discovery Haven maps every learning outcome against the United
+              Nations Sustainable Development Goals — because local execution
+              must meet global accountability.
             </p>
             <p className="text-gray-600 font-body text-lg leading-relaxed mb-4">
-              When Discovery Haven maps its work against the United Nations SDGs, it is not performative. It is strategic. It signals to global funders, embassies, cultural institutes, and philanthropic foundations that our work meets internationally recognised standards of educational impact. It opens doors to partnerships with the British Council, UNICEF, the Goethe-Institut, the Ford Foundation, the African Development Bank, and the Commonwealth Education Trust. And it holds us accountable — because measuring against global benchmarks means we cannot hide behind vague claims of positive impact. We have to prove it.
+              When Discovery Haven maps its work against the United Nations
+              SDGs, it is not performative. It is strategic. It signals to
+              global funders, embassies, cultural institutes, and philanthropic
+              foundations that our work meets internationally recognised
+              standards of educational impact. It opens doors to partnerships
+              with the British Council, UNICEF, the Goethe-Institut, the Ford
+              Foundation, the African Development Bank, and the Commonwealth
+              Education Trust. And it holds us accountable — because measuring
+              against global benchmarks means we cannot hide behind vague claims
+              of positive impact. We have to prove it.
             </p>
             <p className="text-gray-600 font-body text-lg leading-relaxed">
-              When a child in Lagos learns to debate with evidence and lead with empathy, that is SDG 4 in action. When a young girl stands up in our Loud and Fearless studio and delivers a speech that changes how her peers think, that is SDG 5. When a child from an underserved community accesses the same quality of deeper learning as their counterpart in a private school, that is SDG 10. When Discovery Haven builds strategic partnerships with cultural institutes, embassies, and philanthropic foundations to scale that access, that is SDG 17.
+              When a child in Lagos learns to debate with evidence and lead with
+              empathy, that is SDG 4 in action. When a young girl stands up in
+              our Loud and Fearless studio and delivers a speech that changes
+              how her peers think, that is SDG 5. When a child from an
+              underserved community accesses the same quality of deeper learning
+              as their counterpart in a private school, that is SDG 10. When
+              Discovery Haven builds strategic partnerships with cultural
+              institutes, embassies, and philanthropic foundations to scale that
+              access, that is SDG 17.
             </p>
           </motion.div>
 
@@ -272,16 +357,26 @@ export default function Impact() {
                   <span className="bg-aqua text-white font-bold font-body text-xs tracking-widest uppercase px-3 py-1.5 rounded-full">
                     {sdg.number}
                   </span>
-                  <span className="font-cherry text-xl text-slate-900">{sdg.label}</span>
+                  <span className="font-cherry text-xl text-slate-900">
+                    {sdg.label}
+                  </span>
                 </div>
-                <h3 className="font-cherry text-2xl text-slate-900 mb-3">{sdg.heading}</h3>
-                <p className="text-gray-600 font-body text-base leading-relaxed mb-6">{sdg.body}</p>
-                <p className="font-bold font-body text-slate-900 text-sm mb-3">How we advance {sdg.number}:</p>
+                <h3 className="font-cherry text-2xl text-slate-900 mb-3">
+                  {sdg.heading}
+                </h3>
+                <p className="text-gray-600 font-body text-base leading-relaxed mb-6">
+                  {sdg.body}
+                </p>
+                <p className="font-bold font-body text-slate-900 text-sm mb-3">
+                  How we advance {sdg.number}:
+                </p>
                 <ul className="flex flex-col gap-2 mb-6">
                   {sdg.outcomes.map((o, j) => (
                     <li key={j} className="flex gap-3 items-start">
                       <div className="w-1.5 h-1.5 rounded-full bg-aqua flex-shrink-0 mt-2" />
-                      <span className="font-body text-gray-700 text-sm leading-relaxed">{o}</span>
+                      <span className="font-body text-gray-700 text-sm leading-relaxed">
+                        {o}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -307,7 +402,11 @@ export default function Impact() {
             whileInView="show"
             viewport={useViewport}
           >
-            <Button variant="primary" size="lg" onClick={() => window.location.href = "/partnership"}>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => (window.location.href = "/partnership")}
+            >
               View Our Full SDG Mapping Document →
             </Button>
           </motion.div>
@@ -329,16 +428,29 @@ export default function Impact() {
               Advocacy That Goes Beyond the Classroom.
             </h2>
             <p className="font-body text-aqua font-bold text-lg mb-6">
-              True educational equity means ensuring that high-calibre deeper learning is never a luxury.
+              True educational equity means ensuring that high-calibre deeper
+              learning is never a luxury.
             </p>
             <p className="text-gray-600 font-body text-lg leading-relaxed mb-4">
-              The children who need Discovery Haven most are not always the ones who can find us most easily. That is why advocacy is not an afterthought at Discovery Haven — it is a core function of everything we build.
+              The children who need Discovery Haven most are not always the ones
+              who can find us most easily. That is why advocacy is not an
+              afterthought at Discovery Haven — it is a core function of
+              everything we build.
             </p>
             <p className="text-gray-600 font-body text-lg leading-relaxed mb-4">
-              Through our outreach tracks, we actively take our studio methodologies into underserved communities. We bridge gaps between public and private educational networks. We challenge the rote-learning status quo through public exhibitions, inter-district tournaments, and localised community activities. We document and share what we find — because the evidence of what is possible for children who are given the right environment is the most powerful advocacy tool we have.
+              Through our outreach tracks, we actively take our studio
+              methodologies into underserved communities. We bridge gaps between
+              public and private educational networks. We challenge the
+              rote-learning status quo through public exhibitions,
+              inter-district tournaments, and localised community activities. We
+              document and share what we find — because the evidence of what is
+              possible for children who are given the right environment is the
+              most powerful advocacy tool we have.
             </p>
             <p className="text-gray-600 font-body text-lg leading-relaxed">
-              We are not just building programmes. We are building the argument for a different kind of education — and making that argument loud enough that systems have to listen.
+              We are not just building programmes. We are building the argument
+              for a different kind of education — and making that argument loud
+              enough that systems have to listen.
             </p>
           </motion.div>
 
@@ -349,19 +461,32 @@ export default function Impact() {
             whileInView="show"
             viewport={useViewport}
           >
-            <h3 className="font-cherry text-2xl text-slate-900 mb-6">Our Advocacy Work Includes</h3>
+            <h3 className="font-cherry text-2xl text-slate-900 mb-6">
+              Our Advocacy Work Includes
+            </h3>
             <div className="flex flex-col gap-3">
               {ADVOCACY_ITEMS.map((item, i) => (
                 <div key={i} className="flex gap-3 items-start">
                   <div className="w-1.5 h-1.5 rounded-full bg-aqua flex-shrink-0 mt-2" />
-                  <span className="font-body text-gray-700 text-sm leading-relaxed">{item}</span>
+                  <span className="font-body text-gray-700 text-sm leading-relaxed">
+                    {item}
+                  </span>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={useViewport}>
-            <Button variant="primary" size="lg" onClick={() => window.location.href = "/explore"}>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => (window.location.href = "/explore")}
+            >
               Explore Our Outreach Footprint →
             </Button>
           </motion.div>
@@ -377,25 +502,39 @@ export default function Impact() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel className="text-yellow">FOR INSTITUTIONAL PARTNERS AND FUNDERS</SectionLabel>
+            <SectionLabel className="text-yellow">
+              FOR INSTITUTIONAL PARTNERS AND FUNDERS
+            </SectionLabel>
             <h2 className="font-cherry text-4xl lg:text-5xl text-white mb-6 mt-4 leading-tight">
               Discovery Haven is built for institutional partnership.
             </h2>
             <p className="text-gray-300 font-body text-lg leading-relaxed mb-6 max-w-2xl mx-auto">
-              Our impact documentation, SDG alignment framework, and open-licensed pedagogical reports are designed to meet the due diligence requirements of global funders and institutional partners. We maintain detailed cohort records, outcome data, and programme evaluation reports that are available to verified institutional partners on request.
+              Our impact documentation, SDG alignment framework, and
+              open-licensed pedagogical reports are designed to meet the due
+              diligence requirements of global funders and institutional
+              partners. We maintain detailed cohort records, outcome data, and
+              programme evaluation reports that are available to verified
+              institutional partners on request.
             </p>
             <p className="text-gray-400 font-body text-base mb-8">
-              We are actively pursuing partnerships and funding relationships with the following organisations:
+              We are actively pursuing partnerships and funding relationships
+              with the following organisations:
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-10">
               {FUNDERS.map((f) => (
-                <span key={f} className="bg-white/10 text-white font-body text-sm font-bold px-4 py-2 rounded-full">
+                <span
+                  key={f}
+                  className="bg-white/10 text-white font-body text-sm font-bold px-4 py-2 rounded-full"
+                >
                   {f}
                 </span>
               ))}
             </div>
             <p className="text-gray-400 font-body text-base mb-10 max-w-xl mx-auto">
-              If you represent a funding body, embassy, cultural institute, or institutional partner and would like to discuss a formal partnership, programme sponsorship, or grant alignment, we would love to hear from you.
+              If you represent a funding body, embassy, cultural institute, or
+              institutional partner and would like to discuss a formal
+              partnership, programme sponsorship, or grant alignment, we would
+              love to hear from you.
             </p>
             <Button
               variant="yellow"
@@ -418,10 +557,18 @@ export default function Impact() {
             viewport={useViewport}
           >
             <h2 className="font-cherry text-4xl lg:text-5xl text-white mb-6 leading-tight">
-              Every data point represents a child who showed up, did the work, and left different.
+              Every data point represents a child who showed up, did the work,
+              and left different.
             </h2>
             <p className="text-white/85 font-body text-lg leading-relaxed mb-10">
-              Behind every metric in our impact reports is a real child — a child who found their voice in Loud and Fearless, who published their first story in Creative Quest, who learned to sit with a difficult emotion in the EQ Lab, or who cracked a logic puzzle in the Curiosity Box and realised for the first time that they loved thinking. That is what we are measuring. That is what we are protecting. And that is what every partnership, every report, and every advocacy effort at Discovery Haven exists to sustain.
+              Behind every metric in our impact reports is a real child — a
+              child who found their voice in Loud and Fearless, who published
+              their first story in Creative Quest, who learned to sit with a
+              difficult emotion in the EQ Lab, or who cracked a logic puzzle in
+              the Curiosity Box and realised for the first time that they loved
+              thinking. That is what we are measuring. That is what we are
+              protecting. And that is what every partnership, every report, and
+              every advocacy effort at Discovery Haven exists to sustain.
             </p>
             <Button
               variant="yellow"

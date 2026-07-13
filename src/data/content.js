@@ -73,7 +73,7 @@ export const COURSES = [
       "A programme for young storytellers. Children write, edit, and publish creative fiction, non-fiction, and flash fiction pieces. Classes grouped by age: 7–11 and 12–16.",
     ages: "7–11 & 12–16",
     duration: "6 Weeks",
-    format: "Virtual · Saturdays",
+    format: "Virtual · Fridays",
     color: "#05c3dd",
     icon: "PenLine",
     image: "",
