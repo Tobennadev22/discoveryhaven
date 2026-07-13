@@ -4,15 +4,31 @@ import { CheckCircle } from "lucide-react";
 import discoveryHavenLogo from "../assets/dh.png";
 
 const COURSE_NAMES = {
-  "creative-quest": { name: "Creative Quest", month: "August 2026", price: 75000 },
-  "loud-and-fearless": { name: "Loud & Fearless", month: "October 2026", price: 75000 },
-  "curiosity-box": { name: "The Curiosity Box", month: "February 2027", price: 50000 },
+  "creative-quest": {
+    name: "Creative Quest",
+    month: "August 2026",
+    price: 75000,
+  },
+  "loud-and-fearless": {
+    name: "Loud & Fearless",
+    month: "October 2026",
+    price: 75000,
+  },
+  "curiosity-box": {
+    name: "The Curiosity Box",
+    month: "February 2027",
+    price: 50000,
+  },
   "eq-lab": { name: "The EQ Lab", month: "June 2027", price: 50000 },
 };
 
 export default function ThankYou() {
   const { slug } = useParams();
-  const course = COURSE_NAMES[slug] || { name: "your course", month: "2026", price: 0 };
+  const course = COURSE_NAMES[slug] || {
+    name: "your course",
+    month: "7th August 2026",
+    price: 0,
+  };
 
   useEffect(() => {
     // Paystack payment page redirects here after confirmed payment —
@@ -30,8 +46,14 @@ export default function ThankYou() {
     <div className="min-h-screen bg-aqua flex flex-col">
       <header className="py-4 px-6">
         <Link to="/" className="inline-flex items-center gap-2">
-          <img src={discoveryHavenLogo} alt="Discovery Haven" className="w-9 h-9" />
-          <span className="font-cherry text-xl text-white">Discovery Haven</span>
+          <img
+            src={discoveryHavenLogo}
+            alt="Discovery Haven"
+            className="w-9 h-9"
+          />
+          <span className="font-cherry text-xl text-white">
+            Discovery Haven
+          </span>
         </Link>
       </header>
 
@@ -46,23 +68,30 @@ export default function ThankYou() {
             You're in. Welcome to the Haven.
           </h1>
           <p className="font-body text-white/90 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-            Your child's place in <strong>{course.name}</strong> has been reserved. You will receive a
-            confirmation email within the next few minutes with everything you need to get started.
+            Your child's place in <strong>{course.name}</strong> has been
+            reserved. You will receive a confirmation email within the next few
+            minutes with everything you need to get started.
           </p>
 
           <div className="bg-white rounded-3xl p-8 text-left mb-8">
-            <h2 className="font-cherry text-2xl text-slate-900 mb-6 text-center">What Happens Next</h2>
+            <h2 className="font-cherry text-2xl text-slate-900 mb-6 text-center">
+              What Happens Next
+            </h2>
             <div className="flex flex-col gap-4">
               {[
                 "Check your email for your confirmation and onboarding details",
                 "Join our Haven Tribe WhatsApp community for parent updates",
-                `Mark your calendar — ${course.name} begins ${course.month}, Saturdays`,
+                `Mark your calendar — ${course.name} begins ${course.month}, Friday`,
               ].map((step, i) => (
                 <div key={i} className="flex gap-3 items-start">
                   <div className="w-7 h-7 rounded-full bg-aqua flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-white font-bold text-xs">{i + 1}</span>
+                    <span className="text-white font-bold text-xs">
+                      {i + 1}
+                    </span>
                   </div>
-                  <span className="font-body text-gray-700 text-sm leading-relaxed">{step}</span>
+                  <span className="font-body text-gray-700 text-sm leading-relaxed">
+                    {step}
+                  </span>
                 </div>
               ))}
             </div>
