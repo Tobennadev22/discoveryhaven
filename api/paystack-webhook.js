@@ -23,6 +23,16 @@ const COURSE_TAG_MAP = {
   },
 };
 
+function findCustomField(customFields, variableName) {
+  return (customFields || []).find((f) => f.variable_name === variableName)?.value || "";
+}
+
+function splitName(fullName) {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return { firstName: "", lastName: "" };
+  return { firstName: parts[0], lastName: parts.slice(1).join(" ") };
+}
+
 async function getRawBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -112,8 +122,16 @@ export default async function handler(req, res) {
 
   const data = payload.data;
   const email = data?.customer?.email;
-  const firstName = data?.customer?.first_name || "";
-  const lastName = data?.customer?.last_name || "";
+  const customFields = data?.metadata?.custom_fields;
+  // Paystack's customer.first_name/last_name come from Paystack's own
+  // persisted Customer record, which we never populate — the name typed
+  // into our checkout form only ever arrives via metadata.custom_fields
+  // (see usePaystack.js), so that's the field we must read the payer's
+  // name from.
+  const nameFromMetadata = findCustomField(customFields, "name");
+  const { firstName: metaFirstName, lastName: metaLastName } = splitName(nameFromMetadata);
+  const firstName = data?.customer?.first_name || metaFirstName;
+  const lastName = data?.customer?.last_name || metaLastName;
   const pageSlug = data?.source?.identifier;
   const course = pageSlug ? COURSE_TAG_MAP[pageSlug] : null;
 
