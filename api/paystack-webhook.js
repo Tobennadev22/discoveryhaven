@@ -23,6 +23,36 @@ const COURSE_TAG_MAP = {
   },
 };
 
+function findCustomField(customFields, variableName) {
+  return (customFields || []).find((f) => f.variable_name === variableName)?.value || "";
+}
+
+// Maps Paystack metadata.custom_fields variable_name -> Systeme.io custom
+// field slug. These slugs are a best guess (child_name, child_age, event)
+// and must match whatever custom fields actually exist in the Systeme.io
+// account (Contacts -> Settings -> Custom Fields), or Systeme.io may
+// reject the request. Verify/correct against the real slugs.
+const CUSTOM_FIELD_SLUG_MAP = {
+  "child name": "child_name",
+  "child age": "child_age",
+  event: "event",
+};
+
+function buildSystemeFields(customFields) {
+  const fields = [];
+  for (const f of customFields || []) {
+    const slug = CUSTOM_FIELD_SLUG_MAP[f.variable_name];
+    if (slug && f.value) fields.push({ slug, value: f.value });
+  }
+  return fields;
+}
+
+function splitName(fullName) {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return { firstName: "", lastName: "" };
+  return { firstName: parts[0], lastName: parts.slice(1).join(" ") };
+}
+
 async function getRawBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -32,7 +62,7 @@ async function getRawBody(req) {
   });
 }
 
-async function addContactToSysteme({ email, firstName, lastName, tags }) {
+async function addContactToSysteme({ email, firstName, lastName, fields, tags }) {
   const apiKey = process.env.SYSTEME_API_KEY;
   if (!apiKey) {
     console.error("[systeme] SYSTEME_API_KEY is not set — skipping contact creation");
@@ -43,7 +73,7 @@ async function addContactToSysteme({ email, firstName, lastName, tags }) {
     email,
     ...(firstName ? { firstName } : {}),
     ...(lastName ? { lastName } : {}),
-    fields: [],
+    fields: fields || [],
     tags: tags.map((name) => ({ name })),
   };
 
@@ -112,8 +142,17 @@ export default async function handler(req, res) {
 
   const data = payload.data;
   const email = data?.customer?.email;
-  const firstName = data?.customer?.first_name || "";
-  const lastName = data?.customer?.last_name || "";
+  const customFields = data?.metadata?.custom_fields;
+  // Paystack's customer.first_name/last_name come from Paystack's own
+  // persisted Customer record, which we never populate — the name typed
+  // into our checkout form only ever arrives via metadata.custom_fields
+  // (see usePaystack.js), so that's the field we must read the payer's
+  // name from.
+  const nameFromMetadata = findCustomField(customFields, "name");
+  const { firstName: metaFirstName, lastName: metaLastName } = splitName(nameFromMetadata);
+  const firstName = data?.customer?.first_name || metaFirstName;
+  const lastName = data?.customer?.last_name || metaLastName;
+  const systemeFields = buildSystemeFields(customFields);
   const pageSlug = data?.source?.identifier;
   const course = pageSlug ? COURSE_TAG_MAP[pageSlug] : null;
 
@@ -126,6 +165,7 @@ export default async function handler(req, res) {
     email,
     firstName,
     lastName,
+    systemeFields,
     source: data?.source,
     metadata: data?.metadata,
     pageSlug,
@@ -138,7 +178,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    await addContactToSysteme({ email, firstName, lastName, tags: course.tags });
+    await addContactToSysteme({ email, firstName, lastName, fields: systemeFields, tags: course.tags });
     console.log(`[webhook] tagged ${email} for course=${course.name}`);
     return res.status(200).json({ received: true, tagged: true, course: course.name });
   } catch (err) {
