@@ -42,7 +42,7 @@ export const COURSES = [
       "Build and present a step-by-step investigation report",
     ],
     bonus: "Children receive a personalised Investigator Certificate.",
-    price: 45000,
+    price: 50000,
   },
   {
     id: "eq-lab",
@@ -62,7 +62,7 @@ export const COURSES = [
       "Learn peaceful diplomacy and leadership frameworks",
     ],
     bonus: "Children graduate as certified Young Diplomats.",
-    price: 40000,
+    price: 50000,
   },
 
   {
@@ -83,7 +83,7 @@ export const COURSES = [
       "Build and present a final story portfolio",
     ],
     bonus: "Top stories are published in the DH Youth Anthology.",
-    price: 45000,
+    price: 75000,
   },
   {
     id: "loud-fearless",
@@ -104,7 +104,7 @@ export const COURSES = [
     ],
     bonus:
       "Final speech delivered before a live audience of parents and guests.",
-    price: 45000,
+    price: 75000,
   },
 ];
 

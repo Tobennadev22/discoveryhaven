@@ -46,7 +46,7 @@ const COURSE = {
     course: "Creative Quest",
     month: "August 2026",
     duration: "6 Weeks",
-    sessionSchedule: "Saturdays · 2 hours per session",
+    sessionSchedule: "Fridays · 2 hours per session",
     ages: "7–16",
     grouping: "Classes grouped by age: 7–11 and 12–16",
     format: "Virtual — live Zoom sessions",
