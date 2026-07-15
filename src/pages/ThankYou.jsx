@@ -24,7 +24,8 @@ const COURSE_NAMES = {
 
 export default function ThankYou() {
   const { slug } = useParams();
-  const course = COURSE_NAMES[slug] || {
+  const knownCourse = COURSE_NAMES[slug];
+  const course = knownCourse || {
     name: "your course",
     month: "August 2026",
     price: 0,
@@ -32,15 +33,18 @@ export default function ThankYou() {
 
   useEffect(() => {
     // Paystack payment page redirects here after confirmed payment —
-    // this is the authoritative place to fire the Purchase event.
-    if (window.fbq) {
+    // this is the authoritative place to fire the Purchase event. Only
+    // fire it for a recognized course/slug — an unmatched slug has no
+    // real price, and reporting value: 0 pollutes Meta's Purchase data.
+    if (window.fbq && knownCourse) {
       window.fbq("track", "Purchase", {
-        content_name: course.name,
-        value: course.price,
+        value: Number(knownCourse.price),
         currency: "NGN",
+        content_name: knownCourse.name,
+        content_type: "product",
       });
     }
-  }, []);
+  }, [knownCourse]);
 
   return (
     <div className="min-h-screen bg-aqua flex flex-col">

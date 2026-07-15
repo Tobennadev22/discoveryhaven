@@ -38,9 +38,10 @@ export default function CourseLandingPage({ course }) {
   const handleEnrol = () => {
     if (window.fbq)
       window.fbq("track", "InitiateCheckout", {
-        content_name: course.title,
-        value: course.price,
+        value: Number(course.price),
         currency: "NGN",
+        content_name: course.title,
+        content_type: "product",
       });
     window.location.href = course.paymentUrl;
   };

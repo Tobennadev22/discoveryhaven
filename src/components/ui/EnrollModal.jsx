@@ -26,6 +26,14 @@ export function EnrollModal({ isOpen, onClose, event }) {
       onSuccess: (res) => {
         setLoading(false)
         setSuccess(true)
+        if (window.fbq) {
+          window.fbq('track', 'Purchase', {
+            value: Number(event.price),
+            currency: 'NGN',
+            content_name: event.title,
+            content_type: 'product',
+          })
+        }
       },
       onClose: () => setLoading(false),
     })
