@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { appendSheetRow } from "./lib/googleSheets.js";
 
 // Disable Vercel's default body parser so we can read the raw bytes
 // needed for HMAC signature verification.
@@ -62,11 +63,13 @@ async function getRawBody(req) {
   });
 }
 
+// Returns { ok, status, body } instead of throwing, so the caller can log
+// the Systeme.io response status/body to the sheet regardless of outcome.
 async function addContactToSysteme({ email, firstName, lastName, fields, tags }) {
   const apiKey = process.env.SYSTEME_API_KEY;
   if (!apiKey) {
     console.error("[systeme] SYSTEME_API_KEY is not set — skipping contact creation");
-    return;
+    return { ok: false, status: null, body: "SYSTEME_API_KEY not set" };
   }
 
   const body = {
@@ -91,16 +94,33 @@ async function addContactToSysteme({ email, firstName, lastName, fields, tags })
   const text = await res.text();
   console.log(`[systeme] response status=${res.status} body=${text}`);
 
-  if (!res.ok) {
-    throw new Error(`Systeme.io error ${res.status}: ${text}`);
+  return { ok: res.ok, status: res.status, body: text };
+}
+
+// Logs one row to the "Discovery Haven Contact Forms" sheet for every
+// webhook invocation. Never throws — a Sheets outage must not affect the
+// webhook's response to Paystack.
+async function logToSheet({ eventType, email, amount, reference, systemeStatus, error }) {
+  try {
+    await appendSheetRow([
+      new Date().toISOString(),
+      eventType || "",
+      email || "",
+      amount != null ? amount : "",
+      reference || "",
+      systemeStatus != null ? systemeStatus : "",
+      error || "",
+    ]);
+  } catch (err) {
+    console.error("[sheets] failed to log row:", err.message);
   }
-  return text ? JSON.parse(text) : null;
 }
 
 export default async function handler(req, res) {
   console.log(`[webhook] hit: method=${req.method} at ${new Date().toISOString()}`);
 
   if (req.method !== "POST") {
+    await logToSheet({ eventType: `invalid_method:${req.method}`, error: "Non-POST request" });
     return res.status(405).end();
   }
 
@@ -110,6 +130,7 @@ export default async function handler(req, res) {
 
   if (!secretKey) {
     console.error("[webhook] PAYSTACK_SECRET_KEY is not set");
+    await logToSheet({ eventType: "server_misconfigured", error: "PAYSTACK_SECRET_KEY not set" });
     return res.status(500).json({ error: "Server misconfigured" });
   }
 
@@ -123,6 +144,7 @@ export default async function handler(req, res) {
     console.error("[webhook] signature mismatch — rejecting", {
       hasSignatureHeader: Boolean(signature),
     });
+    await logToSheet({ eventType: "invalid_signature", error: "Signature mismatch" });
     return res.status(401).json({ error: "Invalid signature" });
   }
 
@@ -131,12 +153,14 @@ export default async function handler(req, res) {
     payload = JSON.parse(rawBody.toString());
   } catch {
     console.error("[webhook] failed to parse JSON body");
+    await logToSheet({ eventType: "invalid_json", error: "Failed to parse JSON body" });
     return res.status(400).json({ error: "Invalid JSON" });
   }
 
   console.log(`[webhook] verified event=${payload.event}`);
 
   if (payload.event !== "charge.success") {
+    await logToSheet({ eventType: payload.event, reference: payload.data?.reference });
     return res.status(200).json({ received: true });
   }
 
@@ -155,6 +179,7 @@ export default async function handler(req, res) {
   const systemeFields = buildSystemeFields(customFields);
   const pageSlug = data?.source?.identifier;
   const course = pageSlug ? COURSE_TAG_MAP[pageSlug] : null;
+  const amount = data?.amount != null ? data.amount / 100 : null;
 
   // Full dump so a real test payment tells us exactly which field actually
   // carries the course/page info — source.identifier is unconfirmed for
@@ -173,17 +198,42 @@ export default async function handler(req, res) {
   }));
 
   if (!email || !course) {
-    console.warn(`[webhook] no Systeme.io call made — email=${Boolean(email)} matchedCourse=${Boolean(course)} pageSlug=${pageSlug}`);
+    const error = `no Systeme.io call made — email=${Boolean(email)} matchedCourse=${Boolean(course)} pageSlug=${pageSlug}`;
+    console.warn(`[webhook] ${error}`);
+    await logToSheet({
+      eventType: payload.event,
+      email,
+      amount,
+      reference: data?.reference,
+      systemeStatus: "",
+      error,
+    });
     return res.status(200).json({ received: true, tagged: false });
   }
 
-  try {
-    await addContactToSysteme({ email, firstName, lastName, fields: systemeFields, tags: course.tags });
+  const systemeResult = await addContactToSysteme({ email, firstName, lastName, fields: systemeFields, tags: course.tags });
+
+  if (systemeResult.ok) {
     console.log(`[webhook] tagged ${email} for course=${course.name}`);
-    return res.status(200).json({ received: true, tagged: true, course: course.name });
-  } catch (err) {
-    console.error("[webhook] Systeme.io tagging failed:", err.message);
-    // Return 200 so Paystack doesn't retry — log the failure for investigation
-    return res.status(200).json({ received: true, tagged: false, error: err.message });
+  } else {
+    console.error("[webhook] Systeme.io tagging failed:", systemeResult.body);
   }
+
+  await logToSheet({
+    eventType: payload.event,
+    email,
+    amount,
+    reference: data?.reference,
+    systemeStatus: systemeResult.status,
+    error: systemeResult.ok ? "" : systemeResult.body,
+  });
+
+  // Return 200 either way so Paystack doesn't retry — failures are recorded
+  // above, in the sheet and in the function logs, for investigation.
+  return res.status(200).json({
+    received: true,
+    tagged: systemeResult.ok,
+    course: course.name,
+    ...(systemeResult.ok ? {} : { error: systemeResult.body }),
+  });
 }
