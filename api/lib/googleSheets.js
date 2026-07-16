@@ -93,7 +93,13 @@ export async function appendSheetRow(values) {
     return;
   }
 
-  const range = encodeURIComponent(`${sheetName}!A:G`);
+  // Sheet/tab names must be single-quoted in A1 notation whenever they
+  // contain a space (or other special character) — Google's API rejects
+  // an unquoted "My Tab Name!A:G" as an unparseable range. Quoting is
+  // always valid, even for single-word names, so quote unconditionally.
+  // A literal ' inside the tab name is escaped as '' per A1 notation.
+  const quotedSheetName = `'${sheetName.replace(/'/g, "''")}'`;
+  const range = encodeURIComponent(`${quotedSheetName}!A:G`);
   const res = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED`,
     {
