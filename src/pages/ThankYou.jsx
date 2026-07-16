@@ -103,7 +103,7 @@ export default function ThankYou() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/2349163992614"
+              href="https://chat.whatsapp.com/Hts4KLTDFCC5zZSQ4sxuaK?s=cl&p=a&ilr=4&amv=3"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-full font-cherry text-lg bg-yellow text-dark hover:scale-105 active:scale-95 transition-all"
