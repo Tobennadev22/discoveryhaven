@@ -8,10 +8,32 @@ function base64url(input) {
     .replace(/=+$/, "");
 }
 
+// Vercel env vars can arrive mangled depending on how they were pasted:
+// wrapped in stray quotes, Windows \r\n line endings, or the literal
+// two-character sequence \n instead of a real newline. All of these
+// produce a PEM string Node's crypto module rejects with an opaque
+// "1E08010C:DECODER routines::unsupported" error, so normalize
+// defensively rather than trusting the raw env var.
+function normalizePrivateKey(raw) {
+  let key = (raw || "").trim();
+  if (key.startsWith('"') && key.endsWith('"')) key = key.slice(1, -1);
+  key = key.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  return key.trim();
+}
+
 async function getAccessToken() {
   const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
-  const privateKey = (process.env.GOOGLE_SHEETS_PRIVATE_KEY || "").replace(/\\n/g, "\n");
+  const privateKey = normalizePrivateKey(process.env.GOOGLE_SHEETS_PRIVATE_KEY);
   if (!clientEmail || !privateKey) return null;
+
+  // Non-secret structural diagnostics — never log the key itself.
+  const lines = privateKey.split("\n");
+  console.log("[sheets] private key check:", JSON.stringify({
+    startsWithBeginMarker: privateKey.startsWith("-----BEGIN PRIVATE KEY-----"),
+    endsWithEndMarker: privateKey.endsWith("-----END PRIVATE KEY-----"),
+    lineCount: lines.length,
+    length: privateKey.length,
+  }));
 
   const header = { alg: "RS256", typ: "JWT" };
   const now = Math.floor(Date.now() / 1000);
@@ -24,12 +46,17 @@ async function getAccessToken() {
   };
 
   const unsigned = `${base64url(JSON.stringify(header))}.${base64url(JSON.stringify(claimSet))}`;
-  const signature = crypto
-    .sign("RSA-SHA256", Buffer.from(unsigned), privateKey)
-    .toString("base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
+  let signature;
+  try {
+    signature = crypto
+      .sign("RSA-SHA256", Buffer.from(unsigned), privateKey)
+      .toString("base64")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+  } catch (err) {
+    throw new Error(`Failed to sign JWT with GOOGLE_SHEETS_PRIVATE_KEY — check the key was pasted with real newlines and the full BEGIN/END markers intact: ${err.message}`);
+  }
   const jwt = `${unsigned}.${signature}`;
 
   const res = await fetch("https://oauth2.googleapis.com/token", {

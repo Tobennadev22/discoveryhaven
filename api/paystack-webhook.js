@@ -119,12 +119,18 @@ async function logToSheet({ eventType, email, amount, reference, systemeStatus, 
 export default async function handler(req, res) {
   console.log(`[webhook] hit: method=${req.method} at ${new Date().toISOString()}`);
 
+  // Log arrival to the sheet before anything else (signature check, parsing,
+  // etc.) so a row appears even if a later step throws or misconfigured env
+  // vars cause an early return — this is the ground truth for "did Paystack
+  // even reach us."
+  await logToSheet({ eventType: `arrival:${req.method}` });
+
   if (req.method !== "POST") {
-    await logToSheet({ eventType: `invalid_method:${req.method}`, error: "Non-POST request" });
     return res.status(405).end();
   }
 
   const rawBody = await getRawBody(req);
+  console.log(`[webhook] raw body (${rawBody.length} bytes):`, rawBody.toString().slice(0, 2000));
   const signature = req.headers["x-paystack-signature"];
   const secretKey = process.env.PAYSTACK_SECRET_KEY;
 
