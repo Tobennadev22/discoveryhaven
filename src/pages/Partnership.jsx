@@ -1,5 +1,7 @@
 import { useState } from "react";
-import campingNigeriaLogo from "../assets/campingNigerialogo.webp";
+import campingNigeriaLogo from "../assets/campingNigerialogo.png";
+import socLogo from "../assets/soc.png";
+import schoolofconfidenceLogo from "../assets/schoolofconfidence.png";
 import {
   Users,
   Landmark,
@@ -354,8 +356,9 @@ function TierCard({ tier }) {
 }
 
 const PARTNERS = [
-  { name: "Our Nigeria Publishing", logo: null },
+  { name: "Our Nigeria Publishing", logo: socLogo },
   { name: "Camping Nigeria", logo: campingNigeriaLogo },
+  { name: "School of Confidence", logo: schoolofconfidenceLogo },
 ];
 
 export default function Partnership() {
@@ -426,17 +429,17 @@ export default function Partnership() {
               <motion.div
                 key={i}
                 variants={scaleIn}
-                className="bg-gray-50 border border-gray-200 rounded-2xl px-8 py-5 flex items-center justify-center min-w-[180px]"
+                className="bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2 flex items-center justify-center min-w-[100px]"
               >
                 {p.logo ? (
                   <img
                     src={p.logo}
                     alt={p.name}
-                    className="h-10 w-auto"
-                    style={{
-                      filter:
-                        "brightness(0) saturate(100%) invert(22%) sepia(13%) saturate(757%) hue-rotate(175deg) brightness(94%) contrast(85%)",
-                    }}
+                    className="h-32 w-auto"
+                    // style={{
+                    //   filter:
+                    //     "brightness(0) saturate(100%) invert(28%) sepia(13%) saturate(757%) hue-rotate(175deg) brightness(94%) contrast(85%)",
+                    // }}
                   />
                 ) : (
                   <span className="font-bold font-body text-slate-700 text-sm">
