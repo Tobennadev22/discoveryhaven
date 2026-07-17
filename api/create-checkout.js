@@ -68,6 +68,32 @@ export default async function handler(req, res) {
     // - a no-op for countries/numbers that don't have one.
     const fullPhone = `${countryCode}${String(phone).replace(/^0+/, "")}`;
 
+    // transaction/initialize has no first_name/last_name/phone parameters
+    // of its own — those only show up in Paystack's dashboard (Customers,
+    // and the transaction's customer panel) if a Customer record exists
+    // for this email, which requires a separate call to the Customer API.
+    // Best-effort: a failure here must not block checkout, since the
+    // payment itself doesn't depend on it.
+    try {
+      const customerRes = await fetch("https://api.paystack.co/customer", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          first_name: firstName,
+          last_name: lastName,
+          phone: fullPhone,
+        }),
+      });
+      const customerText = await customerRes.text();
+      console.log(`[create-checkout] POST /customer status=${customerRes.status} body=${customerText}`);
+    } catch (err) {
+      console.error("[create-checkout] failed to create/update Paystack customer:", err.message);
+    }
+
     const paystackRes = await fetch("https://api.paystack.co/transaction/initialize", {
       method: "POST",
       headers: {
