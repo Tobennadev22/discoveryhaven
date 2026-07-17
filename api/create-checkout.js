@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const { email, courseSlug, firstName, lastName, phone, childName, childAge } = req.body || {};
+    const { email, courseSlug, firstName, lastName, countryCode, phone, childName, childAge } = req.body || {};
     const course = COURSES[courseSlug];
 
     if (!email || typeof email !== "string" || !email.includes("@")) {
@@ -48,6 +48,9 @@ export default async function handler(req, res) {
     }
     if (!firstName || !lastName || !phone || !childName || !childAge) {
       return res.status(400).json({ error: "Missing required enrollment details" });
+    }
+    if (!countryCode || !/^\+\d{1,4}$/.test(countryCode)) {
+      return res.status(400).json({ error: "Invalid country code" });
     }
 
     const secretKey = process.env.PAYSTACK_SECRET_KEY;
@@ -60,7 +63,10 @@ export default async function handler(req, res) {
     // from the client, so a tampered request can't change the charged price.
     const proto = req.headers["x-forwarded-proto"] || "https";
     const callbackUrl = `${proto}://${req.headers.host}/thank-you/${courseSlug}`;
-    const fullPhone = `+234${String(phone).replace(/^0+/, "")}`;
+    // Local numbers are commonly written with a leading 0 that's dropped
+    // once the country code is prefixed (e.g. Nigeria/UK/Ghana convention)
+    // - a no-op for countries/numbers that don't have one.
+    const fullPhone = `${countryCode}${String(phone).replace(/^0+/, "")}`;
 
     const paystackRes = await fetch("https://api.paystack.co/transaction/initialize", {
       method: "POST",

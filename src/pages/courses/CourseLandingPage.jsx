@@ -10,11 +10,44 @@ import {
 } from "../../components/ui/Motion";
 import discoveryHavenLogo from "../../assets/dh.png";
 
+const COUNTRY_CODES = [
+  { code: "+234", label: "🇳🇬 Nigeria (+234)" },
+  { code: "+233", label: "🇬🇭 Ghana (+233)" },
+  { code: "+254", label: "🇰🇪 Kenya (+254)" },
+  { code: "+27", label: "🇿🇦 South Africa (+27)" },
+  { code: "+20", label: "🇪🇬 Egypt (+20)" },
+  { code: "+237", label: "🇨🇲 Cameroon (+237)" },
+  { code: "+228", label: "🇹🇬 Togo (+228)" },
+  { code: "+229", label: "🇧🇯 Benin (+229)" },
+  { code: "+256", label: "🇺🇬 Uganda (+256)" },
+  { code: "+255", label: "🇹🇿 Tanzania (+255)" },
+  { code: "+250", label: "🇷🇼 Rwanda (+250)" },
+  { code: "+251", label: "🇪🇹 Ethiopia (+251)" },
+  { code: "+221", label: "🇸🇳 Senegal (+221)" },
+  { code: "+225", label: "🇨🇮 Côte d'Ivoire (+225)" },
+  { code: "+260", label: "🇿🇲 Zambia (+260)" },
+  { code: "+263", label: "🇿🇼 Zimbabwe (+263)" },
+  { code: "+1", label: "🇺🇸 United States / Canada (+1)" },
+  { code: "+44", label: "🇬🇧 United Kingdom (+44)" },
+  { code: "+353", label: "🇮🇪 Ireland (+353)" },
+  { code: "+49", label: "🇩🇪 Germany (+49)" },
+  { code: "+33", label: "🇫🇷 France (+33)" },
+  { code: "+34", label: "🇪🇸 Spain (+34)" },
+  { code: "+39", label: "🇮🇹 Italy (+39)" },
+  { code: "+31", label: "🇳🇱 Netherlands (+31)" },
+  { code: "+61", label: "🇦🇺 Australia (+61)" },
+  { code: "+971", label: "🇦🇪 United Arab Emirates (+971)" },
+  { code: "+966", label: "🇸🇦 Saudi Arabia (+966)" },
+  { code: "+91", label: "🇮🇳 India (+91)" },
+  { code: "+86", label: "🇨🇳 China (+86)" },
+];
+
 function EnrolModal({ isOpen, onClose, course }) {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
     email: "",
+    countryCode: "+234",
     phone: "",
     childName: "",
     childAge: "",
@@ -126,12 +159,21 @@ function EnrolModal({ isOpen, onClose, course }) {
               Phone Number
             </label>
             <div className="flex gap-2">
-              <span className="inline-flex items-center px-4 border border-gray-200 rounded-xl font-body text-sm text-gray-500 bg-gray-50">
-                +234
-              </span>
+              <select
+                className="border border-gray-200 rounded-xl px-2 font-body text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-aqua"
+                value={form.countryCode}
+                onChange={updateField("countryCode")}
+              >
+                {COUNTRY_CODES.map(({ code, label }) => (
+                  <option key={code} value={code}>
+                    {label}
+                  </option>
+                ))}
+              </select>
               <input
                 required
                 type="tel"
+                placeholder="Phone number"
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
                 value={form.phone}
                 onChange={updateField("phone")}
