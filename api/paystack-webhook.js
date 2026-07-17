@@ -38,20 +38,23 @@ const COURSE_TAG_MAP = {
 const EVENT_TAG_MAP = {
   "creative-quest-aug-2026": {
     name: "Creative Quest — Summer Cohort",
-    tags: ["discovery-haven", "enrolled-creative-quest"],
+    tags: ["discovery-haven", "dh-enrolled-creative-quest"],
   },
   "loud-&-fearless-Oct-2026": {
     name: "Loud & Fearless — Cohort",
-    tags: ["discovery-haven", "enrolled-loud-and-fearless"],
+    tags: ["discovery-haven", "enrol-loud-and-fearless"],
   },
   "summit-nov-2026": {
     name: "Discovery Haven Children's Summit",
-    tags: ["discovery-haven", "enrolled-summit"],
+    tags: ["discovery-haven", "enrol-summit"],
   },
 };
 
 function findCustomField(customFields, variableName) {
-  return (customFields || []).find((f) => f.variable_name === variableName)?.value || "";
+  return (
+    (customFields || []).find((f) => f.variable_name === variableName)?.value ||
+    ""
+  );
 }
 
 // Maps Paystack metadata.custom_fields variable_name -> Systeme.io custom
@@ -91,10 +94,18 @@ async function getRawBody(req) {
 
 // Returns { ok, status, body } instead of throwing, so the caller can log
 // the Systeme.io response status/body to the sheet regardless of outcome.
-async function addContactToSysteme({ email, firstName, lastName, fields, tags }) {
+async function addContactToSysteme({
+  email,
+  firstName,
+  lastName,
+  fields,
+  tags,
+}) {
   const apiKey = process.env.SYSTEME_API_KEY;
   if (!apiKey) {
-    console.error("[systeme] SYSTEME_API_KEY is not set — skipping contact creation");
+    console.error(
+      "[systeme] SYSTEME_API_KEY is not set — skipping contact creation",
+    );
     return { ok: false, status: null, body: "SYSTEME_API_KEY not set" };
   }
 
@@ -126,7 +137,14 @@ async function addContactToSysteme({ email, firstName, lastName, fields, tags })
 // Logs one row to the "Discovery Haven Contact Forms" sheet for every
 // webhook invocation. Never throws — a Sheets outage must not affect the
 // webhook's response to Paystack.
-async function logToSheet({ eventType, email, amount, reference, systemeStatus, error }) {
+async function logToSheet({
+  eventType,
+  email,
+  amount,
+  reference,
+  systemeStatus,
+  error,
+}) {
   try {
     await appendSheetRow([
       new Date().toISOString(),
@@ -143,7 +161,9 @@ async function logToSheet({ eventType, email, amount, reference, systemeStatus, 
 }
 
 export default async function handler(req, res) {
-  console.log(`[webhook] hit: method=${req.method} at ${new Date().toISOString()}`);
+  console.log(
+    `[webhook] hit: method=${req.method} at ${new Date().toISOString()}`,
+  );
 
   // Log arrival to the sheet before anything else (signature check, parsing,
   // etc.) so a row appears even if a later step throws or misconfigured env
@@ -156,13 +176,19 @@ export default async function handler(req, res) {
   }
 
   const rawBody = await getRawBody(req);
-  console.log(`[webhook] raw body (${rawBody.length} bytes):`, rawBody.toString().slice(0, 2000));
+  console.log(
+    `[webhook] raw body (${rawBody.length} bytes):`,
+    rawBody.toString().slice(0, 2000),
+  );
   const signature = req.headers["x-paystack-signature"];
   const secretKey = process.env.PAYSTACK_SECRET_KEY;
 
   if (!secretKey) {
     console.error("[webhook] PAYSTACK_SECRET_KEY is not set");
-    await logToSheet({ eventType: "server_misconfigured", error: "PAYSTACK_SECRET_KEY not set" });
+    await logToSheet({
+      eventType: "server_misconfigured",
+      error: "PAYSTACK_SECRET_KEY not set",
+    });
     return res.status(500).json({ error: "Server misconfigured" });
   }
 
@@ -176,7 +202,10 @@ export default async function handler(req, res) {
     console.error("[webhook] signature mismatch — rejecting", {
       hasSignatureHeader: Boolean(signature),
     });
-    await logToSheet({ eventType: "invalid_signature", error: "Signature mismatch" });
+    await logToSheet({
+      eventType: "invalid_signature",
+      error: "Signature mismatch",
+    });
     return res.status(401).json({ error: "Invalid signature" });
   }
 
@@ -185,14 +214,20 @@ export default async function handler(req, res) {
     payload = JSON.parse(rawBody.toString());
   } catch {
     console.error("[webhook] failed to parse JSON body");
-    await logToSheet({ eventType: "invalid_json", error: "Failed to parse JSON body" });
+    await logToSheet({
+      eventType: "invalid_json",
+      error: "Failed to parse JSON body",
+    });
     return res.status(400).json({ error: "Invalid JSON" });
   }
 
   console.log(`[webhook] verified event=${payload.event}`);
 
   if (payload.event !== "charge.success") {
-    await logToSheet({ eventType: payload.event, reference: payload.data?.reference });
+    await logToSheet({
+      eventType: payload.event,
+      reference: payload.data?.reference,
+    });
     return res.status(200).json({ received: true });
   }
 
@@ -205,7 +240,8 @@ export default async function handler(req, res) {
   // (see usePaystack.js), so that's the field we must read the payer's
   // name from.
   const nameFromMetadata = findCustomField(customFields, "name");
-  const { firstName: metaFirstName, lastName: metaLastName } = splitName(nameFromMetadata);
+  const { firstName: metaFirstName, lastName: metaLastName } =
+    splitName(nameFromMetadata);
   const firstName = data?.customer?.first_name || metaFirstName;
   const lastName = data?.customer?.last_name || metaLastName;
   const systemeFields = buildSystemeFields(customFields);
@@ -216,18 +252,21 @@ export default async function handler(req, res) {
   const match = course || event;
   const amount = data?.amount != null ? data.amount / 100 : null;
 
-  console.log("[webhook] charge.success data:", JSON.stringify({
-    reference: data?.reference,
-    amount: data?.amount,
-    email,
-    firstName,
-    lastName,
-    systemeFields,
-    metadata: data?.metadata,
-    courseSlug,
-    eventId,
-    matchedName: match?.name || null,
-  }));
+  console.log(
+    "[webhook] charge.success data:",
+    JSON.stringify({
+      reference: data?.reference,
+      amount: data?.amount,
+      email,
+      firstName,
+      lastName,
+      systemeFields,
+      metadata: data?.metadata,
+      courseSlug,
+      eventId,
+      matchedName: match?.name || null,
+    }),
+  );
 
   if (!email || !match) {
     const error = `no Systeme.io call made — email=${Boolean(email)} matched=${Boolean(match)} courseSlug=${courseSlug} eventId=${eventId}`;
@@ -243,7 +282,13 @@ export default async function handler(req, res) {
     return res.status(200).json({ received: true, tagged: false });
   }
 
-  const systemeResult = await addContactToSysteme({ email, firstName, lastName, fields: systemeFields, tags: match.tags });
+  const systemeResult = await addContactToSysteme({
+    email,
+    firstName,
+    lastName,
+    fields: systemeFields,
+    tags: match.tags,
+  });
 
   if (systemeResult.ok) {
     console.log(`[webhook] tagged ${email} for ${match.name}`);
