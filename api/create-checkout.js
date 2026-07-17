@@ -7,7 +7,7 @@ const COURSES = {
   "creative-quest": {
     paystackSlug: "dh-creative-quest-2026",
     name: "Creative Quest",
-    amount: 1000,
+    amount: 200,
   },
   "loud-and-fearless": {
     paystackSlug: "dh-loud-and-fearless-2026",
