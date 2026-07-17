@@ -190,7 +190,12 @@ async function addContactToSysteme({ email, firstName, lastName, phone, fields, 
     return { ok: false, status: res.status, body: text, tagResults: [], allTagsOk: false };
   }
 
-  const contactId = extractId(JSON.parse(text));
+  let contactId = null;
+  try {
+    contactId = extractId(JSON.parse(text));
+  } catch (err) {
+    console.error("[systeme] contact created but response body wasn't valid JSON — cannot assign tags:", text, err.message);
+  }
   if (contactId == null) {
     console.error("[systeme] contact created but response had no id — cannot assign tags:", text);
     return {
@@ -374,14 +379,24 @@ export default async function handler(req, res) {
     return res.status(200).json({ received: true, tagged: false });
   }
 
-  const systemeResult = await addContactToSysteme({
-    email,
-    firstName,
-    lastName,
-    phone,
-    fields: systemeFields,
-    tags: match.tags,
-  });
+  // Safety net: any unexpected error here (network failure, unhandled edge
+  // case) must still result in a 200 + a logged sheet row, not a crashed
+  // function — an uncaught exception would skip the sheet log entirely,
+  // defeating the point of a log that doesn't need Vercel access to read.
+  let systemeResult;
+  try {
+    systemeResult = await addContactToSysteme({
+      email,
+      firstName,
+      lastName,
+      phone,
+      fields: systemeFields,
+      tags: match.tags,
+    });
+  } catch (err) {
+    console.error("[webhook] unexpected error in addContactToSysteme:", err.message);
+    systemeResult = { ok: false, status: null, body: err.message, tagResults: [], allTagsOk: false };
+  }
   const fullyTagged = systemeResult.ok && systemeResult.allTagsOk;
 
   if (fullyTagged) {
