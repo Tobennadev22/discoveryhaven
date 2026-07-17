@@ -181,11 +181,33 @@ async function assignTagToContact(contactId, tagId, apiKey) {
   return { ok: res.ok, status: res.status, body: text };
 }
 
+// A repeat buyer (same email, different course) must not fail contact
+// creation outright — POST /api/contacts on an existing email was
+// blocking every subsequent purchase from ever reaching the tag-assignment
+// step. Look the contact up first so a repeat purchase reuses its id and
+// adds the new course's tag instead of trying (and failing) to recreate it.
+async function findContactByEmail(email, apiKey) {
+  const res = await fetch(`https://api.systeme.io/api/contacts?email=${encodeURIComponent(email)}`, {
+    headers: { "X-API-Key": apiKey },
+  });
+  if (!res.ok) {
+    console.error(`[systeme] GET /api/contacts?email= failed status=${res.status}`);
+    return null;
+  }
+  const json = await res.json();
+  const items = Array.isArray(json) ? json : json.items || json.member || json["hydra:member"] || [];
+  // Defensive: only trust an exact (case-insensitive) email match, in case
+  // the ?email= filter isn't actually applied server-side and this comes
+  // back as an unfiltered list.
+  const match = items.find((c) => String(c.email || "").toLowerCase() === email.toLowerCase());
+  return match ? extractId(match) : null;
+}
+
 // Returns { ok, status, body } instead of throwing, so the caller can log
 // the Systeme.io response status/body to the sheet regardless of outcome.
-// ok reflects contact creation; tag assignment failures are appended to
-// body/logged individually rather than failing the whole call, since a
-// tag-less contact is still better than no contact at all.
+// ok reflects having a usable contact id (new or existing); tag assignment
+// failures are appended to body/logged individually rather than failing
+// the whole call, since a tag-less contact is still better than none.
 async function addContactToSysteme({ email, firstName, lastName, phone, fields, tags }) {
   const apiKey = process.env.SYSTEME_API_KEY;
   if (!apiKey) {
@@ -193,47 +215,56 @@ async function addContactToSysteme({ email, firstName, lastName, phone, fields, 
     return { ok: false, status: null, body: "SYSTEME_API_KEY not set", tagResults: [], allTagsOk: false };
   }
 
-  const body = {
-    email,
-    ...(firstName ? { firstName } : {}),
-    ...(lastName ? { lastName } : {}),
-    ...(phone ? { phoneNumber: phone } : {}),
-    fields: fields || [],
-  };
+  let contactId = await findContactByEmail(email, apiKey);
+  let creationStatus = null;
+  let creationBody = "";
 
-  console.log("[systeme] POST /api/contacts request:", JSON.stringify(body));
-
-  const res = await fetch("https://api.systeme.io/api/contacts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": apiKey,
-    },
-    body: JSON.stringify(body),
-  });
-
-  const text = await res.text();
-  console.log(`[systeme] response status=${res.status} body=${text}`);
-
-  if (!res.ok) {
-    return { ok: false, status: res.status, body: text, tagResults: [], allTagsOk: false };
-  }
-
-  let contactId = null;
-  try {
-    contactId = extractId(JSON.parse(text));
-  } catch (err) {
-    console.error("[systeme] contact created but response body wasn't valid JSON — cannot assign tags:", text, err.message);
-  }
-  if (contactId == null) {
-    console.error("[systeme] contact created but response had no id — cannot assign tags:", text);
-    return {
-      ok: true,
-      status: res.status,
-      body: text,
-      tagResults: ["no contact id in response — tags not assigned"],
-      allTagsOk: false,
+  if (contactId != null) {
+    console.log(`[systeme] existing contact found for ${email}: id=${contactId} — skipping create, will update + tag`);
+  } else {
+    const body = {
+      email,
+      ...(firstName ? { firstName } : {}),
+      ...(lastName ? { lastName } : {}),
+      ...(phone ? { phoneNumber: phone } : {}),
+      fields: fields || [],
     };
+
+    console.log("[systeme] POST /api/contacts request:", JSON.stringify(body));
+
+    const res = await fetch("https://api.systeme.io/api/contacts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": apiKey,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const text = await res.text();
+    console.log(`[systeme] response status=${res.status} body=${text}`);
+    creationStatus = res.status;
+    creationBody = text;
+
+    if (!res.ok) {
+      return { ok: false, status: res.status, body: text, tagResults: [], allTagsOk: false };
+    }
+
+    try {
+      contactId = extractId(JSON.parse(text));
+    } catch (err) {
+      console.error("[systeme] contact created but response body wasn't valid JSON — cannot assign tags:", text, err.message);
+    }
+    if (contactId == null) {
+      console.error("[systeme] contact created but response had no id — cannot assign tags:", text);
+      return {
+        ok: true,
+        status: res.status,
+        body: text,
+        tagResults: ["no contact id in response — tags not assigned"],
+        allTagsOk: false,
+      };
+    }
   }
 
   const tagResults = [];
@@ -262,7 +293,13 @@ async function addContactToSysteme({ email, firstName, lastName, phone, fields, 
     }
   }
 
-  return { ok: true, status: res.status, body: text, tagResults, allTagsOk };
+  return {
+    ok: true,
+    status: creationStatus,
+    body: creationBody || `existing contact id=${contactId}`,
+    tagResults,
+    allTagsOk,
+  };
 }
 
 // Logs one row to the "Discovery Haven Contact Forms" sheet for every
