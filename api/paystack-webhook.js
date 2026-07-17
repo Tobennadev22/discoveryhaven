@@ -141,6 +141,35 @@ async function resolveTagId(name, apiKey) {
   return id;
 }
 
+// Same story as tags: Systeme.io's POST /api/contacts accepts firstName/
+// lastName/phoneNumber in the body but doesn't reliably persist them on
+// creation (contacts were coming through as "No Name" / "No Phone Number"
+// despite a correctly-formatted create request). Their update endpoint
+// requires Content-Type: application/merge-patch+json, unlike the create
+// endpoint's plain application/json.
+async function updateContactDetails(contactId, { firstName, lastName, phone }, apiKey) {
+  const patchBody = {
+    ...(firstName ? { firstName } : {}),
+    ...(lastName ? { lastName } : {}),
+    ...(phone ? { phoneNumber: phone } : {}),
+  };
+  if (Object.keys(patchBody).length === 0) {
+    return { ok: true, status: null, body: "nothing to update" };
+  }
+
+  const res = await fetch(`https://api.systeme.io/api/contacts/${contactId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/merge-patch+json",
+      "X-API-Key": apiKey,
+    },
+    body: JSON.stringify(patchBody),
+  });
+  const text = await res.text();
+  console.log(`[systeme] PATCH /api/contacts/${contactId} body=${JSON.stringify(patchBody)} status=${res.status} response=${text}`);
+  return { ok: res.ok, status: res.status, body: text };
+}
+
 async function assignTagToContact(contactId, tagId, apiKey) {
   const res = await fetch(`https://api.systeme.io/api/contacts/${contactId}/tags`, {
     method: "POST",
@@ -209,6 +238,17 @@ async function addContactToSysteme({ email, firstName, lastName, phone, fields, 
 
   const tagResults = [];
   let allTagsOk = true;
+
+  try {
+    const detailsResult = await updateContactDetails(contactId, { firstName, lastName, phone }, apiKey);
+    tagResults.push(`contact-details:${detailsResult.ok ? "ok" : `failed(${detailsResult.status})`}`);
+    if (!detailsResult.ok) allTagsOk = false;
+  } catch (err) {
+    console.error("[systeme] failed to update contact firstName/lastName/phoneNumber:", err.message);
+    tagResults.push(`contact-details:error(${err.message})`);
+    allTagsOk = false;
+  }
+
   for (const name of tags) {
     try {
       const tagId = await resolveTagId(name, apiKey);
