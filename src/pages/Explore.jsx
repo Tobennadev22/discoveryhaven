@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Calendar, Trophy, CheckCircle, PlayCircle, Images, BookOpen, ChevronDown } from "lucide-react";
+import {
+  Calendar,
+  Trophy,
+  CheckCircle,
+  PlayCircle,
+  Images,
+  BookOpen,
+  ChevronDown,
+} from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
@@ -45,7 +53,9 @@ function PhotoGallery() {
         </div>
         <div>
           <h3 className="font-cherry text-2xl text-white">Photo Gallery</h3>
-          <p className="text-gray-400 font-body text-sm">Snapshots from our events, cohorts, and community moments</p>
+          <p className="text-gray-400 font-body text-sm">
+            Snapshots from our events, cohorts, and community moments
+          </p>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-3">
@@ -56,7 +66,9 @@ function PhotoGallery() {
           >
             <div className="text-center">
               <Images size={24} className="text-white/20 mx-auto mb-1" />
-              <p className="text-white/20 font-body text-[10px]">Photo {i + 1}</p>
+              <p className="text-white/20 font-body text-[10px]">
+                Photo {i + 1}
+              </p>
             </div>
           </div>
         ))}
@@ -107,7 +119,7 @@ export default function Explore() {
               whileInView="show"
               viewport={useViewport}
             >
-              <SectionLabel>ANNUAL FLAGSHIP EVENT</SectionLabel>
+              <SectionLabel>EXPLORERS FESTIVAL</SectionLabel>
               <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4 leading-tight">
                 Discovery Haven Children's Summit
               </h2>
@@ -166,7 +178,9 @@ export default function Explore() {
               whileInView="show"
               viewport={useViewport}
             >
-              <div className="flex justify-center mb-6"><Trophy size={72} className="text-yellow" /></div>
+              <div className="flex justify-center mb-6">
+                <Trophy size={72} className="text-yellow" />
+              </div>
               <h3 className="font-cherry text-3xl mb-3">November 2026</h3>
               <p className="font-body text-gray-300 mb-2">
                 Annual Flagship · Virtual & Abuja
@@ -271,7 +285,8 @@ export default function Explore() {
               What We've Done Together
             </h2>
             <p className="text-gray-600 font-body text-lg max-w-xl mx-auto">
-              A look back at the cohorts, summits, and showcases that shaped our community.
+              A look back at the cohorts, summits, and showcases that shaped our
+              community.
             </p>
           </motion.div>
           <motion.div
@@ -282,12 +297,42 @@ export default function Explore() {
             viewport={useViewport}
           >
             {[
-              { title: "Creative Quest — Cohort 1", date: "March 2024", tag: "Writing Studio", color: "#05c3dd" },
-              { title: "Loud & Fearless — Cohort 3", date: "October 2024", tag: "Public Speaking", color: "#de2d10" },
-              { title: "Discovery Haven Children's Summit 2024", date: "November 2024", tag: "Annual Summit", color: "#1a1a1a" },
-              { title: "The Curiosity Box — Cohort 2", date: "January 2025", tag: "Critical Thinking", color: "#ffec00" },
-              { title: "The EQ Lab — Cohort 1", date: "April 2025", tag: "Emotional Intelligence", color: "#7c3aed" },
-              { title: "Creative Quest — Cohort 4", date: "June 2025", tag: "Writing Studio", color: "#05c3dd" },
+              {
+                title: "Creative Quest — Cohort 1",
+                date: "March 2024",
+                tag: "Writing Studio",
+                color: "#05c3dd",
+              },
+              {
+                title: "Loud & Fearless — Cohort 3",
+                date: "October 2024",
+                tag: "Public Speaking",
+                color: "#de2d10",
+              },
+              {
+                title: "Discovery Haven Children's Summit 2024",
+                date: "November 2024",
+                tag: "Annual Summit",
+                color: "#1a1a1a",
+              },
+              {
+                title: "The Curiosity Box — Cohort 2",
+                date: "January 2025",
+                tag: "Critical Thinking",
+                color: "#ffec00",
+              },
+              {
+                title: "The EQ Lab — Cohort 1",
+                date: "April 2025",
+                tag: "Emotional Intelligence",
+                color: "#7c3aed",
+              },
+              {
+                title: "Creative Quest — Cohort 4",
+                date: "June 2025",
+                tag: "Writing Studio",
+                color: "#05c3dd",
+              },
             ].map((ev, i) => (
               <motion.div
                 key={i}
@@ -334,7 +379,9 @@ export default function Explore() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel className="text-aqua">ARTIFACTS FROM EVENTS</SectionLabel>
+            <SectionLabel className="text-aqua">
+              ARTIFACTS FROM EVENTS
+            </SectionLabel>
             <h2 className="font-cherry text-4xl text-white mb-4">
               Moments Worth Remembering
             </h2>
@@ -356,8 +403,12 @@ export default function Explore() {
                 <PlayCircle size={22} className="text-crimson" />
               </div>
               <div>
-                <h3 className="font-cherry text-2xl text-white">Loud & Fearless</h3>
-                <p className="text-gray-400 font-body text-sm">Performance clips from our public speaking showcases</p>
+                <h3 className="font-cherry text-2xl text-white">
+                  Loud & Fearless
+                </h3>
+                <p className="text-gray-400 font-body text-sm">
+                  Performance clips from our public speaking showcases
+                </p>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -367,7 +418,10 @@ export default function Explore() {
                   className="aspect-video bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 hover:border-aqua/40 transition-colors cursor-pointer group"
                 >
                   <div className="text-center">
-                    <PlayCircle size={40} className="text-white/30 group-hover:text-aqua transition-colors mx-auto mb-2" />
+                    <PlayCircle
+                      size={40}
+                      className="text-white/30 group-hover:text-aqua transition-colors mx-auto mb-2"
+                    />
                     <p className="text-white/30 font-body text-xs group-hover:text-white/60 transition-colors">
                       Video #{i} — Coming Soon
                     </p>
@@ -393,8 +447,12 @@ export default function Explore() {
                 <BookOpen size={22} className="text-aqua" />
               </div>
               <div>
-                <h3 className="font-cherry text-2xl text-white">Books by Kids</h3>
-                <p className="text-gray-400 font-body text-sm">Stories written and published by our Creative Quest scholars</p>
+                <h3 className="font-cherry text-2xl text-white">
+                  Books by Kids
+                </h3>
+                <p className="text-gray-400 font-body text-sm">
+                  Stories written and published by our Creative Quest scholars
+                </p>
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
@@ -405,7 +463,9 @@ export default function Explore() {
                 >
                   <div className="text-center px-4">
                     <BookOpen size={36} className="text-aqua/50 mx-auto mb-2" />
-                    <p className="text-white/30 font-body text-xs">Book cover #{i}</p>
+                    <p className="text-white/30 font-body text-xs">
+                      Book cover #{i}
+                    </p>
                   </div>
                 </div>
               ))}

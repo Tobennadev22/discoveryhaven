@@ -2,6 +2,7 @@ import { useState } from "react";
 import campingNigeriaLogo from "../assets/campingNigerialogo.png";
 import socLogo from "../assets/soc.png";
 import schoolofconfidenceLogo from "../assets/schoolofconfidence.png";
+import nigeriaMagazineLogo from "../assets/Nigeriamagazine.png";
 import {
   Users,
   Landmark,
@@ -359,6 +360,7 @@ const PARTNERS = [
   { name: "Our Nigeria Publishing", logo: socLogo },
   { name: "Camping Nigeria", logo: campingNigeriaLogo },
   { name: "School of Confidence", logo: schoolofconfidenceLogo },
+  { name: "Our Nigeria News Magazine", logo: nigeriaMagazineLogo },
 ];
 
 export default function Partnership() {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import havenVideoLp from "../assets/discoveryhaven-LP-video.mp4";
 
 function TypingText({ text, className }) {
   const [displayed, setDisplayed] = useState("");
@@ -9,7 +10,10 @@ function TypingText({ text, className }) {
     const id = setInterval(() => {
       i++;
       setDisplayed(text.slice(0, i));
-      if (i >= text.length) { clearInterval(id); setDone(true); }
+      if (i >= text.length) {
+        clearInterval(id);
+        setDone(true);
+      }
     }, 60);
     return () => clearInterval(id);
   }, [text]);
@@ -321,7 +325,7 @@ export default function Home() {
                 Skills That Shape Tomorrow
               </h2>
               <p className="text-gray-500 font-body text-lg leading-relaxed mb-8">
-                We don't just teach — we transform. Discovery Haven runs virtual
+                We don't just teach, we transform. Discovery Haven runs virtual
                 and in-person programmes that build the skills children need
                 most. Not just for school, but for life.
               </p>
@@ -332,7 +336,7 @@ export default function Home() {
                 controls
                 poster=""
               >
-                <source src="" type="video/mp4" />
+                <source src={havenVideoLp} type="video/mp4" />
               </video>
             </motion.div>
           </motion.div>
@@ -371,7 +375,12 @@ export default function Home() {
                 /> */}
                 <div className="p-8">
                   <div className="mb-4 flex justify-center">
-                    {(() => { const Icon = COURSE_ICONS[course.icon]; return Icon ? <Icon size={40} style={{ color: course.color }} /> : null; })()}
+                    {(() => {
+                      const Icon = COURSE_ICONS[course.icon];
+                      return Icon ? (
+                        <Icon size={40} style={{ color: course.color }} />
+                      ) : null;
+                    })()}
                   </div>
                   <h3 className="font-cherry text-2xl text-slate-900 mb-1">
                     {course.title}
@@ -450,7 +459,8 @@ export default function Home() {
               Aligned to the UN Sustainable Development Goals
             </h2>
             <p className="text-gray-500 font-body text-lg max-w-xl mx-auto">
-              Every programme we run is purposefully designed around two global frameworks for change.
+              Every programme we run is purposefully designed around two global
+              frameworks for change.
             </p>
           </motion.div>
           <motion.div
@@ -483,12 +493,16 @@ export default function Home() {
                 variants={scaleIn}
                 className={`${sdg.bg} ${sdg.text} rounded-3xl p-8 flex flex-col gap-4`}
               >
-                <div className={`inline-flex items-center gap-2 ${sdg.accent} rounded-full px-4 py-2 w-fit`}>
+                <div
+                  className={`inline-flex items-center gap-2 ${sdg.accent} rounded-full px-4 py-2 w-fit`}
+                >
                   <span className="font-cherry text-lg">{sdg.number}</span>
                 </div>
                 <div>
                   <h3 className="font-cherry text-2xl mb-3">{sdg.title}</h3>
-                  <p className="font-body text-sm leading-relaxed opacity-80">{sdg.desc}</p>
+                  <p className="font-body text-sm leading-relaxed opacity-80">
+                    {sdg.desc}
+                  </p>
                 </div>
                 <button
                   className={`mt-auto inline-flex items-center gap-2 ${sdg.accent} hover:opacity-90 transition-opacity font-body font-bold text-sm px-5 py-2.5 rounded-full w-fit`}
@@ -626,7 +640,9 @@ export default function Home() {
         viewport={useViewport}
       >
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <div className="flex justify-center mb-6"><Coffee size={48} className="text-slate-900/40" /></div>
+          <div className="flex justify-center mb-6">
+            <Coffee size={48} className="text-slate-900/40" />
+          </div>
           <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
             Not Sure Yet? Let's Talk.
           </h2>
@@ -660,7 +676,9 @@ export default function Home() {
           whileInView="show"
           viewport={useViewport}
         >
-          <div className="flex justify-center mb-4"><Globe size={40} className="text-white/60" /></div>
+          <div className="flex justify-center mb-4">
+            <Globe size={40} className="text-white/60" />
+          </div>
           <h2 className="font-cherry text-4xl text-white mb-3">
             Join Our Community
           </h2>

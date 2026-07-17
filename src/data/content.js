@@ -148,7 +148,7 @@ export const EVENTS = [
     description:
       "Our annual flagship summit. Virtual and Abuja. Performances, panels, awards, and the Little Voices book launch.",
     dateBarColor: "#ffec00",
-    dateBarTextColor: "#ffffff",
+    dateBarTextColor: "#1a1a1a",
     price: 15000,
     type: "summit",
     gcalStart: "20261101",
