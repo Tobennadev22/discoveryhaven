@@ -107,10 +107,19 @@ function extractId(json) {
 // POST /api/contacts/{id}/tags with { tagId }. So: find-or-create the tag
 // to get its id, then assign it.
 async function resolveTagId(name, apiKey) {
-  const listRes = await fetch(`https://api.systeme.io/api/tags?limit=100`, {
-    headers: { "X-API-Key": apiKey },
-  });
-  if (listRes.ok) {
+  // Paginate through the full tag list (bounded to 10 pages / ~1000 tags as
+  // a sanity cap) instead of only checking the first page — a tag that
+  // exists but isn't on page 1 would otherwise look "missing" and trigger
+  // a doomed duplicate-create attempt.
+  let page = 1;
+  for (; page <= 10; page++) {
+    const listRes = await fetch(`https://api.systeme.io/api/tags?limit=100&page=${page}`, {
+      headers: { "X-API-Key": apiKey },
+    });
+    if (!listRes.ok) {
+      console.error(`[systeme] GET /api/tags page=${page} failed status=${listRes.status}`);
+      break;
+    }
     const listJson = await listRes.json();
     const items = Array.isArray(listJson)
       ? listJson
@@ -120,8 +129,8 @@ async function resolveTagId(name, apiKey) {
       const id = extractId(existing);
       if (id != null) return id;
     }
-  } else {
-    console.error(`[systeme] GET /api/tags failed status=${listRes.status}`);
+    const hasMore = Array.isArray(listJson) ? false : listJson.hasMore;
+    if (!hasMore || items.length === 0) break;
   }
 
   const createRes = await fetch("https://api.systeme.io/api/tags", {
