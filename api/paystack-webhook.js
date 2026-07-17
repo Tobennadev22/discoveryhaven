@@ -92,21 +92,76 @@ async function getRawBody(req) {
   });
 }
 
+// Extracts a numeric id from either a plain `id` field or an API-Platform
+// style IRI in `@id` (e.g. "/api/contacts/123" -> 123).
+function extractId(json) {
+  if (json?.id != null) return json.id;
+  const match = typeof json?.["@id"] === "string" ? json["@id"].match(/(\d+)$/) : null;
+  return match ? Number(match[1]) : null;
+}
+
+// Systeme.io's POST /api/contacts accepts a "tags" field in the body but
+// does not actually attach tags on creation — contacts were coming through
+// tag-less despite a correctly-formatted request. Tags there are a
+// separate resource referenced by numeric id, assigned via
+// POST /api/contacts/{id}/tags with { tagId }. So: find-or-create the tag
+// to get its id, then assign it.
+async function resolveTagId(name, apiKey) {
+  const listRes = await fetch(`https://api.systeme.io/api/tags?limit=100`, {
+    headers: { "X-API-Key": apiKey },
+  });
+  if (listRes.ok) {
+    const listJson = await listRes.json();
+    const items = Array.isArray(listJson)
+      ? listJson
+      : listJson.items || listJson.member || listJson["hydra:member"] || [];
+    const existing = items.find((t) => t.name === name);
+    if (existing) {
+      const id = extractId(existing);
+      if (id != null) return id;
+    }
+  } else {
+    console.error(`[systeme] GET /api/tags failed status=${listRes.status}`);
+  }
+
+  const createRes = await fetch("https://api.systeme.io/api/tags", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-API-Key": apiKey },
+    body: JSON.stringify({ name }),
+  });
+  const createText = await createRes.text();
+  console.log(`[systeme] POST /api/tags name="${name}" status=${createRes.status} body=${createText}`);
+  if (!createRes.ok) {
+    throw new Error(`Could not resolve or create tag "${name}": ${createRes.status} ${createText}`);
+  }
+  const id = extractId(JSON.parse(createText));
+  if (id == null) {
+    throw new Error(`Tag "${name}" created but response had no id: ${createText}`);
+  }
+  return id;
+}
+
+async function assignTagToContact(contactId, tagId, apiKey) {
+  const res = await fetch(`https://api.systeme.io/api/contacts/${contactId}/tags`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-API-Key": apiKey },
+    body: JSON.stringify({ tagId }),
+  });
+  const text = await res.text();
+  console.log(`[systeme] POST /api/contacts/${contactId}/tags tagId=${tagId} status=${res.status} body=${text}`);
+  return { ok: res.ok, status: res.status, body: text };
+}
+
 // Returns { ok, status, body } instead of throwing, so the caller can log
 // the Systeme.io response status/body to the sheet regardless of outcome.
-async function addContactToSysteme({
-  email,
-  firstName,
-  lastName,
-  fields,
-  tags,
-}) {
+// ok reflects contact creation; tag assignment failures are appended to
+// body/logged individually rather than failing the whole call, since a
+// tag-less contact is still better than no contact at all.
+async function addContactToSysteme({ email, firstName, lastName, fields, tags }) {
   const apiKey = process.env.SYSTEME_API_KEY;
   if (!apiKey) {
-    console.error(
-      "[systeme] SYSTEME_API_KEY is not set — skipping contact creation",
-    );
-    return { ok: false, status: null, body: "SYSTEME_API_KEY not set" };
+    console.error("[systeme] SYSTEME_API_KEY is not set — skipping contact creation");
+    return { ok: false, status: null, body: "SYSTEME_API_KEY not set", tagResults: [], allTagsOk: false };
   }
 
   const body = {
@@ -114,7 +169,6 @@ async function addContactToSysteme({
     ...(firstName ? { firstName } : {}),
     ...(lastName ? { lastName } : {}),
     fields: fields || [],
-    tags: tags.map((name) => ({ name })),
   };
 
   console.log("[systeme] POST /api/contacts request:", JSON.stringify(body));
@@ -131,7 +185,38 @@ async function addContactToSysteme({
   const text = await res.text();
   console.log(`[systeme] response status=${res.status} body=${text}`);
 
-  return { ok: res.ok, status: res.status, body: text };
+  if (!res.ok) {
+    return { ok: false, status: res.status, body: text, tagResults: [], allTagsOk: false };
+  }
+
+  const contactId = extractId(JSON.parse(text));
+  if (contactId == null) {
+    console.error("[systeme] contact created but response had no id — cannot assign tags:", text);
+    return {
+      ok: true,
+      status: res.status,
+      body: text,
+      tagResults: ["no contact id in response — tags not assigned"],
+      allTagsOk: false,
+    };
+  }
+
+  const tagResults = [];
+  let allTagsOk = true;
+  for (const name of tags) {
+    try {
+      const tagId = await resolveTagId(name, apiKey);
+      const assignResult = await assignTagToContact(contactId, tagId, apiKey);
+      tagResults.push(`${name}:${assignResult.ok ? "ok" : `failed(${assignResult.status})`}`);
+      if (!assignResult.ok) allTagsOk = false;
+    } catch (err) {
+      console.error(`[systeme] failed to assign tag "${name}":`, err.message);
+      tagResults.push(`${name}:error(${err.message})`);
+      allTagsOk = false;
+    }
+  }
+
+  return { ok: true, status: res.status, body: text, tagResults, allTagsOk };
 }
 
 // Logs one row to the "Discovery Haven Contact Forms" sheet for every
@@ -289,12 +374,22 @@ export default async function handler(req, res) {
     fields: systemeFields,
     tags: match.tags,
   });
+  const fullyTagged = systemeResult.ok && systemeResult.allTagsOk;
 
-  if (systemeResult.ok) {
-    console.log(`[webhook] tagged ${email} for ${match.name}`);
+  if (fullyTagged) {
+    console.log(`[webhook] tagged ${email} for ${match.name}: ${systemeResult.tagResults.join(", ")}`);
   } else {
-    console.error("[webhook] Systeme.io tagging failed:", systemeResult.body);
+    console.error("[webhook] Systeme.io tagging incomplete:", systemeResult.body, systemeResult.tagResults);
   }
+
+  // Sheet's error column shows the contact-creation failure, or (when the
+  // contact was created but a tag failed) the per-tag results, so a
+  // partial failure is visible without needing Vercel logs either way.
+  const sheetError = !systemeResult.ok
+    ? systemeResult.body
+    : !systemeResult.allTagsOk
+      ? `tags: ${systemeResult.tagResults.join(", ")}`
+      : "";
 
   await logToSheet({
     eventType: payload.event,
@@ -302,15 +397,15 @@ export default async function handler(req, res) {
     amount,
     reference: data?.reference,
     systemeStatus: systemeResult.status,
-    error: systemeResult.ok ? "" : systemeResult.body,
+    error: sheetError,
   });
 
   // Return 200 either way so Paystack doesn't retry — failures are recorded
   // above, in the sheet and in the function logs, for investigation.
   return res.status(200).json({
     received: true,
-    tagged: systemeResult.ok,
+    tagged: fullyTagged,
     match: match.name,
-    ...(systemeResult.ok ? {} : { error: systemeResult.body }),
+    ...(sheetError ? { error: sheetError } : {}),
   });
 }
