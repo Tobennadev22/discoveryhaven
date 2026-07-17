@@ -5,6 +5,12 @@ import { appendSheetRow } from "./lib/googleSheets.js";
 // needed for HMAC signature verification.
 export const config = { api: { bodyParser: false } };
 
+// Keyed by metadata.course_slug, which api/create-checkout.js sets when it
+// initializes the transaction server-side. The old static
+// paystack.com/pay/... links never reliably carried this through the
+// webhook (source.identifier is null for these transactions) — course
+// purchases now go through create-checkout.js precisely so this metadata
+// key is guaranteed to round-trip.
 const COURSE_TAG_MAP = {
   "dh-creative-quest-2026": {
     name: "Creative Quest",
@@ -21,6 +27,26 @@ const COURSE_TAG_MAP = {
   "dh-eq-lab-2027": {
     name: "The EQ Lab",
     tags: ["discovery-haven"],
+  },
+};
+
+// Keyed by the event's id (see src/data/content.js EVENTS), which
+// EnrollModal.jsx sends as an "Event Id" custom field via the Paystack
+// inline checkout's metadata — that metadata reliably round-trips to the
+// webhook, unlike source.identifier. Tag names here are a reasonable
+// default; rename them to match whatever's actually used in Systeme.io.
+const EVENT_TAG_MAP = {
+  "creative-quest-aug-2026": {
+    name: "Creative Quest — Summer Cohort",
+    tags: ["discovery-haven", "enrolled-creative-quest"],
+  },
+  "loud-&-fearless-Oct-2026": {
+    name: "Loud & Fearless — Cohort",
+    tags: ["discovery-haven", "enrolled-loud-and-fearless"],
+  },
+  "summit-nov-2026": {
+    name: "Discovery Haven Children's Summit",
+    tags: ["discovery-haven", "enrolled-summit"],
   },
 };
 
@@ -183,13 +209,13 @@ export default async function handler(req, res) {
   const firstName = data?.customer?.first_name || metaFirstName;
   const lastName = data?.customer?.last_name || metaLastName;
   const systemeFields = buildSystemeFields(customFields);
-  const pageSlug = data?.source?.identifier;
-  const course = pageSlug ? COURSE_TAG_MAP[pageSlug] : null;
+  const courseSlug = data?.metadata?.course_slug;
+  const course = courseSlug ? COURSE_TAG_MAP[courseSlug] : null;
+  const eventId = findCustomField(customFields, "event id");
+  const event = eventId ? EVENT_TAG_MAP[eventId] : null;
+  const match = course || event;
   const amount = data?.amount != null ? data.amount / 100 : null;
 
-  // Full dump so a real test payment tells us exactly which field actually
-  // carries the course/page info — source.identifier is unconfirmed for
-  // hosted Payment Page checkouts.
   console.log("[webhook] charge.success data:", JSON.stringify({
     reference: data?.reference,
     amount: data?.amount,
@@ -197,14 +223,14 @@ export default async function handler(req, res) {
     firstName,
     lastName,
     systemeFields,
-    source: data?.source,
     metadata: data?.metadata,
-    pageSlug,
-    matchedCourse: course?.name || null,
+    courseSlug,
+    eventId,
+    matchedName: match?.name || null,
   }));
 
-  if (!email || !course) {
-    const error = `no Systeme.io call made — email=${Boolean(email)} matchedCourse=${Boolean(course)} pageSlug=${pageSlug}`;
+  if (!email || !match) {
+    const error = `no Systeme.io call made — email=${Boolean(email)} matched=${Boolean(match)} courseSlug=${courseSlug} eventId=${eventId}`;
     console.warn(`[webhook] ${error}`);
     await logToSheet({
       eventType: payload.event,
@@ -217,10 +243,10 @@ export default async function handler(req, res) {
     return res.status(200).json({ received: true, tagged: false });
   }
 
-  const systemeResult = await addContactToSysteme({ email, firstName, lastName, fields: systemeFields, tags: course.tags });
+  const systemeResult = await addContactToSysteme({ email, firstName, lastName, fields: systemeFields, tags: match.tags });
 
   if (systemeResult.ok) {
-    console.log(`[webhook] tagged ${email} for course=${course.name}`);
+    console.log(`[webhook] tagged ${email} for ${match.name}`);
   } else {
     console.error("[webhook] Systeme.io tagging failed:", systemeResult.body);
   }
@@ -239,7 +265,7 @@ export default async function handler(req, res) {
   return res.status(200).json({
     received: true,
     tagged: systemeResult.ok,
-    course: course.name,
+    match: match.name,
     ...(systemeResult.ok ? {} : { error: systemeResult.body }),
   });
 }

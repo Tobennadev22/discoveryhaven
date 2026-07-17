@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { CheckCircle, ChevronDown, ChevronUp, X } from "lucide-react";
 import {
   motion,
   fadeUp,
@@ -9,6 +9,97 @@ import {
   useViewport,
 } from "../../components/ui/Motion";
 import discoveryHavenLogo from "../../assets/dh.png";
+
+function EnrolModal({ isOpen, onClose, course }) {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    if (window.fbq) {
+      window.fbq("track", "InitiateCheckout", {
+        value: Number(course.price),
+        currency: "NGN",
+        content_name: course.title,
+        content_type: "product",
+      });
+    }
+
+    try {
+      const res = await fetch("/api/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, courseSlug: course.slug }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.authorizationUrl) {
+        throw new Error(data.error || "Something went wrong. Please try again.");
+      }
+      window.location.href = data.authorizationUrl;
+    } catch (err) {
+      setError(err.message || "Something went wrong. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 z-10">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-dark transition-colors"
+        >
+          <X size={24} />
+        </button>
+        <h3 className="font-cherry text-2xl text-slate-900 mb-1">
+          {course.title}
+        </h3>
+        <p className="text-aqua font-bold font-body mb-6">
+          ₦{course.price.toLocaleString()}
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+              Your Email
+            </label>
+            <input
+              required
+              type="email"
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          {error && (
+            <p className="text-red-500 text-sm font-body">{error}</p>
+          )}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full px-8 py-4 rounded-full font-cherry text-lg font-bold bg-aqua text-white hover:scale-105 active:scale-95 transition-all disabled:opacity-60"
+          >
+            {loading
+              ? "Redirecting to secure checkout…"
+              : `Continue to Payment — ₦${course.price.toLocaleString()}`}
+          </button>
+          <p className="text-center text-xs text-gray-400 font-body">
+            Secured by Paystack · SSL Encrypted
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+}
 
 function FAQ({ q, a }) {
   const [open, setOpen] = useState(false);
@@ -35,20 +126,11 @@ function FAQ({ q, a }) {
 }
 
 export default function CourseLandingPage({ course }) {
-  const handleEnrol = () => {
-    if (window.fbq)
-      window.fbq("track", "InitiateCheckout", {
-        value: Number(course.price),
-        currency: "NGN",
-        content_name: course.title,
-        content_type: "product",
-      });
-    window.location.href = course.paymentUrl;
-  };
+  const [modalOpen, setModalOpen] = useState(false);
 
   const enrolBtn = (variant = "yellow", label) => (
     <button
-      onClick={handleEnrol}
+      onClick={() => setModalOpen(true)}
       className={`px-8 py-4 rounded-full font-cherry text-lg font-bold transition-all hover:scale-105 active:scale-95 ${
         variant === "yellow" ? "bg-yellow text-slate-900" : "bg-aqua text-white"
       }`}
@@ -339,6 +421,12 @@ export default function CourseLandingPage({ course }) {
           </div>
         </motion.div>
       </section>
+
+      <EnrolModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        course={course}
+      />
     </div>
   );
 }

@@ -22,6 +22,7 @@ export function EnrollModal({ isOpen, onClose, event }) {
         'Child Name': form.childName,
         'Child Age': form.childAge,
         'Event': event.title,
+        'Event Id': event.id,
       },
       onSuccess: (res) => {
         setLoading(false)
