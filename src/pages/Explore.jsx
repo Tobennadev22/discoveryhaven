@@ -13,6 +13,15 @@ import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
 import { EnrollModal } from "../components/ui/EnrollModal";
 import { EVENTS } from "../data/content";
+import eventImg1 from "../assets/EventImg1.jpg";
+import eventImg2 from "../assets/EventImg2.jpg";
+import eventImg3 from "../assets/EventImg3.jpg";
+import eventImg4 from "../assets/EventImg4.jpg";
+import eventImg5 from "../assets/EventImg5.jpg";
+import eventImg6 from "../assets/EventImg6.jpg";
+import eventImg7 from "../assets/EventImg7.jpg";
+import eventImg8 from "../assets/EventImg8.jpg";
+import eventImg9 from "../assets/EventImg9.jpg";
 import {
   motion,
   fadeUp,
@@ -34,7 +43,18 @@ function buildGoogleCalendarUrl(ev) {
   return `${base}&${params.toString()}`;
 }
 
-const GALLERY_COUNT = 9;
+const GALLERY_IMAGES = [
+  eventImg1,
+  eventImg2,
+  eventImg3,
+  eventImg4,
+  eventImg5,
+  eventImg6,
+  eventImg7,
+  eventImg8,
+  eventImg9,
+];
+const GALLERY_COUNT = GALLERY_IMAGES.length;
 
 function PhotoGallery() {
   const [showAll, setShowAll] = useState(false);
@@ -59,17 +79,16 @@ function PhotoGallery() {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-3">
-        {Array.from({ length: visible }).map((_, i) => (
+        {GALLERY_IMAGES.slice(0, visible).map((image, i) => (
           <div
             key={i}
-            className="aspect-square bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 hover:border-yellow/40 transition-colors"
+            className="aspect-square rounded-2xl overflow-hidden border border-white/10 hover:border-yellow/40 transition-colors"
           >
-            <div className="text-center">
-              <Images size={24} className="text-white/20 mx-auto mb-1" />
-              <p className="text-white/20 font-body text-[10px]">
-                Photo {i + 1}
-              </p>
-            </div>
+            <img
+              src={image}
+              alt={`Discovery Haven event photo ${i + 1}`}
+              className="w-full h-full object-cover"
+            />
           </div>
         ))}
       </div>
