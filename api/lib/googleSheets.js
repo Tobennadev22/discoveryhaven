@@ -116,6 +116,24 @@ export async function appendSheetRow(values) {
   console.log(`[sheets] append status=${res.status}`);
 
   if (!res.ok) {
+    // "Unable to parse range" also fires when the quoted range is
+    // syntactically valid but no tab with that exact name exists in the
+    // spreadsheet (the file's Drive title != a sheet/tab name). List the
+    // spreadsheet's actual tabs so the mismatch is visible without another
+    // round trip of guessing.
+    try {
+      const metaRes = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?fields=sheets.properties.title`,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      const metaJson = await metaRes.json();
+      console.error(
+        `[sheets] configured tab name is "${sheetName}" — actual tabs in this spreadsheet:`,
+        JSON.stringify(metaJson?.sheets?.map((s) => s.properties.title) ?? metaJson)
+      );
+    } catch (metaErr) {
+      console.error("[sheets] could not fetch spreadsheet tab list:", metaErr.message);
+    }
     throw new Error(`Google Sheets error ${res.status}: ${text}`);
   }
 }
