@@ -83,7 +83,7 @@ export const COURSES = [
       "Build and present a final story portfolio",
     ],
     bonus: "Top stories are published in the DH Youth Anthology.",
-    price: 75000,
+    price: 1000,
   },
   {
     id: "loud-fearless",
