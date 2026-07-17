@@ -27,36 +27,41 @@ const COURSES = {
 };
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
-  const { email, courseSlug, firstName, lastName, phone, childName, childAge } = req.body || {};
-  const course = COURSES[courseSlug];
-
-  if (!email || typeof email !== "string" || !email.includes("@")) {
-    return res.status(400).json({ error: "A valid email is required" });
-  }
-  if (!course) {
-    return res.status(400).json({ error: "Unknown course" });
-  }
-  if (!firstName || !lastName || !phone || !childName || !childAge) {
-    return res.status(400).json({ error: "Missing required enrollment details" });
-  }
-
-  const secretKey = process.env.PAYSTACK_SECRET_KEY;
-  if (!secretKey) {
-    console.error("[create-checkout] PAYSTACK_SECRET_KEY is not set");
-    return res.status(500).json({ error: "Payment service not configured" });
-  }
-
-  // Amount is always taken from the server-side COURSES map above, never
-  // from the client, so a tampered request can't change the charged price.
-  const proto = req.headers["x-forwarded-proto"] || "https";
-  const callbackUrl = `${proto}://${req.headers.host}/thank-you/${courseSlug}`;
-  const fullPhone = `+234${String(phone).replace(/^0+/, "")}`;
-
+  // Whole body wrapped in try/catch, not just the Paystack call — any
+  // unexpected exception here must still return JSON, never let Vercel's
+  // platform-level error page (HTML) leak to the client, which the
+  // frontend can't parse and shows as a cryptic "unexpected character"
+  // error instead of anything actionable.
   try {
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    const { email, courseSlug, firstName, lastName, phone, childName, childAge } = req.body || {};
+    const course = COURSES[courseSlug];
+
+    if (!email || typeof email !== "string" || !email.includes("@")) {
+      return res.status(400).json({ error: "A valid email is required" });
+    }
+    if (!course) {
+      return res.status(400).json({ error: "Unknown course" });
+    }
+    if (!firstName || !lastName || !phone || !childName || !childAge) {
+      return res.status(400).json({ error: "Missing required enrollment details" });
+    }
+
+    const secretKey = process.env.PAYSTACK_SECRET_KEY;
+    if (!secretKey) {
+      console.error("[create-checkout] PAYSTACK_SECRET_KEY is not set");
+      return res.status(500).json({ error: "Payment service not configured" });
+    }
+
+    // Amount is always taken from the server-side COURSES map above, never
+    // from the client, so a tampered request can't change the charged price.
+    const proto = req.headers["x-forwarded-proto"] || "https";
+    const callbackUrl = `${proto}://${req.headers.host}/thank-you/${courseSlug}`;
+    const fullPhone = `+234${String(phone).replace(/^0+/, "")}`;
+
     const paystackRes = await fetch("https://api.paystack.co/transaction/initialize", {
       method: "POST",
       headers: {

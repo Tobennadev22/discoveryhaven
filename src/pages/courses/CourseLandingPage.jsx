@@ -47,7 +47,14 @@ function EnrolModal({ isOpen, onClose, course }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, courseSlug: course.slug }),
       });
-      const data = await res.json();
+      const rawText = await res.text();
+      let data;
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        console.error("[checkout] non-JSON response from /api/create-checkout:", res.status, rawText.slice(0, 500));
+        throw new Error(`Server error (status ${res.status}). Please try again in a moment.`);
+      }
       if (!res.ok || !data.authorizationUrl) {
         throw new Error(data.error || "Something went wrong. Please try again.");
       }
