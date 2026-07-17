@@ -157,7 +157,7 @@ async function assignTagToContact(contactId, tagId, apiKey) {
 // ok reflects contact creation; tag assignment failures are appended to
 // body/logged individually rather than failing the whole call, since a
 // tag-less contact is still better than no contact at all.
-async function addContactToSysteme({ email, firstName, lastName, fields, tags }) {
+async function addContactToSysteme({ email, firstName, lastName, phone, fields, tags }) {
   const apiKey = process.env.SYSTEME_API_KEY;
   if (!apiKey) {
     console.error("[systeme] SYSTEME_API_KEY is not set — skipping contact creation");
@@ -168,6 +168,7 @@ async function addContactToSysteme({ email, firstName, lastName, fields, tags })
     email,
     ...(firstName ? { firstName } : {}),
     ...(lastName ? { lastName } : {}),
+    ...(phone ? { phoneNumber: phone } : {}),
     fields: fields || [],
   };
 
@@ -322,13 +323,18 @@ export default async function handler(req, res) {
   // Paystack's customer.first_name/last_name come from Paystack's own
   // persisted Customer record, which we never populate — the name typed
   // into our checkout form only ever arrives via metadata.custom_fields
-  // (see usePaystack.js), so that's the field we must read the payer's
-  // name from.
+  // (see usePaystack.js and create-checkout.js), so that's the field we
+  // must read the payer's name from. Course checkout sends separate
+  // "first name"/"last name" fields; event enrollment sends a single
+  // "name" field that needs splitting.
+  const firstNameFromMetadata = findCustomField(customFields, "first name");
+  const lastNameFromMetadata = findCustomField(customFields, "last name");
   const nameFromMetadata = findCustomField(customFields, "name");
-  const { firstName: metaFirstName, lastName: metaLastName } =
+  const { firstName: splitFirstName, lastName: splitLastName } =
     splitName(nameFromMetadata);
-  const firstName = data?.customer?.first_name || metaFirstName;
-  const lastName = data?.customer?.last_name || metaLastName;
+  const firstName = data?.customer?.first_name || firstNameFromMetadata || splitFirstName;
+  const lastName = data?.customer?.last_name || lastNameFromMetadata || splitLastName;
+  const phone = findCustomField(customFields, "phone");
   const systemeFields = buildSystemeFields(customFields);
   const courseSlug = data?.metadata?.course_slug;
   const course = courseSlug ? COURSE_TAG_MAP[courseSlug] : null;
@@ -345,6 +351,7 @@ export default async function handler(req, res) {
       email,
       firstName,
       lastName,
+      phone,
       systemeFields,
       metadata: data?.metadata,
       courseSlug,
@@ -371,6 +378,7 @@ export default async function handler(req, res) {
     email,
     firstName,
     lastName,
+    phone,
     fields: systemeFields,
     tags: match.tags,
   });

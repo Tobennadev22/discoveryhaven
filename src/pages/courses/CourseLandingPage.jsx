@@ -11,11 +11,21 @@ import {
 import discoveryHavenLogo from "../../assets/dh.png";
 
 function EnrolModal({ isOpen, onClose, course }) {
-  const [email, setEmail] = useState("");
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    childName: "",
+    childAge: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   if (!isOpen) return null;
+
+  const updateField = (field) => (e) =>
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +45,7 @@ function EnrolModal({ isOpen, onClose, course }) {
       const res = await fetch("/api/create-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, courseSlug: course.slug }),
+        body: JSON.stringify({ ...form, courseSlug: course.slug }),
       });
       const data = await res.json();
       if (!res.ok || !data.authorizationUrl) {
@@ -49,12 +59,12 @@ function EnrolModal({ isOpen, onClose, course }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto py-10">
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 z-10">
+      <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 z-10 my-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-dark transition-colors"
@@ -68,16 +78,82 @@ function EnrolModal({ isOpen, onClose, course }) {
           ₦{course.price.toLocaleString()}
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+                First Name
+              </label>
+              <input
+                required
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+                value={form.firstName}
+                onChange={updateField("firstName")}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+                Last Name
+              </label>
+              <input
+                required
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+                value={form.lastName}
+                onChange={updateField("lastName")}
+              />
+            </div>
+          </div>
           <div>
             <label className="block text-sm font-bold text-slate-900 font-body mb-1">
-              Your Email
+              Email Address
             </label>
             <input
               required
               type="email"
               className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={form.email}
+              onChange={updateField("email")}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+              Phone Number
+            </label>
+            <div className="flex gap-2">
+              <span className="inline-flex items-center px-4 border border-gray-200 rounded-xl font-body text-sm text-gray-500 bg-gray-50">
+                +234
+              </span>
+              <input
+                required
+                type="tel"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+                value={form.phone}
+                onChange={updateField("phone")}
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+              Child's Full Name
+            </label>
+            <input
+              required
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+              value={form.childName}
+              onChange={updateField("childName")}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+              Child's Age
+            </label>
+            <input
+              required
+              type="number"
+              min="4"
+              max="18"
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+              value={form.childAge}
+              onChange={updateField("childAge")}
             />
           </div>
           {error && (

@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { email, courseSlug } = req.body || {};
+  const { email, courseSlug, firstName, lastName, phone, childName, childAge } = req.body || {};
   const course = COURSES[courseSlug];
 
   if (!email || typeof email !== "string" || !email.includes("@")) {
@@ -39,6 +39,9 @@ export default async function handler(req, res) {
   }
   if (!course) {
     return res.status(400).json({ error: "Unknown course" });
+  }
+  if (!firstName || !lastName || !phone || !childName || !childAge) {
+    return res.status(400).json({ error: "Missing required enrollment details" });
   }
 
   const secretKey = process.env.PAYSTACK_SECRET_KEY;
@@ -51,6 +54,7 @@ export default async function handler(req, res) {
   // from the client, so a tampered request can't change the charged price.
   const proto = req.headers["x-forwarded-proto"] || "https";
   const callbackUrl = `${proto}://${req.headers.host}/thank-you/${courseSlug}`;
+  const fullPhone = `+234${String(phone).replace(/^0+/, "")}`;
 
   try {
     const paystackRes = await fetch("https://api.paystack.co/transaction/initialize", {
@@ -67,6 +71,16 @@ export default async function handler(req, res) {
         metadata: {
           course_slug: course.paystackSlug,
           course_name: course.name,
+          // Same custom_fields shape the event enrollment flow uses, so the
+          // webhook's existing extraction logic (findCustomField /
+          // buildSystemeFields) works unchanged for both flows.
+          custom_fields: [
+            { display_name: "First Name", variable_name: "first name", value: firstName },
+            { display_name: "Last Name", variable_name: "last name", value: lastName },
+            { display_name: "Phone", variable_name: "phone", value: fullPhone },
+            { display_name: "Child Name", variable_name: "child name", value: childName },
+            { display_name: "Child Age", variable_name: "child age", value: String(childAge) },
+          ],
         },
       }),
     });
