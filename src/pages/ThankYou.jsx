@@ -7,7 +7,7 @@ const COURSE_NAMES = {
   "creative-quest": {
     name: "Creative Quest",
     month: "August 2026",
-    price: 200,
+    price: 75000,
   },
   "loud-and-fearless": {
     name: "Loud & Fearless",

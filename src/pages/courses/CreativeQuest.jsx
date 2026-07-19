@@ -19,7 +19,7 @@ const COURSE = {
   slug: "creative-quest",
   title: "Creative Quest",
   cohort: "August 2026",
-  price: 200,
+  price: 75000,
   paymentUrl: "https://paystack.com/pay/dh-creative-quest-2026",
   tag: "Haven Academy · Writing & Storytelling Studio",
   headline: "Creative Quest: Where Your Child Becomes a Published Author.",
@@ -50,7 +50,7 @@ const COURSE = {
     ages: "7–16",
     grouping: "Classes grouped by age: 7–11 and 12–16",
     format: "Virtual — live Zoom sessions",
-    investment: "₦200",
+    investment: "₦75,000",
   },
   testimonial: {
     quote:
