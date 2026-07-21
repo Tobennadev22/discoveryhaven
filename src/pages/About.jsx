@@ -44,6 +44,7 @@ const TEAM = [
     name: "Barimah Elizabeth",
     role: "Resident Facilitator",
     image: ElizabethImg,
+    imagePosition: "center 15%",
     bio: "Barimah Elizabeth is an education professional, teacher, tutor, life coach, and advocate against gender-based violence. She holds a Diploma in Law, a Bachelor of Education (B.Ed.) in Early Childhood Education, and a Master's degree in Educational Administration and Planning. With extensive experience as a teacher, coordinator, and educational advisor, she is passionate about early childhood education, lifelong learning, and raising the total child. She facilitates impactful learning both physically and virtually.",
   },
 ];
@@ -265,6 +266,7 @@ export default function About() {
                   <img
                     src={member.image}
                     alt={member.name}
+                    style={{ objectPosition: member.imagePosition || "center" }}
                     className="w-[200px] h-[200px] rounded-2xl object-cover mb-5"
                   />
                 ) : (
