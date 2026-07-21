@@ -2,6 +2,7 @@ import { useEffect, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ReactGA from "react-ga4";
 import { Layout } from "./components/layout/Layout";
+import { WhatsAppButton } from "./components/ui/WhatsAppButton";
 
 const Home = lazy(() => import("./pages/Home"));
 const HavenAcademy = lazy(() => import("./pages/HavenAcademy"));
@@ -47,6 +48,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AnalyticsTracker />
+      <WhatsAppButton />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/courses/creative-quest" element={<CreativeQuest />} />
