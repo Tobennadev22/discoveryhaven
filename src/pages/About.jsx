@@ -40,9 +40,9 @@ const TEAM = [
     bio: "Faith is a true scholar of human data - the kind of thinker who looks past raw numbers to find the real human stories hidden inside them. With a First-Class Honours in Medical Biochemistry and an MSc in Public Health, by all conventional metrics, Faith knows how to excel in the rigorous world of advanced statistics, epidemiology, and systems design. But like Discovery Haven, Faith holds a deep conviction that data and intelligence are meaningless if they are not anchored to a clear identity and a purpose that serves people. At Discovery Haven, Faith applies that exact scientific rigor to our curriculum design and organizational framework. She ensures that every program we build is not just creative, but deeply evidence-based and structured for true cognitive and emotional growth. As an author herself (Legacy of Loss, 2025), she understands how to translate complex, heavy ideas into clear narratives that children and families can connect with. Faith is driven by a single goal: building clean, honest systems and infrastructures where young thinkers can safely discover exactly who they were designed to be.",
   },
   {
-    name: "Elizabeth",
+    name: "Barimah Elizabeth",
     role: "Resident Facilitator",
-    bio: "Elizabeth brings Discovery Haven's studio curriculum to life in every session. As our Resident Facilitator, she works directly with scholars — guiding investigations, drawing out voices, and creating the kind of learning environment where every child feels safe enough to take real intellectual and creative risks.",
+    bio: "Barimah Elizabeth is an education professional, teacher, tutor, life coach, and advocate against gender-based violence. She holds a Diploma in Law, a Bachelor of Education (B.Ed.) in Early Childhood Education, and a Master's degree in Educational Administration and Planning. With extensive experience as a teacher, coordinator, and educational advisor, she is passionate about early childhood education, lifelong learning, and raising the total child. She facilitates impactful learning both physically and virtually.",
   },
 ];
 
