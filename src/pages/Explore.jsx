@@ -409,7 +409,7 @@ export default function Explore() {
             </p>
           </motion.div>
 
-          {/* Loud & Fearless Videos */}
+          {/* Loud & Fearless Videos
           <motion.div
             className="mb-16"
             variants={fadeUp}
@@ -449,11 +449,12 @@ export default function Explore() {
               ))}
             </div>
           </motion.div>
+          */}
 
           {/* Photo Gallery */}
           <PhotoGallery />
 
-          {/* Books by Kids */}
+          {/* Books by Kids
           <motion.div
             className="mt-16"
             variants={fadeUp}
@@ -490,6 +491,7 @@ export default function Explore() {
               ))}
             </div>
           </motion.div>
+          */}
         </div>
       </section>
 
