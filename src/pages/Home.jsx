@@ -330,9 +330,12 @@ export default function Home() {
                 most. Not just for school, but for life.
               </p>
             </motion.div>
-            <motion.div variants={slideRight}>
+            <motion.div variants={slideRight} className="flex justify-center">
+              {/* Source footage is portrait (shot vertically) - aspect-video
+                  (16:9) here would force a landscape crop that cuts off
+                  faces, so this matches the actual 9:16 content instead. */}
               <video
-                className="w-full rounded-3xl aspect-video object-cover bg-dark"
+                className="w-full max-w-md rounded-3xl aspect-[9/16] object-cover bg-dark"
                 controls
                 poster=""
               >
