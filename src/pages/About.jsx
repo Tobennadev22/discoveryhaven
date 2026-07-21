@@ -11,6 +11,7 @@ import {
   useViewport,
 } from "../components/ui/Motion";
 import FounderImg from "../assets/stellaChibuikeEzike.jpg";
+import FaithImg from "../assets/faithjosephutuat.jpg";
 
 const VALUES = [
   {
@@ -33,9 +34,10 @@ const VALUES = [
 
 const TEAM = [
   {
-    name: "Faith",
-    role: "Head of Programmes and Operations",
-    bio: "Faith leads the design, delivery, and coordination of every Discovery Haven programme. She ensures that what happens inside every studio session is structured, purposeful, and consistently excellent. From curriculum planning to operational logistics, Faith helps keep Discovery Haven running with precision and heart.",
+    name: "Faith Joseph Utuat",
+    role: "Lead Researcher & Executive Assistant",
+    image: FaithImg,
+    bio: "Faith is a true scholar of human data - the kind of thinker who looks past raw numbers to find the real human stories hidden inside them. With a First-Class Honours in Medical Biochemistry and an MSc in Public Health, by all conventional metrics, Faith knows how to excel in the rigorous world of advanced statistics, epidemiology, and systems design. But like Discovery Haven, Faith holds a deep conviction that data and intelligence are meaningless if they are not anchored to a clear identity and a purpose that serves people. At Discovery Haven, Faith applies that exact scientific rigor to our curriculum design and organizational framework. She ensures that every program we build is not just creative, but deeply evidence-based and structured for true cognitive and emotional growth. As an author herself (Legacy of Loss, 2025), she understands how to translate complex, heavy ideas into clear narratives that children and families can connect with. Faith is driven by a single goal: building clean, honest systems and infrastructures where young thinkers can safely discover exactly who they were designed to be.",
   },
   {
     name: "Elizabeth",
@@ -257,9 +259,17 @@ export default function About() {
                 variants={scaleIn}
                 className="bg-cream rounded-3xl p-8"
               >
-                <div className="w-14 h-14 rounded-2xl bg-aqua/10 flex items-center justify-center mb-5">
-                  <span className="font-cherry text-2xl text-aqua">{member.name[0]}</span>
-                </div>
+                {member.image ? (
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-14 h-14 rounded-2xl object-cover mb-5"
+                  />
+                ) : (
+                  <div className="w-14 h-14 rounded-2xl bg-aqua/10 flex items-center justify-center mb-5">
+                    <span className="font-cherry text-2xl text-aqua">{member.name[0]}</span>
+                  </div>
+                )}
                 <h3 className="font-cherry text-2xl text-slate-900 mb-1">{member.name}</h3>
                 <p className="font-body text-xs font-bold text-aqua uppercase tracking-widest mb-4">{member.role}</p>
                 <p className="text-gray-600 font-body text-sm leading-relaxed">{member.bio}</p>
