@@ -1,7 +1,10 @@
+const DEFAULT_MESSAGE =
+  "Hello Discovery Haven! I have a question about your programmes.";
+
 export function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/2349167723140"
+      href={`https://wa.me/2349167723140?text=${encodeURIComponent(DEFAULT_MESSAGE)}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
