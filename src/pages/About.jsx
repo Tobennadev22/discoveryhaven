@@ -263,7 +263,7 @@ export default function About() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-14 h-14 rounded-2xl object-cover mb-5"
+                    className="w-32 h-32 rounded-2xl object-cover mb-5"
                   />
                 ) : (
                   <div className="w-14 h-14 rounded-2xl bg-aqua/10 flex items-center justify-center mb-5">
