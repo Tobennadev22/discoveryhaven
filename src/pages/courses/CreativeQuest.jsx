@@ -8,6 +8,10 @@ import journeyLeftImg from "../../assets/CreativeQuest6.jpg";
 import journeyRightImg from "../../assets/CreativeQuest7.jpg";
 import investmentImg from "../../assets/CreativeQuest8.jpg";
 import aboutImg from "../../assets/CreativeQuest9.jpg";
+import coverF3TimeTravel from "../../assets/dhslide1.jpg";
+import coverBarkAndWhisker from "../../assets/dhslide2.jpg";
+import coverHardestChoice from "../../assets/dhslide3.jpg";
+import coverFlyingBook from "../../assets/dhslide4.jpg";
 
 const FAQ_COMMON = [
   {
@@ -49,21 +53,25 @@ const COURSE = {
     {
       title: "The F3 Time Travel Adventure",
       author: "by Zika",
+      image: coverF3TimeTravel,
       gradient: "from-aqua to-cyan-600",
     },
     {
       title: "Bark and Whisker's Great Contest",
       author: "",
+      image: coverBarkAndWhisker,
       gradient: "from-amber-400 to-orange-500",
     },
     {
       title: "The Hardest Choice",
       author: "",
+      image: coverHardestChoice,
       gradient: "from-crimson to-rose-700",
     },
     {
       title: "The Girl Who Found the Flying Book",
       author: "by Sochikaima",
+      image: coverFlyingBook,
       gradient: "from-violet-500 to-fuchsia-600",
     },
   ],

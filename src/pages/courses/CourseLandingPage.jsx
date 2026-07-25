@@ -522,28 +522,40 @@ export default function CourseLandingPage({ course }) {
                 transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
               >
                 {[...course.showcaseBooks, ...course.showcaseBooks].map(
-                  (book, i) => (
-                    <div
-                      key={`${book.title}-${i}`}
-                      className={`w-48 sm:w-56 shrink-0 aspect-[3/4] rounded-2xl shadow-2xl p-5 flex flex-col justify-between bg-gradient-to-br ${book.gradient}`}
-                    >
-                      <BookOpen
-                        size={32}
-                        strokeWidth={1.5}
-                        className="text-white/40"
-                      />
-                      <div>
-                        <p className="font-cherry text-white text-lg leading-snug mb-1">
-                          {book.title}
-                        </p>
-                        {book.author && (
-                          <p className="font-body text-white/80 text-xs uppercase tracking-wide">
-                            {book.author}
-                          </p>
-                        )}
+                  (book, i) =>
+                    book.image ? (
+                      <div
+                        key={`${book.title}-${i}`}
+                        className="w-48 sm:w-56 shrink-0 aspect-[500/798] rounded-2xl shadow-2xl overflow-hidden"
+                      >
+                        <img
+                          src={book.image}
+                          alt={`${book.title}${book.author ? ` ${book.author}` : ""}`}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                    </div>
-                  ),
+                    ) : (
+                      <div
+                        key={`${book.title}-${i}`}
+                        className={`w-48 sm:w-56 shrink-0 aspect-[3/4] rounded-2xl shadow-2xl p-5 flex flex-col justify-between bg-gradient-to-br ${book.gradient}`}
+                      >
+                        <BookOpen
+                          size={32}
+                          strokeWidth={1.5}
+                          className="text-white/40"
+                        />
+                        <div>
+                          <p className="font-cherry text-white text-lg leading-snug mb-1">
+                            {book.title}
+                          </p>
+                          {book.author && (
+                            <p className="font-body text-white/80 text-xs uppercase tracking-wide">
+                              {book.author}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ),
                 )}
               </motion.div>
             </div>
