@@ -284,7 +284,7 @@ export default function CourseLandingPage({ course }) {
 
       {/* S1 — HERO */}
       {course.heroImage ? (
-        <section className="bg-dark py-24 px-4 text-white">
+        <section className="bg-[#0D1B2A] py-24 px-4 text-white">
           <motion.div
             className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center"
             variants={fadeUp}
