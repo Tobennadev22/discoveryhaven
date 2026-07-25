@@ -307,11 +307,37 @@ export default function CourseLandingPage({ course }) {
               </p>
             </div>
             <div className="flex justify-center">
-              <img
-                src={course.heroImage}
-                alt={course.title}
-                className="w-full max-w-md rounded-3xl shadow-2xl"
-              />
+              <div className="relative w-full max-w-md">
+                <img
+                  src={course.heroImage}
+                  alt={course.title}
+                  className="w-full rounded-3xl shadow-2xl"
+                />
+                {course.schedule?.investment && (
+                  <motion.div
+                    className="absolute -rotate-6 flex flex-col items-center justify-center bg-[#FDAE35] shadow-lg rounded-[60%_40%_55%_45%/55%_45%_60%_40%]"
+                    style={{
+                      left: "70%",
+                      top: "32%",
+                      width: "29%",
+                      height: "17%",
+                    }}
+                    animate={{ scale: [1, 1.12, 1] }}
+                    transition={{
+                      duration: 1.6,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <span className="font-body font-bold text-white text-[9px] sm:text-[11px] tracking-widest uppercase">
+                      Investment
+                    </span>
+                    <span className="font-cherry text-white text-base sm:text-xl leading-none">
+                      {course.schedule.investment}
+                    </span>
+                  </motion.div>
+                )}
+              </div>
             </div>
           </motion.div>
         </section>
