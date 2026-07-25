@@ -1,6 +1,8 @@
 import CourseLandingPage from "./CourseLandingPage";
 import heroImg from "../../assets/CreativeQuest1.jpg";
 import centerStageImg from "../../assets/CreativeQuest2.jpg";
+import splitLeftImg from "../../assets/CreativeQuest3.jpg";
+import splitRightImg from "../../assets/CreativeQuest4.jpg";
 
 const FAQ_COMMON = [
   {
@@ -31,6 +33,11 @@ const COURSE = {
   smallText: "Limited spots · August 2026 Cohort · Starts Soon",
   centerStageImage: centerStageImg,
   centerStageRemark: "The blank page stops here!",
+  splitLeftImage: splitLeftImg,
+  splitLeftAlt: "What is Creative Quest?",
+  splitRightImage: splitRightImg,
+  splitRightAlt: "They do not lack talent. They just lack the map.",
+  splitCta: "Reserve a Seat Today",
   problemHeading: "Does your child struggle to put their thoughts into words?",
   problemBody:
     'Most children are taught grammar rules and told to "write an essay." Few are ever taught how to actually think like a writer — how to build a world, create a character worth rooting for, and structure a story that keeps people reading. That\'s the gap Creative Quest closes.',

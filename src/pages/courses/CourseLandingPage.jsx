@@ -458,6 +458,37 @@ export default function CourseLandingPage({ course }) {
         </section>
       )}
 
+      {/* S1.6 — WHAT & WHY SPLIT */}
+      {course.splitLeftImage && course.splitRightImage && (
+        <section className="bg-cream py-20 px-4">
+          <motion.div
+            className="max-w-5xl mx-auto"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <div className="grid md:grid-cols-2 gap-8">
+              <img
+                src={course.splitLeftImage}
+                alt={course.splitLeftAlt || course.title}
+                className="w-full rounded-3xl shadow-2xl"
+              />
+              <img
+                src={course.splitRightImage}
+                alt={course.splitRightAlt || course.title}
+                className="w-full rounded-3xl shadow-2xl"
+              />
+            </div>
+            {course.splitCta && (
+              <div className="text-center mt-12">
+                {enrolBtn("yellow", course.splitCta)}
+              </div>
+            )}
+          </motion.div>
+        </section>
+      )}
+
       {/* S2 — THE PROBLEM */}
       <section className="bg-white py-20 px-4">
         <motion.div
