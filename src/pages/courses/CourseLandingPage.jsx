@@ -557,6 +557,36 @@ export default function CourseLandingPage({ course }) {
         </section>
       )}
 
+      {/* S1.8 — JOURNEY & GAINS SPLIT */}
+      {course.journeyLeftImage && course.journeyRightImage && (
+        <section className="bg-cream py-20 px-4">
+          <motion.div
+            className="max-w-5xl mx-auto"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="aspect-[3/4] rounded-3xl shadow-2xl overflow-hidden">
+                <img
+                  src={course.journeyLeftImage}
+                  alt={course.journeyLeftAlt || course.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="aspect-[3/4] rounded-3xl shadow-2xl overflow-hidden">
+                <img
+                  src={course.journeyRightImage}
+                  alt={course.journeyRightAlt || course.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </motion.div>
+        </section>
+      )}
+
       {/* S2 — THE PROBLEM */}
       <section className="bg-white py-20 px-4">
         <motion.div
