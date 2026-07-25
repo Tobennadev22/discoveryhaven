@@ -703,6 +703,8 @@ export default function CourseLandingPage({ course }) {
         </section>
       )}
 
+      {!course.hideStandardSections && (
+      <>
       {/* S2 — THE PROBLEM */}
       <section className="bg-white py-20 px-4">
         <motion.div
@@ -943,6 +945,8 @@ export default function CourseLandingPage({ course }) {
           </div>
         </motion.div>
       </section>
+      </>
+      )}
 
       {/* S10 — CLOSING */}
       {course.closingImage && (

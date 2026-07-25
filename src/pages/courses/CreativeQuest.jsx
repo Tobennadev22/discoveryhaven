@@ -181,6 +181,7 @@ const COURSE = {
     "Don't let their ideas stay locked away. Slots are strictly limited!",
   closingCta: "ENROLL IN CREATIVE QUEST NOW",
   whatsappNumber: "2349167723140",
+  hideStandardSections: true,
 };
 
 export default function CreativeQuest() {
