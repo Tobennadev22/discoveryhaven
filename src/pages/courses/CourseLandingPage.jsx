@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle, ChevronDown, ChevronUp, X } from "lucide-react";
+import {
+  CheckCircle,
+  ChevronDown,
+  ChevronUp,
+  X,
+  Lightbulb,
+  Sparkles,
+} from "lucide-react";
 import {
   motion,
   fadeUp,
@@ -368,22 +375,85 @@ export default function CourseLandingPage({ course }) {
 
       {/* S1.5 — CENTER STAGE */}
       {course.centerStageImage && (
-        <section className="bg-white py-20 px-4 text-center">
+        <section className="bg-white py-20 px-4 text-center overflow-hidden">
           <motion.div
-            className="max-w-md mx-auto"
+            className="relative max-w-4xl mx-auto"
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
-            <img
-              src={course.centerStageImage}
-              alt={course.title}
-              className="w-full rounded-3xl shadow-2xl mb-8"
-            />
-            <p className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-slate-900 leading-tight">
-              {course.centerStageRemark}
-            </p>
+            <motion.span
+              aria-hidden="true"
+              className="hidden md:inline-block absolute top-2 left-6 -rotate-12 font-cherry text-6xl text-aqua select-none"
+              animate={{ scale: [1, 1.2, 1], opacity: [0.55, 1, 0.55] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              ?
+            </motion.span>
+            <motion.span
+              aria-hidden="true"
+              className="hidden md:inline-block absolute bottom-16 left-10 rotate-6 font-cherry text-4xl text-crimson select-none"
+              animate={{ scale: [1, 1.25, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{
+                duration: 2.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
+            >
+              ?
+            </motion.span>
+            <motion.div
+              aria-hidden="true"
+              className="hidden md:block absolute top-8 right-8 rotate-12 text-yellow"
+              animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.3,
+              }}
+            >
+              <Lightbulb size={48} strokeWidth={1.5} />
+            </motion.div>
+            <motion.div
+              aria-hidden="true"
+              className="hidden md:block absolute bottom-20 right-12 -rotate-6 text-aqua"
+              animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{
+                duration: 2.6,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.8,
+              }}
+            >
+              <Sparkles size={36} strokeWidth={1.5} />
+            </motion.div>
+            <motion.span
+              aria-hidden="true"
+              className="hidden lg:inline-block absolute top-1/2 left-0 -rotate-6 font-cherry text-3xl text-orange-400 select-none"
+              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.1,
+              }}
+            >
+              ?
+            </motion.span>
+
+            <div className="max-w-md mx-auto">
+              <img
+                src={course.centerStageImage}
+                alt={course.title}
+                className="w-full rounded-3xl shadow-2xl mb-8"
+              />
+              <p className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-slate-900 leading-tight">
+                {course.centerStageRemark}
+              </p>
+            </div>
           </motion.div>
         </section>
       )}
