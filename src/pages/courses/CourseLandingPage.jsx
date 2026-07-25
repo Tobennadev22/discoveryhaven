@@ -496,21 +496,21 @@ export default function CourseLandingPage({ course }) {
 
       {/* S1.7 — STORYBOOK SHOWCASE */}
       {course.showcaseImage && (
-        <section className="bg-dark py-20 overflow-hidden">
+        <section className="bg-[#0D1B2A] py-20 overflow-hidden">
           <motion.div
-            className="max-w-3xl mx-auto text-center px-4"
+            className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center px-4 mb-16"
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
-            <h2 className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-white mb-12 leading-tight">
+            <h2 className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-white leading-tight text-center lg:text-left">
               {course.showcaseHeadline}
             </h2>
             <img
               src={course.showcaseImage}
               alt={course.title}
-              className="w-full max-w-sm mx-auto rounded-3xl shadow-2xl mb-16"
+              className="w-full max-w-sm mx-auto rounded-3xl shadow-2xl"
             />
           </motion.div>
 
