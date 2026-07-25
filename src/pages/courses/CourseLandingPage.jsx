@@ -385,7 +385,7 @@ export default function CourseLandingPage({ course }) {
           >
             <motion.span
               aria-hidden="true"
-              className="hidden md:inline-block absolute top-2 left-6 -rotate-12 font-cherry text-6xl text-aqua select-none"
+              className="hidden md:inline-block absolute top-2 left-6 -rotate-12 font-cherry text-8xl text-aqua select-none"
               animate={{ scale: [1, 1.2, 1], opacity: [0.55, 1, 0.55] }}
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
             >
@@ -393,7 +393,7 @@ export default function CourseLandingPage({ course }) {
             </motion.span>
             <motion.span
               aria-hidden="true"
-              className="hidden md:inline-block absolute bottom-16 left-10 rotate-6 font-cherry text-4xl text-crimson select-none"
+              className="hidden md:inline-block absolute bottom-16 left-10 rotate-6 font-cherry text-6xl text-crimson select-none"
               animate={{ scale: [1, 1.25, 1], opacity: [0.5, 1, 0.5] }}
               transition={{
                 duration: 2.8,
@@ -415,7 +415,7 @@ export default function CourseLandingPage({ course }) {
                 delay: 0.3,
               }}
             >
-              <Lightbulb size={48} strokeWidth={1.5} />
+              <Lightbulb size={72} strokeWidth={1.5} />
             </motion.div>
             <motion.div
               aria-hidden="true"
@@ -428,11 +428,11 @@ export default function CourseLandingPage({ course }) {
                 delay: 0.8,
               }}
             >
-              <Sparkles size={36} strokeWidth={1.5} />
+              <Sparkles size={56} strokeWidth={1.5} />
             </motion.div>
             <motion.span
               aria-hidden="true"
-              className="hidden lg:inline-block absolute top-1/2 left-0 -rotate-6 font-cherry text-3xl text-orange-400 select-none"
+              className="hidden lg:inline-block absolute top-1/2 left-0 -rotate-6 font-cherry text-5xl text-orange-400 select-none"
               animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
               transition={{
                 duration: 2.5,
