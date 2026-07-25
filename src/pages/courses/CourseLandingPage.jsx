@@ -623,6 +623,86 @@ export default function CourseLandingPage({ course }) {
         </section>
       )}
 
+      {/* S1.95 — Q&A */}
+      {course.qanda && (
+        <section className="bg-white">
+          <div className="h-4 bg-yellow" />
+          <motion.div
+            className="max-w-3xl mx-auto px-6 py-16"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <div className="flex items-center justify-between mb-12">
+              <h2 className="font-cherry text-4xl sm:text-5xl text-orange-400">
+                Q&amp;A
+              </h2>
+              <img
+                src={discoveryHavenLogo}
+                alt="Discovery Haven"
+                className="w-12 h-12 sm:w-14 sm:h-14"
+              />
+            </div>
+
+            <div className="space-y-10">
+              {course.qanda.map((item, i) => (
+                <div key={item.q}>
+                  <h3 className="font-cherry text-xl sm:text-2xl text-orange-400 mb-2 leading-snug">
+                    {i + 1}. {item.q}
+                  </h3>
+                  <p className="font-body font-bold text-slate-900 leading-relaxed">
+                    {item.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {course.founder && (
+              <div className="mt-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8">
+                <div>
+                  <svg
+                    width="36"
+                    height="36"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    className="text-slate-900 mb-3"
+                    aria-hidden="true"
+                  >
+                    {Array.from({ length: 12 }).map((_, i) => {
+                      const angle = ((i * 30) / 180) * Math.PI;
+                      const x1 = 20 + Math.cos(angle) * 4;
+                      const y1 = 20 + Math.sin(angle) * 4;
+                      const x2 = 20 + Math.cos(angle) * 18;
+                      const y2 = 20 + Math.sin(angle) * 18;
+                      return (
+                        <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />
+                      );
+                    })}
+                  </svg>
+                  <p className="font-cherry text-aqua text-lg sm:text-xl uppercase tracking-wide">
+                    {course.founder.name}
+                  </p>
+                  <p className="font-body font-bold text-orange-400 mt-1">
+                    {course.founder.role}
+                  </p>
+                </div>
+                <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-full overflow-hidden ring-[10px] ring-aqua shrink-0 self-center sm:self-auto">
+                  <img
+                    src={course.founder.image}
+                    alt={course.founder.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            )}
+          </motion.div>
+          <div className="h-4 bg-aqua" />
+        </section>
+      )}
+
       {/* S2 — THE PROBLEM */}
       <section className="bg-white py-20 px-4">
         <motion.div

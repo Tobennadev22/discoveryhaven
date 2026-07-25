@@ -12,6 +12,7 @@ import coverF3TimeTravel from "../../assets/dhslide1.jpg";
 import coverBarkAndWhisker from "../../assets/dhslide2.jpg";
 import coverHardestChoice from "../../assets/dhslide3.jpg";
 import coverFlyingBook from "../../assets/dhslide4.jpg";
+import founderImg from "../../assets/stellaChibuikeEzike.jpg";
 
 const FAQ_COMMON = [
   {
@@ -84,6 +85,53 @@ const COURSE = {
   investmentAlt: "Investment & Schedule",
   aboutImage: aboutImg,
   aboutAlt: "About Discovery Haven & Founder Story",
+  qanda: [
+    {
+      q: "What age is Creative Quest for?",
+      a: "Ages 7–16. We run two tracks - Track 1 for ages 7–11 and Track 2 for ages 12–16.",
+    },
+    {
+      q: "How long is the programme?",
+      a: "6 weeks. Sessions hold every Friday starting August 7th, 2026.",
+    },
+    {
+      q: "How long is each session?",
+      a: "Each live session runs for 90 minutes.",
+    },
+    {
+      q: "Is it online or physical?",
+      a: "Fully virtual via Zoom. Your child can join from anywhere.",
+    },
+    {
+      q: "What does my child need?",
+      a: "A device with a stable internet connection, a notebook and pen, and a quiet space to participate.",
+    },
+    {
+      q: "What does my child produce at the end?",
+      a: "Every child receives a Certificate of Completion and has their own published story in the Discovery Haven Youth Literary Anthology - a real book with their name in it.",
+    },
+    {
+      q: "How many children are in each group?",
+      a: "Groups are kept intentionally small to ensure every child gets attention and interaction.",
+    },
+    {
+      q: "What is the fee?",
+      a: "₦75,000 per child for the full 6-week programme.",
+    },
+    {
+      q: "How do I enrol?",
+      a: "Visit discoveryhaven.org/courses/creative-quest to secure your child's spot.",
+    },
+    {
+      q: "What if I have more questions?",
+      a: "Reply here or call us on 09167723140.",
+    },
+  ],
+  founder: {
+    name: "Stella Chibuike-Ezike",
+    role: "Founder & Lead Architect",
+    image: founderImg,
+  },
   problemHeading: "Does your child struggle to put their thoughts into words?",
   problemBody:
     'Most children are taught grammar rules and told to "write an essay." Few are ever taught how to actually think like a writer — how to build a world, create a character worth rooting for, and structure a story that keeps people reading. That\'s the gap Creative Quest closes.',
