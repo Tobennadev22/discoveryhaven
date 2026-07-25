@@ -13,6 +13,7 @@ import coverBarkAndWhisker from "../../assets/dhslide2.jpg";
 import coverHardestChoice from "../../assets/dhslide3.jpg";
 import coverFlyingBook from "../../assets/dhslide4.jpg";
 import founderImg from "../../assets/stellaChibuikeEzike.jpg";
+import closingImg from "../../assets/CreativeQuest10.jpg";
 
 const FAQ_COMMON = [
   {
@@ -175,6 +176,11 @@ const COURSE = {
   ],
   faqCommon: FAQ_COMMON,
   finalCTA: "Spots for August are limited. Secure your child's place today.",
+  closingImage: closingImg,
+  closingHook:
+    "Don't let their ideas stay locked away. Slots are strictly limited!",
+  closingCta: "ENROLL IN CREATIVE QUEST NOW",
+  whatsappNumber: "2349167723140",
 };
 
 export default function CreativeQuest() {
