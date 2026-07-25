@@ -125,7 +125,21 @@ const COURSE = {
     },
     {
       q: "What if I have more questions?",
-      a: "Reply here or call us on 09167723140.",
+      a: (
+        <>
+          We are happy to help. Send us a message on WhatsApp -{" "}
+          <a
+            href="https://wa.me/2349167723140"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-aqua underline"
+          >
+            09167723140
+          </a>
+          , email us at info@discoveryhaven.org, or use the chat button on
+          this page.
+        </>
+      ),
     },
   ],
   founder: {
