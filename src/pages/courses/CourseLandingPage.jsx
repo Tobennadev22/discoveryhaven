@@ -7,6 +7,7 @@ import {
   X,
   Lightbulb,
   Sparkles,
+  BookOpen,
 } from "lucide-react";
 import {
   motion,
@@ -490,6 +491,69 @@ export default function CourseLandingPage({ course }) {
               </div>
             )}
           </motion.div>
+        </section>
+      )}
+
+      {/* S1.7 — STORYBOOK SHOWCASE */}
+      {course.showcaseImage && (
+        <section className="bg-dark py-20 overflow-hidden">
+          <motion.div
+            className="max-w-3xl mx-auto text-center px-4"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <h2 className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-white mb-12 leading-tight">
+              {course.showcaseHeadline}
+            </h2>
+            <img
+              src={course.showcaseImage}
+              alt={course.title}
+              className="w-full max-w-sm mx-auto rounded-3xl shadow-2xl mb-16"
+            />
+          </motion.div>
+
+          {course.showcaseBooks && (
+            <div className="relative overflow-hidden mb-16">
+              <motion.div
+                className="flex gap-6 w-max px-4"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+              >
+                {[...course.showcaseBooks, ...course.showcaseBooks].map(
+                  (book, i) => (
+                    <div
+                      key={`${book.title}-${i}`}
+                      className={`w-48 sm:w-56 shrink-0 aspect-[3/4] rounded-2xl shadow-2xl p-5 flex flex-col justify-between bg-gradient-to-br ${book.gradient}`}
+                    >
+                      <BookOpen
+                        size={32}
+                        strokeWidth={1.5}
+                        className="text-white/40"
+                      />
+                      <div>
+                        <p className="font-cherry text-white text-lg leading-snug mb-1">
+                          {book.title}
+                        </p>
+                        {book.author && (
+                          <p className="font-body text-white/80 text-xs uppercase tracking-wide">
+                            {book.author}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  ),
+                )}
+              </motion.div>
+            </div>
+          )}
+
+          {course.showcaseRemark && (
+            <p className="font-cherry text-2xl sm:text-3xl text-yellow text-center max-w-2xl mx-auto px-4 leading-tight">
+              {course.showcaseRemark}
+            </p>
+          )}
         </section>
       )}
 
