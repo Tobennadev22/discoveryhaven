@@ -504,13 +504,13 @@ export default function CourseLandingPage({ course }) {
             whileInView="show"
             viewport={useViewport}
           >
-            <h2 className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-white leading-tight text-center lg:text-left">
+            <h2 className="font-cherry text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent leading-tight text-center lg:text-left">
               {course.showcaseHeadline}
             </h2>
             <img
               src={course.showcaseImage}
               alt={course.title}
-              className="w-full max-w-sm mx-auto rounded-3xl shadow-2xl"
+              className="w-full max-w-md mx-auto rounded-3xl shadow-2xl"
             />
           </motion.div>
 
