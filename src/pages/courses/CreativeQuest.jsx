@@ -1,4 +1,5 @@
 import CourseLandingPage from "./CourseLandingPage";
+import heroImg from "../../assets/CreativeQuest1.jpg";
 
 const FAQ_COMMON = [
   {
@@ -22,9 +23,10 @@ const COURSE = {
   price: 75000,
   paymentUrl: "https://paystack.com/pay/dh-creative-quest-2026",
   tag: "Haven Academy · Writing & Storytelling Studio",
-  headline: "Creative Quest: Where Your Child Becomes a Published Author.",
-  subheadline:
-    "A 6-week writing studio for ages 7–16. Classes are grouped by age — 7 to 11 and 12 to 16 — so your child learns alongside peers at the same developmental stage. They will write real stories, think like a storyteller, and see their work published in our Youth Literary Anthology.",
+  headline: "ChatGPT can write an essay. It cannot invent a universe.",
+  subheadline: "This August, your child becomes a published author.",
+  heroImage: heroImg,
+  heroCta: "Secure Your Child's Spot — ₦75,000",
   smallText: "Limited spots · August 2026 Cohort · Starts Soon",
   problemHeading: "Does your child struggle to put their thoughts into words?",
   problemBody:

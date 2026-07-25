@@ -283,28 +283,62 @@ export default function CourseLandingPage({ course }) {
       </header>
 
       {/* S1 — HERO */}
-      <section className="bg-dark py-24 px-4 text-center text-white">
-        <motion.div
-          className="max-w-3xl mx-auto"
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-        >
-          <span className="inline-block bg-yellow text-slate-900 font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
-            {course.tag}
-          </span>
-          <h1 className="font-cherry text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent leading-tight mb-6">
-            {course.headline}
-          </h1>
-          <p className="font-body text-white/90 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
-            {course.subheadline}
-          </p>
-          {enrolBtn("yellow")}
-          <p className="mt-3 text-white/70 font-body text-xs">
-            {course.smallText}
-          </p>
-        </motion.div>
-      </section>
+      {course.heroImage ? (
+        <section className="bg-dark py-24 px-4 text-white">
+          <motion.div
+            className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center"
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+          >
+            <div className="text-center lg:text-left">
+              <span className="inline-block bg-yellow text-slate-900 font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
+                {course.tag}
+              </span>
+              <h1 className="font-cherry text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent leading-tight mb-6">
+                {course.headline}
+              </h1>
+              <p className="font-body text-white/90 text-lg sm:text-xl leading-relaxed mb-10">
+                {course.subheadline}
+              </p>
+              {enrolBtn("yellow", course.heroCta)}
+              <p className="mt-3 text-white/70 font-body text-xs">
+                {course.smallText}
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <img
+                src={course.heroImage}
+                alt={course.title}
+                className="w-full max-w-md rounded-3xl shadow-2xl"
+              />
+            </div>
+          </motion.div>
+        </section>
+      ) : (
+        <section className="bg-dark py-24 px-4 text-center text-white">
+          <motion.div
+            className="max-w-3xl mx-auto"
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+          >
+            <span className="inline-block bg-yellow text-slate-900 font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
+              {course.tag}
+            </span>
+            <h1 className="font-cherry text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent leading-tight mb-6">
+              {course.headline}
+            </h1>
+            <p className="font-body text-white/90 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
+              {course.subheadline}
+            </p>
+            {enrolBtn("yellow")}
+            <p className="mt-3 text-white/70 font-body text-xs">
+              {course.smallText}
+            </p>
+          </motion.div>
+        </section>
+      )}
 
       {/* S2 — THE PROBLEM */}
       <section className="bg-white py-20 px-4">
