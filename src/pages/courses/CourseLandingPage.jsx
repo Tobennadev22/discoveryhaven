@@ -469,16 +469,20 @@ export default function CourseLandingPage({ course }) {
             viewport={useViewport}
           >
             <div className="grid md:grid-cols-2 gap-8">
-              <img
-                src={course.splitLeftImage}
-                alt={course.splitLeftAlt || course.title}
-                className="w-full rounded-3xl shadow-2xl"
-              />
-              <img
-                src={course.splitRightImage}
-                alt={course.splitRightAlt || course.title}
-                className="w-full rounded-3xl shadow-2xl"
-              />
+              <div className="aspect-[3/4] rounded-3xl shadow-2xl overflow-hidden">
+                <img
+                  src={course.splitLeftImage}
+                  alt={course.splitLeftAlt || course.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="aspect-[3/4] rounded-3xl shadow-2xl overflow-hidden">
+                <img
+                  src={course.splitRightImage}
+                  alt={course.splitRightAlt || course.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
             {course.splitCta && (
               <div className="text-center mt-12">
