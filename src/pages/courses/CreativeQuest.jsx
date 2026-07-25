@@ -6,6 +6,8 @@ import splitRightImg from "../../assets/CreativeQuest4.jpg";
 import showcaseImg from "../../assets/CreativeQuest5.jpg";
 import journeyLeftImg from "../../assets/CreativeQuest6.jpg";
 import journeyRightImg from "../../assets/CreativeQuest7.jpg";
+import investmentImg from "../../assets/CreativeQuest8.jpg";
+import aboutImg from "../../assets/CreativeQuest9.jpg";
 
 const FAQ_COMMON = [
   {
@@ -70,6 +72,10 @@ const COURSE = {
   journeyLeftAlt: "The 6-Week Journey",
   journeyRightImage: journeyRightImg,
   journeyRightAlt: "What Your Child Gains",
+  investmentImage: investmentImg,
+  investmentAlt: "Investment & Schedule",
+  aboutImage: aboutImg,
+  aboutAlt: "About Discovery Haven & Founder Story",
   problemHeading: "Does your child struggle to put their thoughts into words?",
   problemBody:
     'Most children are taught grammar rules and told to "write an essay." Few are ever taught how to actually think like a writer — how to build a world, create a character worth rooting for, and structure a story that keeps people reading. That\'s the gap Creative Quest closes.',

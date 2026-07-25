@@ -587,6 +587,30 @@ export default function CourseLandingPage({ course }) {
         </section>
       )}
 
+      {/* S1.9 — INVESTMENT & ABOUT */}
+      {course.investmentImage && course.aboutImage && (
+        <section className="bg-cream py-20 px-4">
+          <motion.div
+            className="max-w-md mx-auto flex flex-col gap-8"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <img
+              src={course.investmentImage}
+              alt={course.investmentAlt || course.title}
+              className="w-full rounded-3xl shadow-2xl"
+            />
+            <img
+              src={course.aboutImage}
+              alt={course.aboutAlt || course.title}
+              className="w-full rounded-3xl shadow-2xl"
+            />
+          </motion.div>
+        </section>
+      )}
+
       {/* S2 — THE PROBLEM */}
       <section className="bg-white py-20 px-4">
         <motion.div
