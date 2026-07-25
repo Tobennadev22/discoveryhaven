@@ -366,6 +366,28 @@ export default function CourseLandingPage({ course }) {
         </section>
       )}
 
+      {/* S1.5 — CENTER STAGE */}
+      {course.centerStageImage && (
+        <section className="bg-white py-20 px-4 text-center">
+          <motion.div
+            className="max-w-md mx-auto"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <img
+              src={course.centerStageImage}
+              alt={course.title}
+              className="w-full rounded-3xl shadow-2xl mb-8"
+            />
+            <p className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-slate-900 leading-tight">
+              {course.centerStageRemark}
+            </p>
+          </motion.div>
+        </section>
+      )}
+
       {/* S2 — THE PROBLEM */}
       <section className="bg-white py-20 px-4">
         <motion.div
