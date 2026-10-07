@@ -12,7 +12,7 @@ const COURSES = {
   "loud-and-fearless": {
     paystackSlug: "dh-loud-and-fearless-2026",
     name: "Loud & Fearless",
-    amount: 75000,
+    amount: 80000,
   },
   "curiosity-box": {
     paystackSlug: "dh-curiosity-box-2027",
@@ -37,7 +37,16 @@ export default async function handler(req, res) {
       return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const { email, courseSlug, firstName, lastName, countryCode, phone, childName, childAge } = req.body || {};
+    const {
+      email,
+      courseSlug,
+      firstName,
+      lastName,
+      countryCode,
+      phone,
+      childName,
+      childAge,
+    } = req.body || {};
     const course = COURSES[courseSlug];
 
     if (!email || typeof email !== "string" || !email.includes("@")) {
@@ -47,7 +56,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Unknown course" });
     }
     if (!firstName || !lastName || !phone || !childName || !childAge) {
-      return res.status(400).json({ error: "Missing required enrollment details" });
+      return res
+        .status(400)
+        .json({ error: "Missing required enrollment details" });
     }
     if (!countryCode || !/^\+\d{1,4}$/.test(countryCode)) {
       return res.status(400).json({ error: "Invalid country code" });
@@ -89,48 +100,85 @@ export default async function handler(req, res) {
         }),
       });
       const customerText = await customerRes.text();
-      console.log(`[create-checkout] POST /customer status=${customerRes.status} body=${customerText}`);
+      console.log(
+        `[create-checkout] POST /customer status=${customerRes.status} body=${customerText}`,
+      );
     } catch (err) {
-      console.error("[create-checkout] failed to create/update Paystack customer:", err.message);
+      console.error(
+        "[create-checkout] failed to create/update Paystack customer:",
+        err.message,
+      );
     }
 
-    const paystackRes = await fetch("https://api.paystack.co/transaction/initialize", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${secretKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        amount: course.amount * 100,
-        currency: "NGN",
-        callback_url: callbackUrl,
-        metadata: {
-          course_slug: course.paystackSlug,
-          course_name: course.name,
-          // Same custom_fields shape the event enrollment flow uses, so the
-          // webhook's existing extraction logic (findCustomField /
-          // buildSystemeFields) works unchanged for both flows.
-          custom_fields: [
-            { display_name: "First Name", variable_name: "first name", value: firstName },
-            { display_name: "Last Name", variable_name: "last name", value: lastName },
-            { display_name: "Phone", variable_name: "phone", value: fullPhone },
-            { display_name: "Child Name", variable_name: "child name", value: childName },
-            { display_name: "Child Age", variable_name: "child age", value: String(childAge) },
-          ],
+    const paystackRes = await fetch(
+      "https://api.paystack.co/transaction/initialize",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+          "Content-Type": "application/json",
         },
-      }),
-    });
+        body: JSON.stringify({
+          email,
+          amount: course.amount * 100,
+          currency: "NGN",
+          callback_url: callbackUrl,
+          metadata: {
+            course_slug: course.paystackSlug,
+            course_name: course.name,
+            // Same custom_fields shape the event enrollment flow uses, so the
+            // webhook's existing extraction logic (findCustomField /
+            // buildSystemeFields) works unchanged for both flows.
+            custom_fields: [
+              {
+                display_name: "First Name",
+                variable_name: "first name",
+                value: firstName,
+              },
+              {
+                display_name: "Last Name",
+                variable_name: "last name",
+                value: lastName,
+              },
+              {
+                display_name: "Phone",
+                variable_name: "phone",
+                value: fullPhone,
+              },
+              {
+                display_name: "Child Name",
+                variable_name: "child name",
+                value: childName,
+              },
+              {
+                display_name: "Child Age",
+                variable_name: "child age",
+                value: String(childAge),
+              },
+            ],
+          },
+        }),
+      },
+    );
 
     const data = await paystackRes.json();
-    console.log(`[create-checkout] course=${courseSlug} email=${email} paystackStatus=${paystackRes.status}`);
+    console.log(
+      `[create-checkout] course=${courseSlug} email=${email} paystackStatus=${paystackRes.status}`,
+    );
 
     if (!paystackRes.ok || !data.status || !data.data?.authorization_url) {
-      console.error("[create-checkout] Paystack init failed:", JSON.stringify(data));
-      return res.status(502).json({ error: data.message || "Failed to start payment" });
+      console.error(
+        "[create-checkout] Paystack init failed:",
+        JSON.stringify(data),
+      );
+      return res
+        .status(502)
+        .json({ error: data.message || "Failed to start payment" });
     }
 
-    return res.status(200).json({ authorizationUrl: data.data.authorization_url });
+    return res
+      .status(200)
+      .json({ authorizationUrl: data.data.authorization_url });
   } catch (err) {
     console.error("[create-checkout] error:", err.message);
     return res.status(500).json({ error: "Failed to start payment" });
