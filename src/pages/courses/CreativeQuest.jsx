@@ -89,7 +89,7 @@ const COURSE = {
   qanda: [
     {
       q: "What age is Creative Quest for?",
-      a: "Ages 7–16. We run two tracks - Track 1 for ages 7–11 and Track 2 for ages 12–16.",
+      a: "Ages 7–16. We run two tracks.Track 1 for ages 7–11 and Track 2 for ages 12–16.",
     },
     {
       q: "How long is the programme?",
@@ -109,7 +109,7 @@ const COURSE = {
     },
     {
       q: "What does my child produce at the end?",
-      a: "Every child receives a Certificate of Completion and has their own published story in the Discovery Haven Youth Literary Anthology - a real book with their name in it.",
+      a: "Every child receives a Certificate of Completion and has their own published story in the Discovery Haven Youth Literary Anthology a real book with their name in it.",
     },
     {
       q: "How many children are in each group?",
@@ -136,8 +136,8 @@ const COURSE = {
           >
             09167723140
           </a>
-          , email us at info@discoveryhaven.org, or use the chat button on
-          this page.
+          , email us at info@discoveryhaven.org, or use the chat button on this
+          page.
         </>
       ),
     },
@@ -149,20 +149,20 @@ const COURSE = {
   },
   problemHeading: "Does your child struggle to put their thoughts into words?",
   problemBody:
-    'Most children are taught grammar rules and told to "write an essay." Few are ever taught how to actually think like a writer — how to build a world, create a character worth rooting for, and structure a story that keeps people reading. That\'s the gap Creative Quest closes.',
+    'Most children are taught grammar rules and told to "write an essay." Few are ever taught how to actually think like a writer how to build a world, create a character worth rooting for, and structure a story that keeps people reading. That\'s the gap Creative Quest closes.',
   whatItIsHeading: "A writing studio, not a writing class.",
   whatItIsBody:
-    "Creative Quest is a hands-on storytelling lab. Instead of drills and worksheets, your child dives into the real mechanics of fiction and non-fiction writing — building fictional worlds, narrating real events, creating memorable characters, and mapping out exciting plots, guided by instructors who make the process feel like play.",
+    "Creative Quest is a hands-on storytelling lab. Instead of drills and worksheets, your child dives into the real mechanics of fiction and non-fiction writing building fictional worlds, narrating real events, creating memorable characters, and mapping out exciting plots, guided by instructors who make the process feel like play.",
   outcomesHeading: "By the end of 6 weeks, your child will have:",
   outcomes: [
     "Written original creative fiction, non-fiction, and flash fiction pieces",
     "Learned to edit their own work and give thoughtful feedback to peers",
     "Built a complete story from idea to final draft",
-    "Discovered their own voice as a writer — not just followed a formula",
+    "Discovered their own voice as a writer not just followed a formula",
   ],
   bonusHeading: "Your child's story will be published. For real.",
   bonusBody:
-    "At the end of the course, your child's final story will be officially published in the Discovery Haven Youth Literary Anthology — a permanent book in The Discovery Haven Book Series. Not a certificate. Not a printout. A real published book with their name in it, something they will treasure for the rest of their life.",
+    "At the end of the course, your child's final story will be officially published in the Discovery Haven Youth Literary Anthology a permanent book in The Discovery Haven Book Series. Not a certificate. Not a printout. A real published book with their name in it, something they will treasure for the rest of their life.",
   schedule: {
     course: "Creative Quest",
     month: "August 2026",
@@ -170,7 +170,7 @@ const COURSE = {
     sessionSchedule: "Fridays · 2 hours per session",
     ages: "7–16",
     grouping: "Classes grouped by age: 7–11 and 12–16",
-    format: "Virtual — live Zoom sessions",
+    format: "Virtual live Zoom sessions",
     investment: "₦75,000",
   },
   testimonial: {
@@ -185,7 +185,7 @@ const COURSE = {
     },
     {
       q: "How are the age groups structured?",
-      a: "Classes are split into two batches — ages 7 to 11 and ages 12 to 16. Your child will be placed in the right group after enrolment.",
+      a: "Classes are split into two batches ages 7 to 11 and ages 12 to 16. Your child will be placed in the right group after enrolment.",
     },
   ],
   faqCommon: FAQ_COMMON,

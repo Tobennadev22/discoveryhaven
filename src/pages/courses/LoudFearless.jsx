@@ -20,7 +20,7 @@ const COURSE = {
   paymentUrl: "https://paystack.com/pay/dh-loud-and-fearless-2026",
   title: "Loud & Fearless",
   cohort: "October 2026",
-  price: 75000,
+  price: 80000,
   tag: "Haven Academy · Public Speaking & Debate",
   headline: "Loud & Fearless: Where Quiet Children Find Their Roar.",
   subheadline:
@@ -50,7 +50,7 @@ const COURSE = {
     ages: "7–16",
     grouping: "Classes grouped by age: 7–11 and 12–16",
     format: "Virtual — live Zoom sessions",
-    investment: "₦75,000",
+    investment: "₦80,000",
   },
   testimonial: {
     quote:

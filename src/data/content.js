@@ -104,7 +104,7 @@ export const COURSES = [
     ],
     bonus:
       "Final speech delivered before a live audience of parents and guests.",
-    price: 75000,
+    price: 80000,
   },
 ];
 
