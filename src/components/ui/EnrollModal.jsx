@@ -51,7 +51,7 @@ export function EnrollModal({ isOpen, onClose, event }) {
         {success ? (
           <div className="text-center py-8">
             <div className="text-5xl mb-4">🎉</div>
-            <h3 className="font-cherry text-2xl text-dark mb-2">You're Enrolled!</h3>
+            <h3 className="font-cherry text-h3 text-dark mb-2">You're Enrolled!</h3>
             <p className="text-gray-600 font-body">We'll send confirmation details to <strong>{form.email}</strong>. See you at <strong>{event.title}</strong>!</p>
             <Button className="mt-6" onClick={onClose}>Close</Button>
           </div>
@@ -61,7 +61,7 @@ export function EnrollModal({ isOpen, onClose, event }) {
               <div className="inline-block px-3 py-1 rounded-full text-xs font-bold font-body mb-3" style={{ backgroundColor: event.dateBarColor, color: event.dateBarTextColor }}>
                 {event.date} · {event.duration}
               </div>
-              <h3 className="font-cherry text-2xl text-dark leading-tight">{event.title}</h3>
+              <h3 className="font-cherry text-h3 text-dark">{event.title}</h3>
               <p className="text-aqua font-bold font-body mt-1">₦{event.price?.toLocaleString()}</p>
             </div>
 

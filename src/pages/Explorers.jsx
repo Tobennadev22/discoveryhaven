@@ -15,30 +15,30 @@ import {
 export default function Explorers() {
   return (
     <>
-      <section className="bg-yellow py-28">
+      <section className="bg-yellow pt-36 pb-20 lg:pt-44 lg:pb-28">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-4">
+          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-4">
             Hey Explorer! 👋
           </h1>
           <p className="font-cherry text-3xl text-slate-900/70 mb-6">
             Ready for an Adventure?
           </p>
-          <p className="text-slate-900/60 font-body text-xl">
+          <p className="text-slate-900/60 font-body text-lead">
             Discovery Haven is your place to learn cool stuff, make friends, and
             discover what makes YOU amazing.
           </p>
         </motion.div>
       </section>
 
-      <section className="py-20 bg-white">
+      <section className="py-16 md:py-24 bg-canvas">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <motion.h2
-            className="font-cherry text-4xl text-slate-900 mb-12"
+            className="font-cherry text-h2 text-slate-900 mb-12"
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
@@ -63,7 +63,7 @@ export default function Explorers() {
                 <div className="mb-4 flex justify-center">
                   {(() => { const Icon = COURSE_ICONS[c.icon]; return Icon ? <Icon size={48} style={{ color: c.color }} /> : null; })()}
                 </div>
-                <h3 className="font-cherry text-lg text-slate-900">
+                <h3 className="font-cherry text-h3 text-slate-900">
                   {c.title}
                 </h3>
               </motion.div>
@@ -72,7 +72,7 @@ export default function Explorers() {
         </div>
       </section>
 
-      <section className="py-20 bg-cream">
+      <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-14"
@@ -81,12 +81,12 @@ export default function Explorers() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>PUBLISHED STORIES</SectionLabel>
-            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+            <SectionLabel>Published stories</SectionLabel>
+            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
               Little Voices Book Series
             </h2>
-            <p className="text-gray-600 font-body text-lg max-w-xl mx-auto">
-              Stories written by our Creative Quest scholars — published,
+            <p className="text-gray-600 font-body text-lead max-w-xl mx-auto">
+              Stories written by our Creative Quest scholars that are published,
               distributed, and celebrated.
             </p>
           </motion.div>
@@ -115,8 +115,8 @@ export default function Explorers() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>DEBATE & SPEECH</SectionLabel>
-            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+            <SectionLabel>Debate & speech</SectionLabel>
+            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
               Loud & Fearless Showcases
             </h2>
           </motion.div>
@@ -131,7 +131,7 @@ export default function Explorers() {
               <motion.div
                 key={i}
                 variants={scaleIn}
-                className="aspect-video bg-dark rounded-2xl flex items-center justify-center"
+                className="aspect-video bg-cocoa rounded-2xl flex items-center justify-center"
               >
                 <span className="text-white font-body text-sm">
                   Video #{i} coming soon
@@ -142,7 +142,7 @@ export default function Explorers() {
         </div>
       </section>
 
-      <section className="py-20 bg-aqua">
+      <section className="py-16 md:py-24 bg-aqua">
         <motion.div
           className="max-w-2xl mx-auto px-4 text-center"
           variants={fadeUp}
@@ -150,10 +150,10 @@ export default function Explorers() {
           whileInView="show"
           viewport={useViewport}
         >
-          <h2 className="font-cherry text-4xl text-white mb-4">
+          <h2 className="font-cherry text-h2 text-white mb-4">
             Tell Your Parents!
           </h2>
-          <p className="text-white/80 font-body text-lg mb-8">
+          <p className="text-white/80 font-body text-lead mb-8">
             Show them this page and ask them to sign you up. Your adventure
             starts here.
           </p>

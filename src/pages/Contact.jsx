@@ -33,24 +33,24 @@ export default function Contact() {
 
   return (
     <>
-      <section className="bg-dark py-28">
+      <section className="bg-dark pt-36 pb-20 lg:pt-44 lg:pb-28">
         <motion.div
           className="max-w-2xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">CONTACT</SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
+          <SectionLabel className="text-aqua">Contact</SectionLabel>
+          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
             Get in Touch
           </h1>
-          <p className="text-gray-300 font-body text-xl">
+          <p className="text-gray-300 font-body text-lead">
             We'd love to hear from you. Choose how you'd like to connect.
           </p>
         </motion.div>
       </section>
 
-      <section className="py-20 bg-cream">
+      <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16">
             <motion.div
@@ -59,13 +59,13 @@ export default function Contact() {
               whileInView="show"
               viewport={useViewport}
             >
-              <h2 className="font-cherry text-3xl text-slate-900 mb-8">
+              <h2 className="font-cherry text-h2 text-slate-900 mb-8">
                 Send a Message
               </h2>
               {sent ? (
                 <div className="bg-aqua/10 border border-aqua/30 rounded-2xl p-8 text-center">
                   <div className="flex justify-center mb-4"><CheckCircle size={40} className="text-aqua" /></div>
-                  <h3 className="font-cherry text-2xl text-slate-900 mb-2">
+                  <h3 className="font-cherry text-h3 text-slate-900 mb-2">
                     Message Received!
                   </h3>
                   <p className="text-gray-600 font-body">
@@ -156,7 +156,7 @@ export default function Contact() {
               viewport={useViewport}
             >
               <div>
-                <h2 className="font-cherry text-3xl text-slate-900 mb-8">
+                <h2 className="font-cherry text-h2 text-slate-900 mb-8">
                   Connect Directly
                 </h2>
                 <div className="bg-white rounded-2xl p-6 border border-gray-100 flex items-center gap-4">
@@ -227,8 +227,8 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="bg-dark rounded-2xl p-8 text-white">
-                <h3 className="font-cherry text-2xl mb-3">
+              <div className="bg-cocoa rounded-2xl p-8 text-white">
+                <h3 className="font-cherry text-h3 mb-3">
                   Not sure where to start?
                 </h3>
                 <p className="text-gray-400 font-body text-sm leading-relaxed mb-6">
@@ -236,7 +236,7 @@ export default function Contact() {
                   way to find the right programme for your child.
                 </p>
                 <Button
-                  variant="yellow"
+                  variant="ember"
                   onClick={() => (window.location.href = "/community-hour")}
                 >
                   Book Your Free Call →

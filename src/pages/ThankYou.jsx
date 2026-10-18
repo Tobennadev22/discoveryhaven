@@ -68,24 +68,24 @@ export default function ThankYou() {
               <CheckCircle size={48} className="text-white" />
             </div>
           </div>
-          <h1 className="font-cherry text-4xl lg:text-5xl text-white mb-4">
+          <h1 className="font-cherry text-h1 text-white mb-4">
             You're in. Welcome to the Haven.
           </h1>
-          <p className="font-body text-white/90 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+          <p className="font-body text-lead text-white/90 mb-10 max-w-xl mx-auto">
             Your child's place in <strong>{course.name}</strong> has been
             reserved. You will receive a confirmation email within the next few
             minutes with everything you need to get started.
           </p>
 
           <div className="bg-white rounded-3xl p-8 text-left mb-8">
-            <h2 className="font-cherry text-2xl text-slate-900 mb-6 text-center">
+            <h2 className="font-cherry text-h2 text-slate-900 mb-6 text-center">
               What Happens Next
             </h2>
             <div className="flex flex-col gap-4">
               {[
                 "Check your email for your confirmation and onboarding details",
                 "Join our Haven Tribe WhatsApp community for parent updates",
-                `Mark your calendar — ${course.name} begins ${course.month}, Starting from Friday, 7th August 2026`,
+                `Mark your calendar because ${course.name} begins ${course.month}, Starting from Friday, 7th August 2026`,
               ].map((step, i) => (
                 <div key={i} className="flex gap-3 items-start">
                   <div className="w-7 h-7 rounded-full bg-aqua flex items-center justify-center flex-shrink-0 mt-0.5">

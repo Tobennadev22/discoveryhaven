@@ -1,3 +1,5 @@
+import genesisReport from "../assets/20-Page Report Design Template.pdf";
+
 export const BRAND = {
   name: "Discovery Haven Kids Co.",
   tagline: "Where Intellectual Curiosity Meets Radical Confidence.",
@@ -29,7 +31,7 @@ export const COURSES = [
     title: "The Curiosity Box",
     subtitle: "Science, Art & Critical Thinking",
     description:
-      "A programme built for young investigators and creators. Where scientific thinking meets artistic expression — children explore logic, deduction, and problem-solving through the lens of art and design. Classes grouped by age: 7–11 and 12–16.",
+      "A programme built for young investigators and creators. Where scientific thinking meets artistic expression, children explore logic, deduction, and problem-solving through the lens of art and design. Classes grouped by age: 7–11 and 12–16.",
     ages: "7–11 & 12–16",
     duration: "4 Weeks",
     format: "Virtual · Saturdays",
@@ -111,7 +113,7 @@ export const COURSES = [
 export const EVENTS = [
   {
     id: "creative-quest-aug-2026",
-    title: "Creative Quest — Summer Writing Studio",
+    title: "Creative Quest: Summer Writing Studio",
     date: "August 2026",
     duration: "6 Weeks",
     description:
@@ -126,7 +128,7 @@ export const EVENTS = [
   },
   {
     id: "loud-&-fearless-Oct-2026",
-    title: "Loud & Fearless — Public Speaking & Debate",
+    title: "Loud & Fearless: Public Speaking & Debate",
     date: "Oct 2026",
     duration: "4 Weeks",
     description:
@@ -142,7 +144,7 @@ export const EVENTS = [
 
   {
     id: "summit-nov-2026",
-    title: "Discovery Haven Children's Summit — The Confident Generation",
+    title: "Discovery Haven Children's Summit: The Confident Generation",
     date: "November 2026",
     duration: "Annual Flagship",
     description:
@@ -216,8 +218,23 @@ export const FOOTER_LINKS = {
   ],
   organisation: [
     { label: "About Us", href: "/about" },
-    { label: "Partnerships", href: "/friends" },
+    { label: "Partnerships", href: "/partnership" },
     { label: "Impact", href: "/impact" },
     { label: "Contact", href: "/contact" },
   ],
 };
+
+// Impact reports listed on /impact/reports, newest first. Put the PDF in
+// src/assets/ and import it above so Vite bundles it. A report without a
+// `file` shows as "Coming Soon" instead of a broken download link.
+export const REPORTS = [
+  {
+    title: "Discovery Haven - The Genesis Report (2025 - February 2026)",
+    date: "2026-10-09",
+    period: "2025 to February 2026",
+    description:
+      "Our first impact report, covering nine pilot programmes from Adventures in Amazonia to Clay & Culture Craft, our executive KPI dashboard across 62 families, and our operational readiness for what comes next.",
+    file: genesisReport,
+    downloadName: "Discovery Haven - The Genesis Report.pdf",
+  },
+];

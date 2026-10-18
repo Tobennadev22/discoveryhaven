@@ -48,7 +48,7 @@ function CourseSection({ course, reverse = false, index }) {
   const courseRoute = COURSE_ROUTES[course.id] || "/haven-academy";
   return (
     <>
-      <section className="py-20 border-b border-gray-100">
+      <section className="border-b border-gray-100 pt-36 pb-20 lg:pt-44 lg:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className={`grid lg:grid-cols-2 gap-16 items-center ${reverse ? "lg:grid-flow-col-dense" : ""}`}
@@ -69,7 +69,7 @@ function CourseSection({ course, reverse = false, index }) {
               >
                 {course.subtitle}
               </div>
-              <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4 leading-tight">
+              <h2 className="font-cherry text-h2 text-slate-900 mb-4">
                 {course.title}
               </h2>
               <div className="flex gap-3 flex-wrap mb-6">
@@ -83,10 +83,10 @@ function CourseSection({ course, reverse = false, index }) {
                   {course.format}
                 </span>
               </div>
-              <p className="text-gray-600 font-body text-lg leading-relaxed mb-6">
+              <p className="text-gray-600 font-body text-lead mb-6">
                 {course.description}
               </p>
-              <h4 className="font-bold font-body text-slate-900 mb-3">
+              <h4 className="font-body font-extrabold text-h4 text-slate-900 mb-3">
                 What Your Child Will Do:
               </h4>
               <ul className="space-y-2 mb-6">
@@ -128,7 +128,7 @@ function CourseSection({ course, reverse = false, index }) {
               whileInView="show"
               viewport={useViewport}
             >
-              <div className="relative rounded-3xl overflow-hidden aspect-[3/4] bg-dark">
+              <div className="relative rounded-3xl overflow-hidden aspect-[3/4] bg-cocoa">
                 {course.image ? (
                   <img
                     src={course.image}
@@ -178,15 +178,15 @@ export default function HavenAcademy() {
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">HAVEN ACADEMY</SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
+          <SectionLabel className="text-aqua">Haven Academy</SectionLabel>
+          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
             Four Tracks.
             <br />
             One Confident Child.
           </h1>
-          <p className="text-gray-300 font-body text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-gray-300 font-body text-lead max-w-2xl mx-auto mb-10">
             Each programme is carefully structured to unlock a specific
-            dimension of your child's potential — communication, creativity,
+            dimension of your child's potential, such as communication, creativity,
             logic, and emotional intelligence.
           </p>
           {/* <Button variant="primary" size="lg">
@@ -204,7 +204,7 @@ export default function HavenAcademy() {
         />
       ))}
 
-      <section className="py-24 bg-cream">
+      <section className="py-20 md:py-28 bg-cream">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
@@ -212,12 +212,12 @@ export default function HavenAcademy() {
           whileInView="show"
           viewport={useViewport}
         >
-          <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
+          <h2 className="font-cherry text-h2 text-slate-900 mb-4">
             Ready to Begin?
           </h2>
-          <p className="text-gray-600 font-body text-lg mb-10">
+          <p className="text-gray-600 font-body text-lead mb-10">
             Enrol your child in the programme that matches their spark. Each
-            cohort is limited — don't miss the next intake.
+            cohort is limited, so don't miss the next intake.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button

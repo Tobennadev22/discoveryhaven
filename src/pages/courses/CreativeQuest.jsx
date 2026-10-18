@@ -18,7 +18,7 @@ import closingImg from "../../assets/CreativeQuest10.jpg";
 const FAQ_COMMON = [
   {
     q: "Is this in-person or virtual?",
-    a: "Fully virtual, live on Zoom — your child can join from anywhere in the world.",
+    a: "Fully virtual, live on Zoom, so your child can join from anywhere in the world.",
   },
   {
     q: "What if my child misses a session?",
@@ -26,7 +26,7 @@ const FAQ_COMMON = [
   },
   {
     q: "What if I'm not sure this is the right fit?",
-    a: "Book a free 15-minute call with our founder before enrolling — we'll help you decide.",
+    a: "Book a free 15-minute call with our founder before enrolling and we'll help you decide.",
   },
 ];
 
@@ -40,7 +40,7 @@ const COURSE = {
   headline: "ChatGPT can write an essay. It cannot invent a universe.",
   subheadline: "This August, your child becomes a published author.",
   heroImage: heroImg,
-  heroCta: "Secure Your Child's Spot — ₦75,000",
+  heroCta: "Secure Your Child's Spot for ₦75,000",
   smallText: "Limited spots · August 2026 Cohort · Starts Soon",
   centerStageImage: centerStageImg,
   centerStageRemark: "The blank page stops here!",
@@ -89,7 +89,7 @@ const COURSE = {
   qanda: [
     {
       q: "What age is Creative Quest for?",
-      a: "Ages 7–16. We run two tracks.Track 1 for ages 7–11 and Track 2 for ages 12–16.",
+      a: "Ages 7–16. We run two tracks, with Track 1 for ages 7–11 and Track 2 for ages 12–16.",
     },
     {
       q: "How long is the programme?",
@@ -109,7 +109,7 @@ const COURSE = {
     },
     {
       q: "What does my child produce at the end?",
-      a: "Every child receives a Certificate of Completion and has their own published story in the Discovery Haven Youth Literary Anthology a real book with their name in it.",
+      a: "Every child receives a Certificate of Completion and has their own published story in the Discovery Haven Youth Literary Anthology, which is a real book with their name in it.",
     },
     {
       q: "How many children are in each group?",
@@ -127,7 +127,7 @@ const COURSE = {
       q: "What if I have more questions?",
       a: (
         <>
-          We are happy to help. Send us a message on WhatsApp -{" "}
+          We are happy to help. Send us a message on WhatsApp at{" "}
           <a
             href="https://wa.me/2349167723140"
             target="_blank"
@@ -149,20 +149,20 @@ const COURSE = {
   },
   problemHeading: "Does your child struggle to put their thoughts into words?",
   problemBody:
-    'Most children are taught grammar rules and told to "write an essay." Few are ever taught how to actually think like a writer how to build a world, create a character worth rooting for, and structure a story that keeps people reading. That\'s the gap Creative Quest closes.',
+    'Most children are taught grammar rules and told to "write an essay." Few are ever taught how to actually think like a writer, which means how to build a world, create a character worth rooting for, and structure a story that keeps people reading. That\'s the gap Creative Quest closes.',
   whatItIsHeading: "A writing studio, not a writing class.",
   whatItIsBody:
-    "Creative Quest is a hands-on storytelling lab. Instead of drills and worksheets, your child dives into the real mechanics of fiction and non-fiction writing building fictional worlds, narrating real events, creating memorable characters, and mapping out exciting plots, guided by instructors who make the process feel like play.",
+    "Creative Quest is a hands-on storytelling lab. Instead of drills and worksheets, your child dives into the real mechanics of fiction and non-fiction writing by building fictional worlds, narrating real events, creating memorable characters, and mapping out exciting plots, guided by instructors who make the process feel like play.",
   outcomesHeading: "By the end of 6 weeks, your child will have:",
   outcomes: [
     "Written original creative fiction, non-fiction, and flash fiction pieces",
     "Learned to edit their own work and give thoughtful feedback to peers",
     "Built a complete story from idea to final draft",
-    "Discovered their own voice as a writer not just followed a formula",
+    "Discovered their own voice as a writer rather than just following a formula",
   ],
   bonusHeading: "Your child's story will be published. For real.",
   bonusBody:
-    "At the end of the course, your child's final story will be officially published in the Discovery Haven Youth Literary Anthology a permanent book in The Discovery Haven Book Series. Not a certificate. Not a printout. A real published book with their name in it, something they will treasure for the rest of their life.",
+    "At the end of the course, your child's final story will be officially published in the Discovery Haven Youth Literary Anthology, which is a permanent book in The Discovery Haven Book Series. Not a certificate. Not a printout. A real published book with their name in it, something they will treasure for the rest of their life.",
   schedule: {
     course: "Creative Quest",
     month: "August 2026",
@@ -170,7 +170,7 @@ const COURSE = {
     sessionSchedule: "Fridays · 2 hours per session",
     ages: "7–16",
     grouping: "Classes grouped by age: 7–11 and 12–16",
-    format: "Virtual live Zoom sessions",
+    format: "Virtual via live Zoom sessions",
     investment: "₦75,000",
   },
   testimonial: {
@@ -185,7 +185,7 @@ const COURSE = {
     },
     {
       q: "How are the age groups structured?",
-      a: "Classes are split into two batches ages 7 to 11 and ages 12 to 16. Your child will be placed in the right group after enrolment.",
+      a: "Classes are split into two batches, one for ages 7 to 11 and one for ages 12 to 16. Your child will be placed in the right group after enrolment.",
     },
   ],
   faqCommon: FAQ_COMMON,

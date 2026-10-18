@@ -322,10 +322,10 @@ function TierCard({ tier }) {
         <div className="w-12 h-12 rounded-2xl bg-aqua/10 flex items-center justify-center mb-5">
           <Icon size={24} className="text-aqua" />
         </div>
-        <h3 className="font-cherry text-2xl text-slate-900 mb-1">
+        <h3 className="font-cherry text-h3 text-slate-900 mb-1">
           {tier.title}
         </h3>
-        <p className="font-body text-xs font-bold text-aqua uppercase tracking-widest mb-4">
+        <p className="font-body text-xs font-bold text-aqua mb-4">
           {tier.subtitle}
         </p>
         <p className="text-gray-600 font-body text-sm leading-relaxed mb-4">
@@ -367,7 +367,7 @@ export default function Partnership() {
   return (
     <>
       {/* HERO */}
-      <section className="bg-dark py-28 overflow-hidden">
+      <section className="bg-dark overflow-hidden pt-36 pb-20 lg:pt-44 lg:pb-28">
         <motion.div
           className="max-w-4xl mx-auto px-4 text-center"
           variants={fadeUp}
@@ -377,10 +377,10 @@ export default function Partnership() {
           <SectionLabel className="text-aqua">
             Friends of Discovery Haven · Partnerships & Collaborations
           </SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6 leading-tight">
+          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
             Build the Future of Learning. With Us.
           </h1>
-          <p className="text-gray-300 font-body text-xl max-w-3xl mx-auto mb-6 leading-relaxed">
+          <p className="text-gray-300 font-body text-lead max-w-3xl mx-auto mb-6">
             Discovery Haven does not grow in isolation. Every child we reach,
             every studio we run, every publication we produce, and every summit
             we host is made possible by a growing network of visionary
@@ -415,10 +415,10 @@ export default function Partnership() {
       </section>
 
       {/* PARTNER LOGOS STRIP */}
-      <section className="bg-white py-14 border-b border-gray-100">
+      <section className="bg-canvas py-14 border-b border-gray-100">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <SectionLabel className="text-aqua mb-6">
-            OUR CURRENT PARTNERS AND COLLABORATORS
+            Our current partners and collaborators
           </SectionLabel>
           <motion.div
             className="flex flex-wrap justify-center gap-6 my-8"
@@ -458,7 +458,7 @@ export default function Partnership() {
       </section>
 
       {/* PARTNERSHIP TIERS */}
-      <section id="partnership-tiers" className="bg-cream py-24">
+      <section id="partnership-tiers" className="bg-cream py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-14"
@@ -467,11 +467,11 @@ export default function Partnership() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>PARTNERSHIP PATHS</SectionLabel>
-            <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
+            <SectionLabel>Partnership paths</SectionLabel>
+            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
               How We Can Work Together
             </h2>
-            <p className="text-gray-500 font-body text-lg max-w-xl mx-auto">
+            <p className="text-gray-500 font-body text-lead max-w-xl mx-auto">
               Three distinct paths, one shared purpose. Choose the one that fits
               your capacity and vision.
             </p>

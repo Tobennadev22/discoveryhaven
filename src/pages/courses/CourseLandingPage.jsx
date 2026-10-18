@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  CheckCircle,
-  ChevronDown,
-  ChevronUp,
+  Check,
+  Plus,
+  Minus,
   X,
+  Lock,
   Lightbulb,
   Sparkles,
   BookOpen,
@@ -17,6 +18,8 @@ import {
   useViewport,
 } from "../../components/ui/Motion";
 import discoveryHavenLogo from "../../assets/dh.png";
+import { Button } from "../../components/ui/Button";
+import { SectionLabel } from "../../components/ui/SectionLabel";
 
 const COUNTRY_CODES = [
   { code: "+234", label: "🇳🇬 Nigeria (+234)" },
@@ -49,6 +52,10 @@ const COUNTRY_CODES = [
   { code: "+91", label: "🇮🇳 India (+91)" },
   { code: "+86", label: "🇨🇳 China (+86)" },
 ];
+
+const INPUT =
+  "w-full rounded-2xl border-2 border-dark/10 bg-canvas px-4 py-3 font-body text-[0.9375rem] text-dark placeholder:text-dark/35 focus:border-aqua focus:outline-none focus:ring-4 focus:ring-aqua/20";
+const LABEL = "block font-body text-sm font-extrabold text-dark mb-1.5";
 
 function EnrolModal({ isOpen, onClose, course }) {
   const [form, setForm] = useState({
@@ -112,63 +119,77 @@ function EnrolModal({ isOpen, onClose, course }) {
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 z-10 my-auto">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="enrol-title"
+        className="relative bg-white rounded-4xl border-2 border-dark shadow-[0_8px_0_0_#1a1a1a] w-full max-w-md p-7 sm:p-8 z-10 my-auto"
+      >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-dark transition-colors"
+          aria-label="Close"
+          className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full text-dark/50 hover:bg-dark/5 hover:text-dark transition-colors"
         >
-          <X size={24} />
+          <X size={22} />
         </button>
-        <h3 className="font-cherry text-2xl text-slate-900 mb-1">
+        <p className="font-body text-sm font-extrabold text-dark/55 mb-1">
+          Enrol your child
+        </p>
+        <h3 id="enrol-title" className="font-cherry text-h3 text-dark mb-1 pr-10">
           {course.title}
         </h3>
-        <p className="text-aqua font-bold font-body mb-6">
+        <p className="font-body font-extrabold text-dark mb-7">
           ₦{course.price.toLocaleString()}
+          <span className="font-semibold text-dark/55"> per child</span>
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+              <label htmlFor="enrol-firstName" className={LABEL}>
                 First Name
               </label>
               <input
                 required
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+                className={INPUT}
                 value={form.firstName}
                 onChange={updateField("firstName")}
+                id="enrol-firstName"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+              <label htmlFor="enrol-lastName" className={LABEL}>
                 Last Name
               </label>
               <input
                 required
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+                className={INPUT}
                 value={form.lastName}
                 onChange={updateField("lastName")}
+                id="enrol-lastName"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+            <label htmlFor="enrol-email" className={LABEL}>
               Email Address
             </label>
             <input
               required
               type="email"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+              className={INPUT}
               value={form.email}
               onChange={updateField("email")}
+                id="enrol-email"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+            <label htmlFor="enrol-phone" className={LABEL}>
               Phone Number
             </label>
             <div className="flex gap-2">
               <select
-                className="border border-gray-200 rounded-xl px-2 font-body text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-aqua"
+                className="w-[9.75rem] shrink-0 rounded-2xl border-2 border-dark/10 bg-canvas px-2 font-body text-sm font-semibold text-dark focus:border-aqua focus:outline-none focus:ring-4 focus:ring-aqua/20"
+                aria-label="Country code"
                 value={form.countryCode}
                 onChange={updateField("countryCode")}
               >
@@ -182,25 +203,27 @@ function EnrolModal({ isOpen, onClose, course }) {
                 required
                 type="tel"
                 placeholder="Phone number"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+                className={INPUT}
                 value={form.phone}
                 onChange={updateField("phone")}
+                id="enrol-phone"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+            <label htmlFor="enrol-childName" className={LABEL}>
               Child's Full Name
             </label>
             <input
               required
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+              className={INPUT}
               value={form.childName}
               onChange={updateField("childName")}
+                id="enrol-childName"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-slate-900 font-body mb-1">
+            <label htmlFor="enrol-childAge" className={LABEL}>
               Child's Age
             </label>
             <input
@@ -208,25 +231,28 @@ function EnrolModal({ isOpen, onClose, course }) {
               type="number"
               min="4"
               max="18"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua"
+              className={INPUT}
               value={form.childAge}
               onChange={updateField("childAge")}
+                id="enrol-childAge"
             />
           </div>
           {error && (
-            <p className="text-red-500 text-sm font-body">{error}</p>
+            <p role="alert" className="rounded-2xl bg-crimson/10 px-4 py-3 font-body text-sm font-semibold text-crimson">
+              {error}
+            </p>
           )}
           <button
             type="submit"
             disabled={loading}
-            className="w-full px-8 py-4 rounded-full font-cherry text-lg font-bold bg-aqua text-white hover:scale-105 active:scale-95 transition-all disabled:opacity-60"
+            className="w-full rounded-full border-2 border-dark bg-aqua px-6 py-3.5 font-body text-[1.0625rem] font-extrabold text-dark shadow-press transition-[transform,box-shadow] duration-150 hover:-translate-y-px active:translate-y-1 active:shadow-none disabled:translate-y-0 disabled:opacity-60"
           >
             {loading
               ? "Redirecting to secure checkout…"
-              : `Continue to Payment — ₦${course.price.toLocaleString()}`}
+              : `Continue to Payment of ₦${course.price.toLocaleString()}`}
           </button>
-          <p className="text-center text-xs text-gray-400 font-body">
-            Secured by Paystack · SSL Encrypted
+          <p className="flex items-center justify-center gap-1.5 text-center font-body text-xs font-semibold text-dark/50">
+            <Lock size={13} /> Secure checkout with Paystack
           </p>
         </form>
       </div>
@@ -234,27 +260,30 @@ function EnrolModal({ isOpen, onClose, course }) {
   );
 }
 
-function FAQ({ q, a }) {
+function FAQ({ q, a, id }) {
   const [open, setOpen] = useState(false);
   return (
-    <button
-      className="w-full text-left border border-gray-200 rounded-2xl p-5 hover:border-gray-300 transition-colors"
-      onClick={() => setOpen((o) => !o)}
-    >
-      <div className="flex items-center justify-between gap-4">
-        <span className="font-bold font-body text-slate-900 text-sm">{q}</span>
-        {open ? (
-          <ChevronUp size={18} className="text-gray-400 flex-shrink-0" />
-        ) : (
-          <ChevronDown size={18} className="text-gray-400 flex-shrink-0" />
-        )}
-      </div>
+    <div className="rounded-3xl border border-dark/10 bg-white">
+      <button
+        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-body text-[1.0625rem] font-extrabold text-dark"
+        aria-expanded={open}
+        aria-controls={`faq-${id}`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        {q}
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-cream text-dark">
+          {open ? <Minus size={18} /> : <Plus size={18} />}
+        </span>
+      </button>
       {open && (
-        <p className="mt-3 font-body text-gray-600 text-sm leading-relaxed">
+        <div
+          id={`faq-${id}`}
+          className="-mt-1 px-6 pb-6 font-body leading-relaxed text-dark/70"
+        >
           {a}
-        </p>
+        </div>
       )}
-    </button>
+    </div>
   );
 }
 
@@ -262,37 +291,52 @@ export default function CourseLandingPage({ course }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const enrolBtn = (variant = "yellow", label) => (
-    <button
+    <Button
+      variant={variant === "yellow" ? "yellow" : "primary"}
+      size="lg"
       onClick={() => setModalOpen(true)}
-      className={`px-8 py-4 rounded-full font-cherry text-lg font-bold transition-all hover:scale-105 active:scale-95 ${
-        variant === "yellow" ? "bg-yellow text-slate-900" : "bg-aqua text-white"
-      }`}
     >
-      {label || `Enrol My Child Now — ₦${course.price.toLocaleString()}`}
-    </button>
+      {label || `Enrol my child now for ₦${course.price.toLocaleString()}`}
+    </Button>
   );
+
+  const glance = [
+    { label: "Starts", value: course.schedule.month },
+    { label: "Duration", value: course.schedule.duration },
+    { label: "Sessions", value: course.schedule.sessionSchedule },
+    { label: "Ages", value: course.schedule.ages },
+    { label: "Format", value: course.schedule.format },
+  ];
 
   return (
     <div className="min-h-screen font-body">
-      {/* LOGO ONLY HEADER */}
-      <header className="bg-white border-b border-gray-100 py-4 px-6">
-        <div className="max-w-7xl mx-auto">
+      {/* HEADER: logo plus an always-visible enrol button */}
+      <header className="sticky top-0 z-40 border-b border-dark/10 bg-canvas/90 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
           <Link to="/" className="inline-flex items-center gap-2">
             <img
               src={discoveryHavenLogo}
-              alt="Discovery Haven"
-              className="w-9 h-9"
+              alt=""
+              className="h-9 w-9 object-contain"
             />
-            <span className="font-cherry text-xl text-slate-900">
+            <span className="font-cherry text-xl text-dark">
               Discovery Haven
             </span>
           </Link>
+          <div className="flex items-center gap-4">
+            <span className="hidden font-body font-extrabold text-dark sm:block">
+              ₦{course.price.toLocaleString()}
+            </span>
+            <Button size="sm" onClick={() => setModalOpen(true)}>
+              Enrol now
+            </Button>
+          </div>
         </div>
       </header>
 
       {/* S1 — HERO */}
       {course.heroImage ? (
-        <section className="bg-[#0D1B2A] py-24 px-4 text-white">
+        <section className="bg-[#0D1B2A] py-20 md:py-28 px-4 text-white">
           <motion.div
             className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center"
             variants={fadeUp}
@@ -300,17 +344,15 @@ export default function CourseLandingPage({ course }) {
             animate="show"
           >
             <div className="text-center lg:text-left">
-              <span className="inline-block bg-yellow text-slate-900 font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
-                {course.tag}
-              </span>
-              <h1 className="font-cherry text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent leading-tight mb-6">
+              <SectionLabel>{course.tag}</SectionLabel>
+              <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6 mt-2">
                 {course.headline}
               </h1>
-              <p className="font-body text-white/90 text-lg sm:text-xl leading-relaxed mb-10">
+              <p className="font-body text-lead text-white/85 mb-10">
                 {course.subheadline}
               </p>
               {enrolBtn("yellow", course.heroCta)}
-              <p className="mt-3 text-white/70 font-body text-xs">
+              <p className="mt-5 text-white/60 font-body font-semibold text-sm">
                 {course.smallText}
               </p>
             </div>
@@ -337,7 +379,7 @@ export default function CourseLandingPage({ course }) {
                       ease: "easeInOut",
                     }}
                   >
-                    <span className="font-body font-bold text-white text-[9px] sm:text-[11px] tracking-widest uppercase">
+                    <span className="font-body font-bold text-white text-[9px] sm:text-[11px]">
                       Investment
                     </span>
                     <span className="font-cherry text-white text-base sm:text-xl leading-none">
@@ -350,33 +392,73 @@ export default function CourseLandingPage({ course }) {
           </motion.div>
         </section>
       ) : (
-        <section className="bg-dark py-24 px-4 text-center text-white">
-          <motion.div
-            className="max-w-3xl mx-auto"
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-          >
-            <span className="inline-block bg-yellow text-slate-900 font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
-              {course.tag}
-            </span>
-            <h1 className="font-cherry text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent leading-tight mb-6">
-              {course.headline}
-            </h1>
-            <p className="font-body text-white/90 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
-              {course.subheadline}
-            </p>
-            {enrolBtn("yellow")}
-            <p className="mt-3 text-white/70 font-body text-xs">
-              {course.smallText}
-            </p>
-          </motion.div>
+        <section className="bg-dark px-5 pb-20 pt-14 text-white sm:px-8 md:pb-28 md:pt-20">
+          <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+            <motion.div variants={fadeUp} initial="hidden" animate="show">
+              <SectionLabel>{course.tag}</SectionLabel>
+              <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6 mt-2">
+                {course.headline}
+              </h1>
+              <p className="font-body text-lead text-white/80 max-w-prose mb-10">
+                {course.subheadline}
+              </p>
+              <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-7">
+                {enrolBtn("yellow")}
+                <Link
+                  to="/community-hour"
+                  className="font-body font-extrabold text-white underline decoration-aqua decoration-[3px] underline-offset-[6px] hover:text-aqua transition-colors"
+                >
+                  Book a free call first
+                </Link>
+              </div>
+              <p className="mt-6 text-white/55 font-body font-semibold text-sm">
+                {course.smallText}
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="rounded-4xl border border-white/10 bg-cocoa p-7 sm:p-8"
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              transition={{ delay: 0.15 }}
+            >
+              <p className="mb-3 font-body text-sm font-extrabold text-yellow">
+                At a glance
+              </p>
+              <dl className="divide-y divide-white/10">
+                {glance.map(({ label, value }) => (
+                  <div key={label} className="flex justify-between gap-6 py-3.5">
+                    <dt className="font-body text-[0.9375rem] font-semibold text-white/60">
+                      {label}
+                    </dt>
+                    <dd className="text-right font-body text-[0.9375rem] font-bold">
+                      {value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-3 flex items-end justify-between gap-4 border-t border-white/10 pt-6">
+                <div>
+                  <p className="font-body text-sm font-semibold text-white/60">
+                    Investment
+                  </p>
+                  <p className="font-cherry text-h3 text-white">
+                    {course.schedule.investment}
+                  </p>
+                </div>
+                <span className="pb-1 font-body text-sm font-semibold text-white/50">
+                  per child
+                </span>
+              </div>
+            </motion.div>
+          </div>
         </section>
       )}
 
       {/* S1.5 — CENTER STAGE */}
       {course.centerStageImage && (
-        <section className="bg-white py-20 px-4 text-center overflow-hidden">
+        <section className="bg-canvas py-16 md:py-24 px-4 text-center overflow-hidden">
           <motion.div
             className="relative max-w-4xl mx-auto"
             variants={fadeUp}
@@ -461,7 +543,7 @@ export default function CourseLandingPage({ course }) {
 
       {/* S1.6 — WHAT & WHY SPLIT */}
       {course.splitLeftImage && course.splitRightImage && (
-        <section className="bg-cream py-20 px-4">
+        <section className="bg-cream py-16 md:py-24 px-4">
           <motion.div
             className="max-w-5xl mx-auto"
             variants={fadeUp}
@@ -496,7 +578,7 @@ export default function CourseLandingPage({ course }) {
 
       {/* S1.7 — STORYBOOK SHOWCASE */}
       {course.showcaseImage && (
-        <section className="bg-[#0D1B2A] py-20 overflow-hidden">
+        <section className="bg-[#0D1B2A] py-16 md:py-24 overflow-hidden">
           <motion.div
             className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center px-4 mb-16"
             variants={fadeUp}
@@ -504,7 +586,7 @@ export default function CourseLandingPage({ course }) {
             whileInView="show"
             viewport={useViewport}
           >
-            <h2 className="font-cherry text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent leading-tight text-center lg:text-left">
+            <h2 className="font-cherry text-h2 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent text-center lg:text-left">
               {course.showcaseHeadline}
             </h2>
             <img
@@ -549,7 +631,7 @@ export default function CourseLandingPage({ course }) {
                             {book.title}
                           </p>
                           {book.author && (
-                            <p className="font-body text-white/80 text-xs uppercase tracking-wide">
+                            <p className="font-body text-white/80 text-xs">
                               {book.author}
                             </p>
                           )}
@@ -571,7 +653,7 @@ export default function CourseLandingPage({ course }) {
 
       {/* S1.8 — JOURNEY & GAINS SPLIT */}
       {course.journeyLeftImage && course.journeyRightImage && (
-        <section className="bg-cream py-20 px-4">
+        <section className="bg-cream py-16 md:py-24 px-4">
           <motion.div
             className="max-w-5xl mx-auto"
             variants={fadeUp}
@@ -601,7 +683,7 @@ export default function CourseLandingPage({ course }) {
 
       {/* S1.9 — INVESTMENT & ABOUT */}
       {course.investmentImage && course.aboutImage && (
-        <section className="bg-cream py-20 px-4">
+        <section className="bg-cream py-16 md:py-24 px-4">
           <motion.div
             className="max-w-md mx-auto flex flex-col gap-8"
             variants={fadeUp}
@@ -625,7 +707,7 @@ export default function CourseLandingPage({ course }) {
 
       {/* S1.95 — Q&A */}
       {course.qanda && (
-        <section className="bg-white">
+        <section className="bg-canvas">
           <div className="h-4 bg-yellow" />
           <motion.div
             className="max-w-3xl mx-auto px-6 py-16"
@@ -635,7 +717,7 @@ export default function CourseLandingPage({ course }) {
             viewport={useViewport}
           >
             <div className="flex items-center justify-between mb-12">
-              <h2 className="font-cherry text-4xl sm:text-5xl text-orange-400">
+              <h2 className="font-cherry text-h2 text-orange-400">
                 Q&amp;A
               </h2>
               <img
@@ -645,18 +727,23 @@ export default function CourseLandingPage({ course }) {
               />
             </div>
 
-            <div className="space-y-10">
+            <ol className="divide-y divide-dark/10 border-y border-dark/10">
               {course.qanda.map((item, i) => (
-                <div key={item.q}>
-                  <h3 className="font-cherry text-xl sm:text-2xl text-orange-400 mb-2 leading-snug">
-                    {i + 1}. {item.q}
-                  </h3>
-                  <p className="font-body font-bold text-slate-900 leading-relaxed">
-                    {item.a}
-                  </p>
-                </div>
+                <li key={item.q} className="flex gap-5 py-7">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-orange-400 font-body text-sm font-extrabold text-dark">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h4 className="font-body font-extrabold text-h4 text-dark mb-2">
+                      {item.q}
+                    </h4>
+                    <p className="font-body text-[1.0625rem] text-dark/75 leading-relaxed">
+                      {item.a}
+                    </p>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ol>
 
             {course.founder && (
               <div className="mt-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8">
@@ -682,7 +769,7 @@ export default function CourseLandingPage({ course }) {
                       );
                     })}
                   </svg>
-                  <p className="font-cherry text-aqua text-lg sm:text-xl uppercase tracking-wide">
+                  <p className="font-cherry text-aqua text-lg sm:text-xl">
                     {course.founder.name}
                   </p>
                   <p className="font-body font-bold text-orange-400 mt-1">
@@ -704,253 +791,281 @@ export default function CourseLandingPage({ course }) {
       )}
 
       {!course.hideStandardSections && (
-      <>
-      {/* S2 — THE PROBLEM */}
-      <section className="bg-white py-20 px-4">
-        <motion.div
-          className="max-w-3xl mx-auto text-center"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={useViewport}
-        >
-          <h2 className="font-cherry text-3xl lg:text-4xl text-slate-900 mb-6 leading-tight">
-            {course.problemHeading}
-          </h2>
-          <p className="font-body text-gray-600 text-lg leading-relaxed">
-            {course.problemBody}
-          </p>
-        </motion.div>
-      </section>
-
-      {/* S3 — WHAT IT IS */}
-      <section className="bg-gray-50 py-20 px-4">
-        <motion.div
-          className="max-w-3xl mx-auto text-center"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={useViewport}
-        >
-          <h2 className="font-cherry text-3xl lg:text-4xl text-slate-900 mb-6 leading-tight">
-            {course.whatItIsHeading}
-          </h2>
-          <p className="font-body text-gray-600 text-lg leading-relaxed">
-            {course.whatItIsBody}
-          </p>
-        </motion.div>
-      </section>
-
-      {/* S4 — OUTCOMES */}
-      <section className="bg-white py-20 px-4">
-        <div className="max-w-3xl mx-auto">
-          <motion.h2
-            className="font-cherry text-3xl lg:text-4xl text-slate-900 mb-10 text-center"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={useViewport}
-          >
-            {course.outcomesHeading}
-          </motion.h2>
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={useViewport}
-          >
-            {course.outcomes.map((o, i) => (
-              <motion.div
-                key={i}
-                variants={scaleIn}
-                className="flex gap-3 items-start bg-gray-50 rounded-2xl p-5"
-              >
-                <CheckCircle
-                  size={20}
-                  className="text-aqua flex-shrink-0 mt-0.5"
-                />
-                <span className="font-body text-gray-700 text-sm leading-relaxed">
-                  {o}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* S5 — BONUS */}
-      <section className="bg-aqua py-20 px-4 text-center text-white">
-        <motion.div
-          className="max-w-3xl mx-auto"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={useViewport}
-        >
-          <span className="inline-block bg-white/20 text-white font-bold font-body text-xs tracking-widest uppercase px-4 py-2 rounded-full mb-6">
-            Bonus Outcome
-          </span>
-          <h2 className="font-cherry text-3xl lg:text-4xl text-white mb-6 leading-tight">
-            {course.bonusHeading}
-          </h2>
-          <p className="font-body text-white/85 text-lg leading-relaxed">
-            {course.bonusBody}
-          </p>
-        </motion.div>
-      </section>
-
-      {/* S6 — SCHEDULE & PRICING */}
-      <section className="bg-white py-20 px-4">
-        <motion.div
-          className="max-w-lg mx-auto"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={useViewport}
-        >
-          <h2 className="font-cherry text-3xl text-slate-900 mb-8 text-center">
-            Schedule & Investment
-          </h2>
-          <div className="border-2 border-aqua rounded-2xl overflow-hidden">
-            <div className="bg-aqua px-6 py-4">
-              <p className="font-cherry text-2xl text-white text-center">
-                {course.schedule.course}
-              </p>
-            </div>
-            <div className="divide-y divide-gray-100">
+        <>
+          {/* S2–S3 — THE CHALLENGE & OUR APPROACH */}
+          <section className="bg-canvas px-5 py-20 sm:px-8 md:py-28">
+            <div className="mx-auto max-w-6xl divide-y divide-dark/10">
               {[
-                { label: "Month", value: course.schedule.month },
-                { label: "Duration", value: course.schedule.duration },
-                { label: "Schedule", value: course.schedule.sessionSchedule },
-                { label: "Ages", value: course.schedule.ages },
-                { label: "Grouping", value: course.schedule.grouping },
-                { label: "Format", value: course.schedule.format },
-              ]
-                .filter(Boolean)
-                .map(({ label, value }) => (
-                  <div
-                    key={label}
-                    className="flex items-center justify-between px-6 py-4"
-                  >
-                    <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">
-                      {label}
-                    </span>
-                    <span className="font-body text-sm font-bold text-slate-900">
-                      {value}
-                    </span>
-                  </div>
-                ))}
-              <div className="flex items-center justify-between px-6 py-4 bg-gray-50">
-                <span className="font-body text-sm font-bold text-gray-500 uppercase tracking-wide">
-                  Investment
-                </span>
-                <span className="font-cherry text-2xl text-aqua">
-                  {course.schedule.investment}
-                </span>
-              </div>
-            </div>
-            <div className="px-6 py-5">
-              {enrolBtn("aqua", "Reserve My Child's Spot →")}
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* S7 — TESTIMONIAL */}
-      <section
-        className="py-20 px-4 text-white"
-        style={{ backgroundColor: "#1a1a1a" }}
-      >
-        <motion.div
-          className="max-w-2xl mx-auto text-center"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={useViewport}
-        >
-          <h2 className="font-cherry text-3xl text-white mb-10">
-            What parents are saying
-          </h2>
-          <div className="bg-white rounded-3xl p-8 sm:p-10">
-            <div className="flex gap-1 justify-center mb-6">
-              {[...Array(5)].map((_, i) => (
-                <svg
-                  key={i}
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="#ffec00"
-                  xmlns="http://www.w3.org/2000/svg"
+                {
+                  label: "The challenge",
+                  heading: course.problemHeading,
+                  body: course.problemBody,
+                },
+                {
+                  label: "Our approach",
+                  heading: course.whatItIsHeading,
+                  body: course.whatItIsBody,
+                },
+              ].map((row) => (
+                <motion.div
+                  key={row.label}
+                  className="grid gap-6 py-14 first:pt-0 last:pb-0 md:grid-cols-12 md:gap-12 md:py-20"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={useViewport}
                 >
-                  <path d="M9 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L9 13.27l-4.77 2.44.91-5.32L1.27 6.62l5.34-.78L9 1z" />
-                </svg>
+                  <div className="md:col-span-5">
+                    <SectionLabel>{row.label}</SectionLabel>
+                    <h2 className="font-cherry text-h2 text-dark mt-2">
+                      {row.heading}
+                    </h2>
+                  </div>
+                  <p className="font-body text-lead text-dark/70 md:col-span-7 md:pt-16">
+                    {row.body}
+                  </p>
+                </motion.div>
               ))}
             </div>
-            <p className="font-body text-gray-700 text-lg leading-relaxed italic mb-6">
-              {course.testimonial.quote}
-            </p>
-            <p className="font-body font-bold text-slate-900 text-sm">
-              {course.testimonial.author}
-            </p>
-          </div>
-        </motion.div>
-      </section>
+          </section>
 
-      {/* S8 — FAQ */}
-      <section className="bg-gray-50 py-20 px-4">
-        <motion.div
-          className="max-w-2xl mx-auto"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={useViewport}
-        >
-          <h2 className="font-cherry text-3xl text-slate-900 mb-10 text-center">
-            Common questions
-          </h2>
-          <div className="flex flex-col gap-3">
-            {[
-              ...(Array.isArray(course.faqSpecific)
-                ? course.faqSpecific
-                : [course.faqSpecific]),
-              ...course.faqCommon,
-            ].map((faq, i) => (
-              <FAQ key={i} q={faq.q} a={faq.a} />
-            ))}
-          </div>
-        </motion.div>
-      </section>
+          {/* S4 — OUTCOMES */}
+          <section className="bg-cream px-5 py-20 sm:px-8 md:py-28">
+            <div className="mx-auto max-w-6xl">
+              <motion.div
+                className="mb-12 text-center"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                <SectionLabel>What your child gains</SectionLabel>
+                <h2 className="font-cherry text-h2 text-dark mx-auto mt-2 max-w-3xl">
+                  {course.outcomesHeading}
+                </h2>
+              </motion.div>
+              <motion.ul
+                className="grid grid-cols-1 gap-5 sm:grid-cols-2"
+                variants={stagger}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                {course.outcomes.map((o) => (
+                  <motion.li
+                    key={o}
+                    variants={scaleIn}
+                    className="flex items-start gap-4 rounded-3xl border border-dark/10 bg-white p-6"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-aqua">
+                      <Check size={20} strokeWidth={3} className="text-dark" />
+                    </span>
+                    <span className="pt-1.5 font-body text-[1.0625rem] leading-relaxed text-dark/80">
+                      {o}
+                    </span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </div>
+          </section>
 
-      {/* S9 — FINAL CTA */}
-      <section className="py-24 px-4 text-center text-white bg-dark">
-        <motion.div
-          className="max-w-2xl mx-auto"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={useViewport}
-        >
-          <h2 className="font-cherry text-4xl lg:text-5xl text-white mb-10 leading-tight">
-            {course.finalCTA}
-          </h2>
-          {enrolBtn("yellow")}
-          <div className="mt-6">
-            <Link
-              to="/community-hour"
-              className="font-body text-white/70 hover:text-white text-sm underline transition-colors"
+          {/* S5 — BONUS */}
+          <section className="bg-canvas px-5 py-20 sm:px-8 md:py-28">
+            <motion.div
+              className="mx-auto max-w-5xl rounded-4xl border-2 border-dark bg-yellow p-8 shadow-[0_8px_0_0_#1a1a1a] sm:p-12 lg:p-16"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={useViewport}
             >
-              Not sure yet? Book a free 15-minute call with our founder first →
-            </Link>
-          </div>
-        </motion.div>
-      </section>
-      </>
+              <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-dark px-4 py-1.5 font-body text-sm font-extrabold text-yellow">
+                <Sparkles size={16} /> Bonus outcome
+              </span>
+              <h2 className="font-cherry text-h2 text-dark mb-6 max-w-3xl">
+                {course.bonusHeading}
+              </h2>
+              <p className="font-body text-lead text-dark/80 max-w-prose">
+                {course.bonusBody}
+              </p>
+            </motion.div>
+          </section>
+
+          {/* S6 — SCHEDULE & PRICING */}
+          <section className="bg-cream px-5 py-20 sm:px-8 md:py-28">
+            <div className="mx-auto max-w-6xl">
+              <motion.div
+                className="mb-12 text-center"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                <SectionLabel>{course.schedule.course}</SectionLabel>
+                <h2 className="font-cherry text-h2 text-dark mt-2">
+                  Schedule & Investment
+                </h2>
+              </motion.div>
+              <motion.div
+                className="grid items-stretch gap-5 lg:grid-cols-[1.4fr_1fr]"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                <dl className="divide-y divide-dark/10 rounded-4xl border border-dark/10 bg-white px-6 py-2 sm:px-8">
+                  {[
+                    { label: "Month", value: course.schedule.month },
+                    { label: "Duration", value: course.schedule.duration },
+                    { label: "Schedule", value: course.schedule.sessionSchedule },
+                    { label: "Ages", value: course.schedule.ages },
+                    { label: "Grouping", value: course.schedule.grouping },
+                    { label: "Format", value: course.schedule.format },
+                  ].map(({ label, value }) => (
+                    <div
+                      key={label}
+                      className="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+                    >
+                      <dt className="font-body text-sm font-bold text-dark/55">
+                        {label}
+                      </dt>
+                      <dd className="font-body font-bold text-dark sm:text-right">
+                        {value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <div className="flex flex-col rounded-4xl bg-cocoa p-8 text-white sm:p-10">
+                  <p className="font-body text-sm font-extrabold text-yellow">
+                    Investment
+                  </p>
+                  <p className="font-cherry text-h1 mt-2">
+                    {course.schedule.investment}
+                  </p>
+                  <p className="mt-2 font-body font-semibold text-white/60">
+                    Per child, covering all {course.schedule.duration.toLowerCase()}
+                  </p>
+                  <div className="mt-auto pt-10">
+                    <Button
+                      variant="ember"
+                      size="lg"
+                      className="w-full"
+                      onClick={() => setModalOpen(true)}
+                    >
+                      Reserve my child's spot
+                    </Button>
+                    <p className="mt-4 flex items-center justify-center gap-1.5 font-body text-sm font-semibold text-white/50">
+                      <Lock size={14} /> Secure checkout with Paystack
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* S7 — TESTIMONIAL */}
+          <section className="bg-dark px-5 py-20 text-white sm:px-8 md:py-28">
+            <motion.figure
+              className="mx-auto max-w-3xl text-center"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={useViewport}
+            >
+              <SectionLabel>What parents are saying</SectionLabel>
+              <div
+                className="mt-4 mb-8 flex justify-center gap-1"
+                aria-label="5 out of 5 stars"
+              >
+                {[...Array(5)].map((_, i) => (
+                  <svg
+                    key={i}
+                    width="22"
+                    height="22"
+                    viewBox="0 0 18 18"
+                    fill="#ffec00"
+                    aria-hidden="true"
+                  >
+                    <path d="M9 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L9 13.27l-4.77 2.44.91-5.32L1.27 6.62l5.34-.78L9 1z" />
+                  </svg>
+                ))}
+              </div>
+              <blockquote className="font-body text-h4 font-bold leading-relaxed text-white">
+                “{course.testimonial.quote}”
+              </blockquote>
+              <figcaption className="mt-8 font-body font-bold text-white/55">
+                {course.testimonial.author}
+              </figcaption>
+            </motion.figure>
+          </section>
+
+          {/* S8 — FAQ */}
+          <section className="bg-canvas px-5 py-20 sm:px-8 md:py-28">
+            <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+              <motion.div
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                <SectionLabel>FAQ</SectionLabel>
+                <h2 className="font-cherry text-h2 text-dark mb-5 mt-2">
+                  Common questions
+                </h2>
+                <p className="font-body text-dark/70 mb-6 max-w-sm">
+                  Can't find your answer? Talk to our founder before you
+                  enrol.
+                </p>
+                <Link
+                  to="/community-hour"
+                  className="font-body font-extrabold text-dark underline decoration-aqua decoration-[3px] underline-offset-[6px] hover:text-aqua transition-colors"
+                >
+                  Book a free call
+                </Link>
+              </motion.div>
+              <div className="flex flex-col gap-3">
+                {[
+                  ...(Array.isArray(course.faqSpecific)
+                    ? course.faqSpecific
+                    : [course.faqSpecific]),
+                  ...course.faqCommon,
+                ].map((faq, i) => (
+                  <FAQ key={faq.q} id={i} q={faq.q} a={faq.a} />
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* S9 — FINAL CTA */}
+          <section className="bg-dark px-5 py-20 text-center text-white sm:px-8 md:py-28">
+            <motion.div
+              className="mx-auto max-w-3xl"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={useViewport}
+            >
+              <h2 className="font-cherry text-h2 text-white mb-10">
+                {course.finalCTA}
+              </h2>
+              {enrolBtn("yellow")}
+              <div className="mt-8">
+                <Link
+                  to="/community-hour"
+                  className="font-body font-bold text-white/70 underline decoration-aqua decoration-2 underline-offset-4 hover:text-white transition-colors"
+                >
+                  Not sure yet? Book a free 15-minute call with our founder
+                  first
+                </Link>
+              </div>
+            </motion.div>
+          </section>
+        </>
       )}
 
       {/* S10 — CLOSING */}
       {course.closingImage && (
-        <section className="bg-[#0D1B2A] py-24 px-4 text-center text-white overflow-hidden">
+        <section className="bg-[#0D1B2A] py-20 md:py-28 px-4 text-center text-white overflow-hidden">
           <motion.div
             className="max-w-md mx-auto"
             variants={fadeUp}
@@ -964,7 +1079,7 @@ export default function CourseLandingPage({ course }) {
               className="w-full rounded-3xl shadow-2xl mb-10"
             />
             {course.closingHook && (
-              <h2 className="font-cherry text-3xl sm:text-4xl text-yellow mb-8 leading-tight">
+              <h2 className="font-cherry text-h2 text-yellow mb-8">
                 {course.closingHook}
               </h2>
             )}

@@ -1,11 +1,44 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Calendar,
+  Star,
+  Coffee,
+  Globe,
+  PenLine,
+  Mic2,
+  SearchCheck,
+  Brain,
+} from "lucide-react";
 import havenVideoLp from "../assets/discoveryhaven-LP-video.mp4";
+import {
+  fadeUp,
+  fadeIn,
+  stagger,
+  slideLeft,
+  slideRight,
+  scaleIn,
+  useViewport,
+} from "../components/ui/Motion";
+import { Button } from "../components/ui/Button";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { Card } from "../components/ui/Card";
+import { EnrollModal } from "../components/ui/EnrollModal";
+import { COURSES, EVENTS, TESTIMONIALS, IMPACT_METRICS } from "../data/content";
+import discoveryhavenHeroImg from "../assets/discoveryhaven-Hero1.jpg";
+import discoveryhavenHeroImg1 from "../assets/discoveryhaven-haventribe.jpg";
 
 function TypingText({ text, className }) {
-  const [displayed, setDisplayed] = useState("");
-  const [done, setDone] = useState(false);
+  const reduceMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const [displayed, setDisplayed] = useState(reduceMotion ? text : "");
+  const [done, setDone] = useState(reduceMotion);
 
   useEffect(() => {
+    if (reduceMotion) return;
     let i = 0;
     const id = setInterval(() => {
       i++;
@@ -16,38 +49,17 @@ function TypingText({ text, className }) {
       }
     }, 60);
     return () => clearInterval(id);
-  }, [text]);
+  }, [text, reduceMotion]);
 
   return (
-    <span className={className}>
-      {displayed}
-      {!done && <span className="animate-pulse">|</span>}
+    <span className={className} aria-label={text}>
+      <span aria-hidden="true">
+        {displayed}
+        {!done && <span className="animate-pulse">|</span>}
+      </span>
     </span>
   );
 }
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import {
-  fadeUp,
-  fadeIn,
-  stagger,
-  slideLeft,
-  slideRight,
-  scaleIn,
-  useViewport,
-} from "../components/ui/Motion";
-import {
-  ArrowRight,
-  Calendar,
-  Star,
-  CheckCircle,
-  Coffee,
-  Globe,
-  PenLine,
-  Mic2,
-  SearchCheck,
-  Brain,
-} from "lucide-react";
 
 const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
 const COURSE_ROUTES = {
@@ -56,13 +68,27 @@ const COURSE_ROUTES = {
   "curiosity-box": "/courses/curiosity-box",
   "eq-lab": "/courses/eq-lab",
 };
-import { Button } from "../components/ui/Button";
-import { SectionLabel } from "../components/ui/SectionLabel";
-import { Card } from "../components/ui/Card";
-import { EnrollModal } from "../components/ui/EnrollModal";
-import { COURSES, EVENTS, TESTIMONIALS, IMPACT_METRICS } from "../data/content";
-import discoveryhavenHeroImg from "../assets/discoveryhaven-Hero1.jpg";
-import discoveryhavenHeroImg1 from "../assets/discoveryhaven-haventribe.jpg";
+
+const SDG_CARDS = [
+  {
+    number: "SDG 4",
+    title: "Quality Education",
+    desc: "We ensure inclusive and equitable quality education by providing creative, skills-based learning programmes that go beyond the traditional classroom.",
+    card: "bg-aqua text-dark",
+    chip: "bg-white/40",
+    body: "text-dark/80",
+    link: "decoration-white",
+  },
+  {
+    number: "SDG 17",
+    title: "Partnerships for the Goals",
+    desc: "We build purposeful relationships with schools, publishers, institutional partners, and the broader community to amplify our impact across Africa.",
+    card: "bg-cocoa text-white",
+    chip: "bg-white/10",
+    body: "text-white/75",
+    link: "text-ember decoration-ember",
+  },
+];
 
 export default function Home() {
   const [enrollEvent, setEnrollEvent] = useState(null);
@@ -71,23 +97,19 @@ export default function Home() {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section className="bg-cream pt-12 pb-0 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* top label */}
+      <section className="bg-cream pt-32 lg:pt-40 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <motion.div
-            className="flex justify-center mb-6"
+            className="text-center"
             variants={fadeIn}
             initial="hidden"
             animate="show"
           >
-            <span className="inline-flex items-center gap-2 bg-aqua/10 text-aqua text-xs font-bold font-body tracking-widest uppercase px-4 py-2 rounded-full">
-              Where Children Come Alive
-            </span>
+            <SectionLabel>Where children come alive</SectionLabel>
           </motion.div>
 
-          {/* heading */}
           <motion.h1
-            className="font-cherry text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-slate-900 text-center leading-none mb-6"
+            className="font-cherry text-h1 text-dark text-center mt-2 mb-7"
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -96,12 +118,12 @@ export default function Home() {
             <br />
             <TypingText
               text="to Come Alive"
-              className="bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-amber-300 to-cyan-400 bg-clip-text text-transparent"
             />
           </motion.h1>
 
           <motion.p
-            className="text-gray-500 font-body text-lg sm:text-xl text-center max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="font-body text-lead text-dark/70 text-center max-w-prose mx-auto mb-10"
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -113,7 +135,7 @@ export default function Home() {
           </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-16 lg:mb-20"
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -124,297 +146,232 @@ export default function Home() {
               variant="primary"
               onClick={() => (window.location.href = "/haven-academy")}
             >
-              Explore Our Courses <ArrowRight size={18} />
+              Explore our courses <ArrowRight size={18} />
             </Button>
             <Button
               size="lg"
               variant="outline-dark"
               onClick={() => (window.location.href = "/community-hour")}
             >
-              Book a Free 20-Min Call
+              Book a free 20-min call
             </Button>
           </motion.div>
 
           {/* ── IMAGE COLLAGE ── */}
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch"
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5 items-stretch"
             variants={stagger}
             initial="hidden"
             animate="show"
           >
-            {/* LEFT — tall photo + bottom-left floating card */}
             <motion.div
               variants={slideLeft}
-              className="relative rounded-3xl overflow-hidden h-[300px] md:h-[420px] lg:h-[500px]"
+              className="relative rounded-4xl overflow-hidden h-[340px] md:h-[440px] lg:h-[520px]"
             >
               <img
                 src={discoveryhavenHeroImg}
-                alt="Child learning"
+                alt="Children smiling on a Discovery Haven outing"
                 fetchPriority="high"
                 decoding="async"
                 className="w-full h-full object-cover"
               />
-              {/* bottom-left white card — compact, speech-bubble style */}
-              <div className="absolute bottom-5 left-5 bg-white rounded-2xl shadow-xl p-3.5 max-w-[200px]">
-                <p className="font-bold font-body text-slate-900 text-xs leading-snug">
+              <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-[240px] bg-white rounded-2xl shadow-lift p-4">
+                <p className="font-body font-extrabold text-dark text-[0.9375rem] leading-snug">
                   Learn anytime, anywhere with our online programmes
                 </p>
-                <div className="mt-2.5 flex items-center gap-1.5">
-                  <div className="w-5 h-5 rounded-full bg-aqua flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-[8px] font-bold">DH</span>
-                  </div>
-                  <span className="font-body text-[10px] text-gray-400 font-semibold">
-                    Discovery Haven
-                  </span>
-                </div>
               </div>
             </motion.div>
 
-            {/* CENTER — two stacked colour cards, no photo */}
             <motion.div
               variants={fadeUp}
-              className="flex flex-col gap-4 h-[420px] md:h-[420px] lg:h-[500px]"
+              className="flex flex-col gap-4 lg:gap-5 md:h-[440px] lg:h-[520px]"
             >
-              {/* TOP — lime green card with avatar row */}
-              <div
-                className="rounded-3xl p-6 flex flex-col justify-between flex-1 bg-yellow text-slate-900"
-                // style={{ backgroundColor: "#8bc34a" }}
-              >
-                <div>
-                  {/* overlapping avatar circles */}
-                  <div className="flex items-center mb-1">
-                    <div className="flex -space-x-2.5">
-                      {[
-                        { bg: "#8b5cf6", letter: "B" },
-                        { bg: "#ec4899", letter: "C" },
-                        { bg: "#06b6d4", letter: "D" },
-                      ].map((av, i) => (
-                        <div
-                          key={i}
-                          className="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold"
-                          // style={{ backgroundColor: av.bg }}
-                        >
-                          {av.letter}
-                        </div>
-                      ))}
-                      <div className="w-9 h-9 rounded-full border-2 border-white bg-white/30 flex items-center justify-center text-white text-xs font-bold">
-                        40+
-                      </div>
-                    </div>
-                  </div>
+              <div className="rounded-4xl p-7 flex flex-col justify-between gap-8 flex-1 bg-yellow text-dark">
+                <div className="flex -space-x-2.5" aria-hidden="true">
+                  {["bg-aqua", "bg-crimson", "bg-dark"].map((bg) => (
+                    <span
+                      key={bg}
+                      className={`w-10 h-10 rounded-full border-[3px] border-yellow ${bg}`}
+                    />
+                  ))}
+                  <span className="w-10 h-10 rounded-full border-[3px] border-yellow bg-white flex items-center justify-center font-body font-extrabold text-xs text-dark">
+                    40+
+                  </span>
                 </div>
                 <div>
-                  <p className="font-cherry text-3xl  leading-tight">
-                    Professional
-                  </p>
-                  <p className="font-cherry text-3xl leading-tight">
-                    Educators
-                  </p>
-                  <p className="font-body text-slate-700 text-xs mt-1.5">
-                    Trained · Vetted · Passionate
+                  <p className="font-cherry text-h2">Professional Educators</p>
+                  <p className="font-body font-bold text-dark/70 text-[0.9375rem] mt-2">
+                    Trained, vetted, and passionate
                   </p>
                 </div>
               </div>
 
-              {/* BOTTOM — lavender card */}
-              <div
-                className="rounded-3xl p-6 flex flex-col justify-between flex-1 bg-orange-200"
-                // style={{ backgroundColor: "orange.300" }}
-              >
-                <p className="font-cherry text-2xl text-slate-900 leading-snug">
+              <div className="rounded-4xl p-7 flex flex-col justify-between gap-6 flex-1 bg-cocoa text-white">
+                <p className="font-cherry text-h3">
                   Every child deserves the chance to learn
                 </p>
-                <div className="flex items-end justify-between mt-4">
-                  <div className="text-5xl leading-none">🌸</div>
-                  <span className="font-body text-[10px] font-bold text-slate-900/50 uppercase tracking-widest">
-                    Discovery Haven
-                  </span>
-                </div>
+                <p className="font-body font-bold text-white/60 text-sm">
+                  Virtual studios for ages 7 to 16
+                </p>
               </div>
             </motion.div>
 
-            {/* RIGHT — tall photo + bottom floating card */}
             <motion.div
               variants={slideRight}
-              className="relative rounded-3xl overflow-hidden h-[300px] md:h-[420px] lg:h-[500px]"
+              className="relative rounded-4xl overflow-hidden h-[340px] md:h-[440px] lg:h-[520px]"
             >
               <img
                 src={discoveryhavenHeroImg1}
-                alt="Child reading"
+                alt="A Discovery Haven group of children and educators"
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover"
               />
-              {/* bottom white card — course pill style */}
-              <div className="absolute bottom-5 left-5 right-5 bg-white rounded-2xl shadow-xl p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-cherry text-base text-slate-900 leading-tight">
-                      Loud & Fearless
-                    </p>
-                    <p className="text-gray-400 font-body text-[11px] mt-0.5">
-                      For Ages 9–15
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-center">
-                      <p className="font-cherry text-2xl text-slate-900 leading-none">
-                        6
-                      </p>
-                      <p className="font-body text-[10px] text-gray-400 leading-tight">
-                        Weeks
-                      </p>
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-dark flex items-center justify-center flex-shrink-0">
-                      <ArrowRight size={14} className="text-white" />
-                    </div>
-                  </div>
+              <Link
+                to="/courses/loud-fearless"
+                className="absolute bottom-4 left-4 right-4 bg-white rounded-2xl shadow-lift p-4 flex items-center justify-between gap-3 group"
+              >
+                <div>
+                  <p className="font-body font-extrabold text-h5 text-dark">
+                    Loud & Fearless
+                  </p>
+                  <p className="text-dark/60 font-body font-semibold text-sm">
+                    Public speaking · 6 weeks
+                  </p>
                 </div>
-              </div>
+                <span className="w-10 h-10 rounded-full bg-dark flex items-center justify-center flex-shrink-0 transition-transform group-hover:translate-x-0.5">
+                  <ArrowRight size={16} className="text-white" />
+                </span>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
 
-        {/* ── STATS STRIP ── */}
-        <div className="mt-12 bg-white border-t border-b border-gray-100 py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="items-center justify-between gap-4"
-              variants={fadeIn}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
-            >
-              <p className="font-cherry text-2xl text-slate-900 text-center">
-                2,400+ Childern Reached Since Launch
-              </p>
-              {/* <div className="flex items-center gap-6 flex-wrap justify-center">
-                {[
-                  "British Council",
-                  "UNICEF",
-                  "UNESCO",
-                  "Ford Foundation",
-                  "Oxford",
-                ].map((logo) => (
-                  <span
-                    key={logo}
-                    className="text-gray-300 font-body font-bold text-sm tracking-wide"
-                  >
-                    {logo}
-                  </span>
-                ))}
-              </div> */}
-            </motion.div>
-          </div>
+        {/* ── REACH STRIP ── */}
+        <div className="mt-16 lg:mt-20 bg-dark py-7">
+          <motion.p
+            className="font-cherry text-h3 text-center text-white px-5"
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <span className="text-yellow">2,400+</span> children reached since
+            launch
+          </motion.p>
         </div>
       </section>
 
       {/* ─── POSITIONING ─── */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 md:py-28 bg-canvas">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <motion.div
-            className="grid lg:grid-cols-2 gap-16 items-center"
+            className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center"
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
             <motion.div variants={slideLeft}>
-              <SectionLabel>OUR APPROACH</SectionLabel>
-              <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
+              <SectionLabel>Our approach</SectionLabel>
+              <h2 className="font-cherry text-h2 text-dark mb-6">
                 Skills That Shape Tomorrow
               </h2>
-              <p className="text-gray-500 font-body text-lg leading-relaxed mb-8">
+              <p className="font-body text-lead text-dark/70 max-w-prose mb-8">
                 We don't just teach, we transform. Discovery Haven runs virtual
                 and in-person programmes that build the skills children need
                 most. Not just for school, but for life.
               </p>
+              <Button
+                variant="outline-dark"
+                onClick={() => (window.location.href = "/about")}
+              >
+                Meet Discovery Haven
+              </Button>
             </motion.div>
             <motion.div variants={slideRight} className="flex justify-center">
               {/* Source footage is portrait (shot vertically) - aspect-video
                   (16:9) here would force a landscape crop that cuts off
                   faces, so this matches the actual 9:16 content instead. */}
-              <video
-                className="w-full max-w-md rounded-3xl aspect-[9/16] object-cover bg-dark"
-                controls
-                poster=""
-              >
-                <source src={havenVideoLp} type="video/mp4" />
-              </video>
+              <div className="relative w-[calc(100%-1rem)] max-w-sm">
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 translate-x-4 translate-y-4 rounded-4xl bg-yellow"
+                />
+                <video
+                  className="relative w-full rounded-4xl aspect-[9/16] object-cover bg-dark border-2 border-dark"
+                  controls
+                  preload="metadata"
+                >
+                  <source src={havenVideoLp} type="video/mp4" />
+                </video>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* ─── FOUR TRACKS ─── */}
-      <section className="py-24 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 md:py-28 bg-cream">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-14"
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>OUR FOUR STUDIO TRACKS</SectionLabel>
-            <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
+            <SectionLabel>Our four studio tracks</SectionLabel>
+            <h2 className="font-cherry text-h2 text-dark mb-5">
               Haven Academy
             </h2>
-            <p className="text-gray-600 font-body text-lg max-w-2xl mx-auto">
+            <p className="font-body text-lead text-dark/70 max-w-prose mx-auto">
               Four carefully designed learning tracks that give your child the
               tools to think clearly, speak confidently, and lead with empathy.
             </p>
           </motion.div>
 
-          <motion.div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-            {COURSES.map((course) => (
-              <Card
-                key={course.id}
-                className="group hover:shadow-lg transition-all duration-300"
-              >
-                {/* <div
-                  className="h-3 w-full"
-                  style={{ backgroundColor: course.color }}
-                /> */}
-                <div className="p-8">
-                  <div className="mb-4 flex justify-center">
-                    {(() => {
-                      const Icon = COURSE_ICONS[course.icon];
-                      return Icon ? (
-                        <Icon size={40} style={{ color: course.color }} />
-                      ) : null;
-                    })()}
-                  </div>
-                  <h3 className="font-cherry text-2xl text-slate-900 mb-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
+            {COURSES.map((course) => {
+              const Icon = COURSE_ICONS[course.icon];
+              return (
+                <Card key={course.id} className="flex flex-col p-7">
+                  {Icon && (
+                    <span className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-aqua/15 text-dark">
+                      <Icon size={24} />
+                    </span>
+                  )}
+                  <h3 className="font-cherry text-h3 text-dark mb-2">
                     {course.title}
                   </h3>
-                  <p className="text-aqua font-bold font-body text-sm uppercase tracking-wide mb-3">
+                  <p className="font-body font-bold text-dark/55 text-sm mb-4">
                     {course.subtitle}
                   </p>
-                  <p className="text-gray-600 font-body text-sm leading-relaxed mb-4">
+                  <p className="font-body text-dark/70 text-[0.9375rem] leading-relaxed mb-6">
                     {course.description}
                   </p>
-                  <div className="flex gap-3 flex-wrap mb-5">
-                    <span className="bg-gray-100 rounded-full px-3 py-1 text-xs font-bold font-body text-gray-600">
-                      Ages {course.ages}
-                    </span>
-                    <span className="bg-gray-100 rounded-full px-3 py-1 text-xs font-bold font-body text-gray-600">
-                      {course.duration}
-                    </span>
-                    <span className="bg-gray-100 rounded-full px-3 py-1 text-xs font-bold font-body text-gray-600">
-                      {course.format}
-                    </span>
+                  <div className="flex gap-2 flex-wrap mb-7 mt-auto">
+                    {[`Ages ${course.ages}`, course.duration, course.format].map(
+                      (tag) => (
+                        <span
+                          key={tag}
+                          className="bg-cream rounded-full px-3 py-1 text-xs font-bold font-body text-dark/70"
+                        >
+                          {tag}
+                        </span>
+                      ),
+                    )}
                   </div>
                   <Link
                     to={COURSE_ROUTES[course.id] || "/haven-academy"}
-                    className="inline-flex items-center gap-1 text-aqua font-bold font-body text-sm hover:gap-2 transition-all"
+                    className="inline-flex w-fit items-center gap-1.5 font-body font-extrabold text-dark text-[0.9375rem] underline decoration-aqua decoration-[3px] underline-offset-[6px] hover:gap-2.5 transition-all"
                   >
-                    Learn More <ArrowRight size={15} />
+                    See the course <ArrowRight size={16} />
                   </Link>
-                </div>
-              </Card>
-            ))}
-          </motion.div>
+                </Card>
+              );
+            })}
+          </div>
 
           <div className="text-center">
             <Button
@@ -422,161 +379,146 @@ export default function Home() {
               size="lg"
               onClick={() => (window.location.href = "/haven-academy")}
             >
-              View All Courses & Pricing
+              View all courses and pricing
             </Button>
           </div>
         </div>
       </section>
 
-      {/* IMPACT METRICS */}
-      <section className="bg-slate-50 py-16">
-        <SectionLabel className="text-center">IMPACT METRICS</SectionLabel>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div className="flex flex-wrap justify-center gap-6">
+      {/* ─── IMPACT METRICS ─── */}
+      <section className="bg-canvas py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 text-center">
+          <SectionLabel>Impact so far</SectionLabel>
+          <dl className="mt-6 grid grid-cols-2 md:grid-cols-5 gap-y-10 md:divide-x md:divide-dark/10">
             {IMPACT_METRICS.map((m) => (
-              <div key={m.label} className="text-center min-w-[120px]">
-                <div className="font-cherry text-5xl text-slate-900 mb-1">
-                  {m.number}
-                </div>
-                <div className="font-body text-slate-900/70 font-semibold text-sm uppercase tracking-wide">
+              <div key={m.label} className="px-4 flex flex-col">
+                <dt className="font-body font-bold text-dark/60 text-sm mt-2">
                   {m.label}
-                </div>
+                </dt>
+                <dd className="order-first font-cherry text-h1 text-dark">{m.number}</dd>
               </div>
             ))}
-          </motion.div>
+          </dl>
         </div>
       </section>
 
-      {/* ── SDG ALIGNMENT ── */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ─── SDG ALIGNMENT ─── */}
+      <section className="py-20 md:py-28 bg-cream">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-14"
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>GLOBAL ALIGNMENT</SectionLabel>
-            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+            <SectionLabel>Global alignment</SectionLabel>
+            <h2 className="font-cherry text-h2 text-dark mb-5 max-w-3xl mx-auto">
               Aligned to the UN Sustainable Development Goals
             </h2>
-            <p className="text-gray-500 font-body text-lg max-w-xl mx-auto">
+            <p className="font-body text-lead text-dark/70 max-w-prose mx-auto">
               Every programme we run is purposefully designed around two global
               frameworks for change.
             </p>
           </motion.div>
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto"
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
-            {[
-              {
-                number: "SDG 4",
-                title: "Quality Education",
-                desc: "We ensure inclusive and equitable quality education by providing creative, skills-based learning programmes that go beyond the traditional classroom.",
-                bg: "bg-aqua",
-                text: "text-white",
-                accent: "bg-white/20",
-              },
-              {
-                number: "SDG 17",
-                title: "Partnerships for the Goals",
-                desc: "We build purposeful relationships with schools, publishers, institutional partners, and the broader community to amplify our impact across Africa.",
-                bg: "bg-dark",
-                text: "text-white",
-                accent: "bg-white/10",
-              },
-            ].map((sdg, i) => (
+            {SDG_CARDS.map((sdg) => (
               <motion.div
-                key={i}
+                key={sdg.number}
                 variants={scaleIn}
-                className={`${sdg.bg} ${sdg.text} rounded-3xl p-8 flex flex-col gap-4`}
+                className={`${sdg.card} rounded-4xl p-8 lg:p-10 flex flex-col gap-5`}
               >
-                <div
-                  className={`inline-flex items-center gap-2 ${sdg.accent} rounded-full px-4 py-2 w-fit`}
+                <span
+                  className={`${sdg.chip} rounded-full px-4 py-1.5 w-fit font-body font-extrabold text-sm`}
                 >
-                  <span className="font-cherry text-lg">{sdg.number}</span>
-                </div>
+                  {sdg.number}
+                </span>
                 <div>
-                  <h3 className="font-cherry text-2xl mb-3">{sdg.title}</h3>
-                  <p className="font-body text-sm leading-relaxed opacity-80">
+                  <h3 className="font-cherry text-h3 mb-3">{sdg.title}</h3>
+                  <p className={`font-body leading-relaxed ${sdg.body}`}>
                     {sdg.desc}
                   </p>
                 </div>
-                <button
-                  className={`mt-auto inline-flex items-center gap-2 ${sdg.accent} hover:opacity-90 transition-opacity font-body font-bold text-sm px-5 py-2.5 rounded-full w-fit`}
-                  onClick={() => (window.location.href = "/advocacy")}
+                <Link
+                  to="/advocacy"
+                  className={`mt-auto inline-flex w-fit items-center gap-2 font-body font-extrabold underline decoration-[3px] underline-offset-[6px] ${sdg.link} hover:gap-3 transition-all`}
                 >
-                  Learn More <ArrowRight size={15} />
-                </button>
+                  How we work towards {sdg.number} <ArrowRight size={16} />
+                </Link>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="py-24 bg-aqua">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ─── TESTIMONIALS ─── */}
+      <section className="py-20 md:py-28 bg-aqua">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
-            <h2 className="font-cherry text-4xl lg:text-5xl text-white mb-4">
+            <h2 className="font-cherry text-h2 text-dark mb-4">
               Parents Are Talking
             </h2>
-            <p className="text-white/80 font-body text-lg">
+            <p className="font-body text-lead text-dark/75">
               Real results from real families across Nigeria.
             </p>
           </div>
-          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="bg-white rounded-2xl p-8">
-                <div className="flex gap-1 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {TESTIMONIALS.map((t) => (
+              <figure
+                key={t.name}
+                className="bg-white rounded-4xl p-8 flex flex-col border-2 border-dark shadow-press"
+              >
+                <div className="flex gap-1 mb-5" aria-label="5 out of 5 stars">
                   {[...Array(5)].map((_, j) => (
                     <Star
                       key={j}
-                      size={16}
-                      className="fill-yellow text-yellow"
+                      size={18}
+                      className="fill-yellow text-dark"
+                      strokeWidth={1.5}
                     />
                   ))}
                 </div>
-                <p className="text-gray-700 font-body text-base leading-relaxed italic mb-6">
-                  "{t.quote}"
-                </p>
-                <div>
-                  <p className="font-bold font-body text-slate-900">{t.name}</p>
-                  <p className="text-gray-400 font-body text-sm">{t.role}</p>
-                </div>
-              </div>
+                <blockquote className="font-body text-[1.0625rem] leading-relaxed text-dark/80 mb-8">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-auto">
+                  <p className="font-body font-extrabold text-dark">{t.name}</p>
+                  <p className="font-body text-sm text-dark/55">{t.role}</p>
+                </figcaption>
+              </figure>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ─── EVENTS ─── */}
-      <section className="py-24 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 md:py-28 bg-cream">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-14"
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>UPCOMING EVENTS</SectionLabel>
-            <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
+            <SectionLabel>Upcoming events</SectionLabel>
+            <h2 className="font-cherry text-h2 text-dark mb-5">
               Don't Miss What's Coming
             </h2>
-            <p className="text-gray-500 font-body text-lg max-w-xl mx-auto">
+            <p className="font-body text-lead text-dark/70 max-w-prose mx-auto">
               Cohorts fill fast. Secure your child's spot before registration
               closes.
             </p>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-3 gap-5"
             variants={stagger}
             initial="hidden"
             whileInView="show"
@@ -584,9 +526,9 @@ export default function Home() {
           >
             {EVENTS.map((ev) => (
               <motion.div key={ev.id} variants={scaleIn}>
-                <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <Card className="h-full flex flex-col">
                   <div
-                    className="px-6 py-3 font-bold font-body text-sm flex justify-between items-center"
+                    className="px-7 py-3.5 font-extrabold font-body text-sm flex justify-between items-center"
                     style={{
                       backgroundColor: ev.dateBarColor,
                       color: ev.dateBarTextColor,
@@ -595,35 +537,32 @@ export default function Home() {
                     <span>{ev.date}</span>
                     <span>{ev.duration}</span>
                   </div>
-                  <div className="p-7">
-                    <h3 className="font-cherry text-xl text-slate-900 mb-3 leading-snug">
+                  <div className="p-7 flex flex-col flex-1">
+                    <h3 className="font-cherry text-h3 text-dark mb-3">
                       {ev.title}
                     </h3>
-                    <p className="text-gray-500 font-body text-sm leading-relaxed mb-5">
+                    <p className="text-dark/65 font-body text-[0.9375rem] leading-relaxed mb-6">
                       {ev.description}
                     </p>
                     {ev.price && (
-                      <p className="text-aqua font-bold font-body text-sm mb-5">
+                      <p className="font-cherry text-h3 text-dark mb-6 mt-auto">
                         ₦{ev.price.toLocaleString()}
                       </p>
                     )}
                     <div className="flex flex-col gap-2">
                       <Button
                         variant="primary"
-                        size="sm"
                         className="w-full"
                         onClick={() => setEnrollEvent(ev)}
                       >
-                        {ev.type === "summit"
-                          ? "Register Interest"
-                          : "Register"}
+                        {ev.type === "summit" ? "Register interest" : "Register"}
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="w-full text-gray-400 hover:text-slate-900"
+                        className="w-full text-dark/60 hover:text-dark"
                       >
-                        <Calendar size={14} /> Add to Calendar
+                        <Calendar size={14} /> Add to calendar
                       </Button>
                     </div>
                   </div>
@@ -636,77 +575,76 @@ export default function Home() {
 
       {/* ─── COMMUNITY HOUR CTA ─── */}
       <motion.section
-        className="py-24 bg-white"
+        className="py-20 md:py-28 bg-canvas"
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
         viewport={useViewport}
       >
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <div className="flex justify-center mb-6">
-            <Coffee size={48} className="text-slate-900/40" />
-          </div>
-          <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4">
+        <div className="max-w-3xl mx-auto px-5 text-center">
+          <span className="mx-auto mb-7 flex h-16 w-16 items-center justify-center rounded-full bg-yellow">
+            <Coffee size={30} className="text-dark" />
+          </span>
+          <h2 className="font-cherry text-h2 text-dark mb-5">
             Not Sure Yet? Let's Talk.
           </h2>
-          <p className="text-gray-600 font-body text-lg leading-relaxed mb-4">
+          <p className="font-body text-lead text-dark/70 max-w-prose mx-auto mb-4">
             Book a free 20-minute conversation with our founder. No pitch, no
-            pressure — just an honest conversation about your child's learning
+            pressure, just an honest conversation about your child's learning
             journey.
           </p>
-          <p className="text-gray-400 font-body text-sm mb-8">
-            20-Minute Sprint · Zoom or Phone · No obligation
+          <p className="text-dark/50 font-body font-semibold text-sm mb-9">
+            20 minutes on Zoom or phone, with no obligation
           </p>
           <Button
             variant="yellow"
             size="lg"
             onClick={() => (window.location.href = "/community-hour")}
           >
-            Book Your Free 20-Minute Call →
+            Book your free 20-minute call
           </Button>
         </div>
       </motion.section>
 
       {/* ─── JOIN COMMUNITY BANNER ─── */}
-      <section className="py-16 bg-slate-800 mx-4 sm:mx-8 lg:mx-16 rounded-3xl mb-16 overflow-hidden relative">
-        <div className="absolute top-4 left-8 w-16 h-16 rounded-full border-2 border-white/10" />
-        <div className="absolute bottom-4 right-12 w-8 h-8 rounded-full border-2 border-yellow/30" />
-        <div className="absolute top-1/2 right-8 -translate-y-1/2 w-12 h-12 rounded-full bg-aqua/20" />
+      <section className="px-4 sm:px-8 pb-20 md:pb-28 bg-canvas">
         <motion.div
-          className="text-center px-4"
+          className="relative max-w-7xl mx-auto overflow-hidden rounded-4xl bg-cocoa px-6 py-16 md:py-20 text-center"
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
           viewport={useViewport}
         >
-          <div className="flex justify-center mb-4">
-            <Globe size={40} className="text-white/60" />
+          <div aria-hidden="true" className="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-aqua/15" />
+          <div aria-hidden="true" className="absolute -bottom-12 -right-6 w-48 h-48 rounded-full bg-yellow/10" />
+          <div className="relative">
+            <Globe size={40} className="text-aqua mx-auto mb-6" />
+            <h2 className="font-cherry text-h2 text-white mb-4">
+              Join Our Community
+            </h2>
+            <p className="font-body text-lead text-white/65 max-w-md mx-auto mb-9">
+              Get early access to new cohorts, the Discovery Letter, and
+              community events, and it's all free.
+            </p>
+            <Button
+              variant="ember"
+              size="lg"
+              onClick={() => (window.location.href = "/haven-tribe")}
+            >
+              Join the Haven Tribe
+            </Button>
           </div>
-          <h2 className="font-cherry text-4xl text-white mb-3">
-            Join Our Community
-          </h2>
-          <p className="text-gray-400 font-body mb-8 max-w-md mx-auto">
-            Get early access to new cohorts, the Discovery Letter, and community
-            events — all free.
-          </p>
-          <Button
-            variant="yellow"
-            size="lg"
-            onClick={() => (window.location.href = "/haven-tribe")}
-          >
-            Join Now →
-          </Button>
         </motion.div>
       </section>
 
       {/* ─── NEWSLETTER ─── */}
-      <section className="py-20 bg-slate-200">
-        <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="font-cherry text-4xl text-slate-900 mb-3">
+      <section className="py-20 md:py-24 bg-yellow">
+        <div className="max-w-2xl mx-auto px-5 text-center">
+          <h2 className="font-cherry text-h2 text-dark mb-4">
             Stay in the Loop
           </h2>
-          <p className="text-slate-900/70 font-body text-lg mb-8">
-            Get the Discovery Letter — weekly insights on child development,
+          <p className="font-body text-lead text-dark/75 mb-9">
+            Get the Discovery Letter for weekly insights on child development,
             creative learning, and early programme access.
           </p>
           <form
@@ -717,19 +655,23 @@ export default function Home() {
               alert("You're on the list!");
             }}
           >
+            <label htmlFor="newsletter-email" className="sr-only">
+              Email address
+            </label>
             <input
+              id="newsletter-email"
               type="email"
               required
               placeholder="Your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-5 py-4 rounded-full font-body text-slate-900 bg-white border-0 focus:outline-none focus:ring-2 focus:ring-dark"
+              className="flex-1 px-6 py-3.5 rounded-full font-body text-dark bg-white border-2 border-dark placeholder:text-dark/40 focus:outline-none focus-visible:ring-4 focus-visible:ring-aqua/60"
             />
             <Button type="submit" variant="dark" size="lg">
-              Join the Dispatch
+              Subscribe
             </Button>
           </form>
-          <p className="text-slate-900/50 font-body text-xs mt-4">
+          <p className="text-dark/60 font-body font-semibold text-sm mt-5">
             We respect your privacy and your child's.
           </p>
         </div>

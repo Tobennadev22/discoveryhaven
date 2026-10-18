@@ -72,7 +72,7 @@ function PhotoGallery() {
           <Images size={22} className="text-yellow" />
         </div>
         <div>
-          <h3 className="font-cherry text-2xl text-white">Photo Gallery</h3>
+          <h3 className="font-cherry text-h3 text-white">Photo Gallery</h3>
           <p className="text-gray-400 font-body text-sm">
             Snapshots from our events, cohorts, and community moments
           </p>
@@ -111,25 +111,25 @@ export default function Explore() {
 
   return (
     <>
-      <section className="bg-dark py-28">
+      <section className="bg-dark pt-36 pb-20 lg:pt-44 lg:pb-28">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">EVENTS</SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-7xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
+          <SectionLabel className="text-aqua">Events</SectionLabel>
+          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
             What's Coming Up
           </h1>
-          <p className="text-gray-300 font-body text-xl leading-relaxed">
-            From weekly cohorts to our annual Children's Summit — every event is
+          <p className="text-gray-300 font-body text-lead">
+            From weekly cohorts to our annual Children's Summit, every event is
             designed to spark something extraordinary in your child.
           </p>
         </motion.div>
       </section>
 
-      <section className="py-20 bg-cream">
+      <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -138,26 +138,26 @@ export default function Explore() {
               whileInView="show"
               viewport={useViewport}
             >
-              <SectionLabel>EXPLORERS FESTIVAL</SectionLabel>
-              <h2 className="font-cherry text-4xl lg:text-5xl text-slate-900 mb-4 leading-tight">
+              <SectionLabel>Explorers Festival</SectionLabel>
+              <h2 className="font-cherry text-h2 text-slate-900 mb-4">
                 Discovery Haven Children's Summit
               </h2>
               <div className="inline-block bg-crimson text-white px-4 py-2 rounded-full font-bold font-body text-sm mb-6">
                 Theme: The Confident Generation
               </div>
-              <p className="text-gray-600 font-body text-lg leading-relaxed mb-8">
+              <p className="text-gray-600 font-body text-lead mb-8">
                 Our annual flagship summit brings together the brightest young
                 minds in Nigeria for a day of performances, panels,
                 competitions, and the Little Voices book launch. Virtual and
                 Abuja.
               </p>
-              <h4 className="font-bold font-body text-slate-900 mb-4">
+              <h4 className="font-body font-extrabold text-h4 text-slate-900 mb-4">
                 What Happens at the Summit:
               </h4>
               <ul className="space-y-3 mb-8">
                 {[
                   "School pitch competition with debate elements",
-                  "Children's published stories showcase — Little Voices Book Series Vol. 1 launch",
+                  "Children's published stories showcase and the Little Voices Book Series Vol. 1 launch",
                   "Live performances, panels, and awards",
                   "Guest speakers and institutional partners",
                   "Parent and community networking",
@@ -191,7 +191,7 @@ export default function Explore() {
               </div>
             </motion.div>
             <motion.div
-              className="bg-dark rounded-3xl p-10 text-center text-white"
+              className="bg-cocoa rounded-3xl p-10 text-center text-white"
               variants={slideRight}
               initial="hidden"
               whileInView="show"
@@ -200,7 +200,7 @@ export default function Explore() {
               <div className="flex justify-center mb-6">
                 <Trophy size={72} className="text-yellow" />
               </div>
-              <h3 className="font-cherry text-3xl mb-3">November 2026</h3>
+              <h3 className="font-cherry text-h3 mb-3">November 2026</h3>
               <p className="font-body text-gray-300 mb-2">
                 Annual Flagship · Virtual & Abuja
               </p>
@@ -212,7 +212,7 @@ export default function Explore() {
         </div>
       </section>
 
-      <section className="py-20 bg-white">
+      <section className="py-16 md:py-24 bg-canvas">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-14"
@@ -221,11 +221,11 @@ export default function Explore() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>UPCOMING COHORTS</SectionLabel>
-            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+            <SectionLabel>Upcoming cohorts</SectionLabel>
+            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
               Book Your Child's Spot
             </h2>
-            <p className="text-gray-600 font-body text-lg">
+            <p className="text-gray-600 font-body text-lead">
               Cohorts are capped at 15 learners. Spaces fill fast.
             </p>
           </motion.div>
@@ -250,7 +250,7 @@ export default function Explore() {
                     <span>{ev.duration}</span>
                   </div>
                   <div className="p-7">
-                    <h3 className="font-cherry text-xl text-slate-900 mb-3 leading-snug">
+                    <h3 className="font-cherry text-h3 text-slate-900 mb-3">
                       {ev.title}
                     </h3>
                     <p className="text-gray-500 font-body text-sm leading-relaxed mb-5">
@@ -290,7 +290,7 @@ export default function Explore() {
       </section>
 
       {/* ── PAST EVENTS ── */}
-      <section className="py-20 bg-cream">
+      <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-14"
@@ -299,11 +299,11 @@ export default function Explore() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>PAST EVENTS</SectionLabel>
-            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+            <SectionLabel>Past events</SectionLabel>
+            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
               What We've Done Together
             </h2>
-            <p className="text-gray-600 font-body text-lg max-w-xl mx-auto">
+            <p className="text-gray-600 font-body text-lead max-w-xl mx-auto">
               A look back at the cohorts, summits, and showcases that shaped our
               community.
             </p>
@@ -317,13 +317,13 @@ export default function Explore() {
           >
             {[
               {
-                title: "Creative Quest — Cohort 1",
+                title: "Creative Quest: Cohort 1",
                 date: "March 2024",
                 tag: "Writing Studio",
                 color: "#05c3dd",
               },
               {
-                title: "Loud & Fearless — Cohort 3",
+                title: "Loud & Fearless: Cohort 3",
                 date: "October 2024",
                 tag: "Public Speaking",
                 color: "#de2d10",
@@ -335,19 +335,19 @@ export default function Explore() {
                 color: "#1a1a1a",
               },
               {
-                title: "The Curiosity Box — Cohort 2",
+                title: "The Curiosity Box: Cohort 2",
                 date: "January 2025",
                 tag: "Critical Thinking",
                 color: "#ffec00",
               },
               {
-                title: "The EQ Lab — Cohort 1",
+                title: "The EQ Lab: Cohort 1",
                 date: "April 2025",
                 tag: "Emotional Intelligence",
                 color: "#7c3aed",
               },
               {
-                title: "Creative Quest — Cohort 4",
+                title: "Creative Quest: Cohort 4",
                 date: "June 2025",
                 tag: "Writing Studio",
                 color: "#05c3dd",
@@ -365,7 +365,7 @@ export default function Explore() {
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
                     <span
-                      className="text-xs font-bold font-body uppercase tracking-wide px-3 py-1 rounded-full"
+                      className="text-xs font-bold font-body px-3 py-1 rounded-full"
                       style={{
                         backgroundColor: ev.color + "20",
                         color: ev.color === "#ffec00" ? "#b45309" : ev.color,
@@ -373,11 +373,11 @@ export default function Explore() {
                     >
                       {ev.tag}
                     </span>
-                    <span className="text-xs font-bold font-body uppercase tracking-wide px-3 py-1 rounded-full bg-gray-100 text-gray-400">
+                    <span className="text-xs font-bold font-body px-3 py-1 rounded-full bg-gray-100 text-gray-400">
                       Past Event
                     </span>
                   </div>
-                  <h3 className="font-cherry text-lg text-slate-900 mb-1 leading-snug">
+                  <h3 className="font-cherry text-h3 text-slate-900 mb-1">
                     {ev.title}
                   </h3>
                   <p className="text-gray-400 font-body text-sm">{ev.date}</p>
@@ -389,7 +389,7 @@ export default function Explore() {
       </section>
 
       {/* ── ARTIFACTS FROM EVENTS ── */}
-      <section className="py-20 bg-dark">
+      <section className="py-16 md:py-24 bg-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -399,12 +399,12 @@ export default function Explore() {
             viewport={useViewport}
           >
             <SectionLabel className="text-aqua">
-              ARTIFACTS FROM EVENTS
+              Artifacts from events
             </SectionLabel>
-            <h2 className="font-cherry text-4xl text-white mb-4">
+            <h2 className="font-cherry text-h2 text-white mb-4">
               Moments Worth Remembering
             </h2>
-            <p className="text-gray-400 font-body text-lg max-w-xl mx-auto">
+            <p className="text-gray-400 font-body text-lead max-w-xl mx-auto">
               Highlights, stories, and memories captured from every event.
             </p>
           </motion.div>
@@ -422,7 +422,7 @@ export default function Explore() {
                 <PlayCircle size={22} className="text-crimson" />
               </div>
               <div>
-                <h3 className="font-cherry text-2xl text-white">
+                <h3 className="font-cherry text-h3 text-white">
                   Loud & Fearless
                 </h3>
                 <p className="text-gray-400 font-body text-sm">
@@ -442,7 +442,7 @@ export default function Explore() {
                       className="text-white/30 group-hover:text-aqua transition-colors mx-auto mb-2"
                     />
                     <p className="text-white/30 font-body text-xs group-hover:text-white/60 transition-colors">
-                      Video #{i} — Coming Soon
+                      Video #{i}: Coming Soon
                     </p>
                   </div>
                 </div>
@@ -467,7 +467,7 @@ export default function Explore() {
                 <BookOpen size={22} className="text-aqua" />
               </div>
               <div>
-                <h3 className="font-cherry text-2xl text-white">
+                <h3 className="font-cherry text-h3 text-white">
                   Books by Kids
                 </h3>
                 <p className="text-gray-400 font-body text-sm">

@@ -33,13 +33,13 @@ const SUGGESTIONS = [
     bg: "bg-yellow",
     text: "text-dark",
   },
-  { label: "Explore", href: "/explore", bg: "bg-dark", text: "text-white" },
+  { label: "Explore", href: "/explore", bg: "bg-cocoa", text: "text-white" },
   { label: "About Us", href: "/about", bg: "bg-cream", text: "text-slate-900" },
 ];
 
 const CLUES = [
   "The page you were looking for went on a field trip.",
-  "It's not you — this page is just off investigating something.",
+  "It's not you, this page is just off investigating something.",
   "Our scholars are looking into it.",
   "Even detectives get lost sometimes.",
   "This page enrolled in the Curiosity Box and hasn't come back.",
@@ -85,7 +85,7 @@ export default function NotFound() {
         </motion.div>
 
         <motion.h1
-          className="font-cherry text-3xl sm:text-4xl text-slate-900 mb-4 max-w-xl leading-tight"
+          className="font-cherry text-h1 text-slate-900 mb-4 max-w-xl"
           variants={fadeUp}
           initial="hidden"
           animate="show"
@@ -95,7 +95,7 @@ export default function NotFound() {
         </motion.h1>
 
         <motion.p
-          className="font-body text-gray-500 text-lg mb-2 max-w-md"
+          className="font-body text-lead text-gray-500 mb-2 max-w-md"
           variants={fadeUp}
           initial="hidden"
           animate="show"

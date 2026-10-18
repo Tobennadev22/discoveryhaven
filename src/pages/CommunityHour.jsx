@@ -12,28 +12,28 @@ import {
 export default function CommunityHour() {
   return (
     <>
-      <section className="bg-dark py-28">
+      <section className="bg-dark pt-36 pb-20 lg:pt-44 lg:pb-28">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">COMMUNITY HOUR</SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-6xl bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-4 leading-tight">
+          <SectionLabel className="text-aqua">Community Hour</SectionLabel>
+          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-4">
             Access the Sanctuary
           </h1>
           <p className="font-cherry text-2xl text-aqua mb-6">
             A Private, 20-Minute Conversation with Our Founder
           </p>
-          <p className="text-gray-300 font-body text-xl leading-relaxed">
+          <p className="text-gray-300 font-body text-lead">
             No sales pitch. No pressure. Just an honest conversation about your
             child's learning journey and how we can help.
           </p>
         </motion.div>
       </section>
 
-      <section className="py-20 bg-cream">
+      <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
             className="grid md:grid-cols-3 gap-6 mb-16"
@@ -46,7 +46,7 @@ export default function CommunityHour() {
               {
                 Icon: Timer,
                 title: "20 Minutes",
-                desc: "A focused, purposeful conversation — no fluff.",
+                desc: "A focused, purposeful conversation with no fluff.",
               },
               {
                 Icon: MonitorSmartphone,
@@ -67,7 +67,7 @@ export default function CommunityHour() {
                 <div className="flex justify-center mb-3">
                   <f.Icon size={40} className="text-aqua" />
                 </div>
-                <h3 className="font-cherry text-xl text-slate-900 mb-2">
+                <h3 className="font-cherry text-h3 text-slate-900 mb-2">
                   {f.title}
                 </h3>
                 <p className="text-gray-500 font-body text-sm">{f.desc}</p>
@@ -82,12 +82,12 @@ export default function CommunityHour() {
             whileInView="show"
             viewport={useViewport}
           >
-            <h2 className="font-cherry text-3xl text-slate-900 mb-4">
+            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
               Book Your Slot
             </h2>
             <p className="text-gray-600 font-body mb-8 max-w-lg mx-auto">
               Select a time that works for you. Stella will personally host the
-              call — no assistants, no sales team.
+              call, with no assistants and no sales team.
             </p>
             <div className="rounded-2xl overflow-hidden" style={{ minHeight: 660 }}>
               <iframe

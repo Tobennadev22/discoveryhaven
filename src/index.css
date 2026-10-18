@@ -4,18 +4,44 @@
 
 @layer base {
   * { box-sizing: border-box; }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
   body {
     margin: 0;
     font-family: 'Nunito', sans-serif;
-    background-color: #ffffff;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    background-color: #fcf6f2;
     color: #1a1a1a;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Scroll reveals start slightly off to the side; clip them so they
+       never cause sideways scrolling on phones. */
+    overflow-x: clip;
   }
   #root {
     width: 100%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+  p, li, blockquote {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: #ffec00;
+    color: #1a1a1a;
+  }
+  :focus-visible {
+    outline: 3px solid #05c3dd;
+    outline-offset: 3px;
   }
 }
 
@@ -28,6 +54,7 @@
 @layer utilities {
   .font-cherry {
     font-family: 'Cherry Bomb One', cursive;
+    font-weight: 400;
   }
   .text-shadow {
     text-shadow: 0 2px 8px rgba(0,0,0,0.4);

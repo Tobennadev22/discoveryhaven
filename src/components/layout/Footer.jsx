@@ -33,49 +33,59 @@ function YoutubeIcon({ size = 20 }) {
 export function Footer() {
   return (
     <footer className="bg-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 pt-20 pb-10 lg:pt-24">
+        <div className="flex flex-col gap-8 border-b border-white/10 pb-14 md:flex-row md:items-end md:justify-between">
+          <h2 className="font-cherry text-h2 text-white max-w-xl">
+            {BRAND.taglineShort}
+          </h2>
+          <Link
+            to="/haven-academy"
+            className="inline-flex w-fit items-center gap-2 rounded-full border-2 border-dark bg-yellow px-7 py-3.5 font-body text-[1.0625rem] font-extrabold text-dark shadow-[0_4px_0_0_#05c3dd] transition-transform hover:-translate-y-px active:translate-y-1 active:shadow-none"
+          >
+            Find a programme
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 gap-12 py-14 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9  flex items-center justify-center">
-                <img src={discoveryHavenLogo} alt="discoveryHavenLogo" />
-              </div>
+            <div className="mb-5 flex items-center gap-2">
+              <img src={discoveryHavenLogo} alt="" className="h-9 w-9 object-contain" />
               <span className="font-cherry text-xl">Discovery Haven</span>
             </div>
-            <p className="text-gray-400 font-body text-sm leading-relaxed mb-6">
-              {BRAND.taglineShort}
+            <p className="mb-6 max-w-xs font-body text-[0.9375rem] leading-relaxed text-white/60">
+              {BRAND.tagline}
             </p>
             <a
-              href={`mailto:${BRAND.email}`}
-              className="flex items-center gap-2 text-gray-400 hover:text-aqua transition-colors font-body text-sm mb-6"
+              href={`mailto:${BRAND.email.trim()}`}
+              className="mb-3 flex w-fit items-center gap-2 font-body text-[0.9375rem] font-semibold text-white/80 transition-colors hover:text-aqua"
             >
               <Mail size={16} />
-              {BRAND.email}
+              {BRAND.email.trim()}
             </a>
-            <div className=" text-gray-400 font-body text-sm mb-6">
+            <p className="mb-7 font-body text-[0.9375rem] font-semibold text-white/80">
               {BRAND.phoneNumber}
-            </div>
-            <div className="flex gap-4">
-              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-aqua transition-colors">
-                <InstagramIcon size={20} />
+            </p>
+            <div className="flex gap-2">
+              <a href="#" aria-label="Instagram" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/70 transition-colors hover:bg-aqua hover:text-dark">
+                <InstagramIcon size={18} />
               </a>
-              <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-aqua transition-colors">
-                <FacebookIcon size={20} />
+              <a href="#" aria-label="Facebook" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/70 transition-colors hover:bg-aqua hover:text-dark">
+                <FacebookIcon size={18} />
               </a>
-              <a href="#" aria-label="YouTube" className="text-gray-400 hover:text-aqua transition-colors">
-                <YoutubeIcon size={20} />
+              <a href="#" aria-label="YouTube" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/70 transition-colors hover:bg-aqua hover:text-dark">
+                <YoutubeIcon size={18} />
               </a>
             </div>
           </div>
 
           <div>
-            <h4 className="font-cherry text-lg mb-5">Programmes</h4>
+            <p className="mb-5 font-body text-sm font-extrabold text-yellow">Programmes</p>
             <ul className="space-y-3">
               {FOOTER_LINKS.programmes.map((l) => (
                 <li key={l.href}>
                   <Link
                     to={l.href}
-                    className="text-gray-400 hover:text-aqua transition-colors font-body text-sm"
+                    className="font-body text-[0.9375rem] text-white/70 transition-colors hover:text-white"
                   >
                     {l.label}
                   </Link>
@@ -85,13 +95,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-cherry text-lg mb-5">Organisation</h4>
+            <p className="mb-5 font-body text-sm font-extrabold text-yellow">Organisation</p>
             <ul className="space-y-3">
               {FOOTER_LINKS.organisation.map((l) => (
                 <li key={l.href}>
                   <Link
                     to={l.href}
-                    className="text-gray-400 hover:text-aqua transition-colors font-body text-sm"
+                    className="font-body text-[0.9375rem] text-white/70 transition-colors hover:text-white"
                   >
                     {l.label}
                   </Link>
@@ -101,11 +111,11 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 font-body text-sm">
-            © 2026 Discovery Haven Kids Co. Ltd. All Rights Reserved.
+        <div className="flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
+          <p className="font-body text-sm text-white/45">
+            © 2026 Discovery Haven Kids Co. Ltd. All rights reserved.
           </p>
-          <p className="text-gray-500 font-body text-sm">{BRAND.website}</p>
+          <p className="font-body text-sm text-white/45">{BRAND.website}</p>
         </div>
       </div>
     </footer>

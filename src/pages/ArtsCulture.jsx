@@ -11,24 +11,24 @@ import {
 export default function ArtsCulture() {
   return (
     <>
-      <section className="bg-dark py-28">
+      <section className="bg-dark pt-36 pb-20 lg:pt-44 lg:pb-28">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">ARTS & CULTURE</SectionLabel>
-          <h1 className="font-cherry text-5xl lg:text-7xl  bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
+          <SectionLabel className="text-aqua">Arts & culture</SectionLabel>
+          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
             The Student Gallery
           </h1>
-          <p className="text-gray-300 font-body text-xl">
+          <p className="text-gray-300 font-body text-lead">
             Where children's brilliance gets the spotlight it deserves.
           </p>
         </motion.div>
       </section>
 
-      <section className="py-20 bg-cream">
+      <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-14"
@@ -37,12 +37,12 @@ export default function ArtsCulture() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>PUBLISHED STORIES</SectionLabel>
-            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+            <SectionLabel>Published stories</SectionLabel>
+            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
               Little Voices Book Series
             </h2>
-            <p className="text-gray-600 font-body text-lg max-w-xl mx-auto">
-              Stories written by our Creative Quest scholars — published,
+            <p className="text-gray-600 font-body text-lead max-w-xl mx-auto">
+              Stories written by our Creative Quest scholars that are published,
               distributed, and celebrated.
             </p>
           </motion.div>
@@ -71,8 +71,8 @@ export default function ArtsCulture() {
             whileInView="show"
             viewport={useViewport}
           >
-            <SectionLabel>DEBATE & SPEECH</SectionLabel>
-            <h2 className="font-cherry text-4xl text-slate-900 mb-4">
+            <SectionLabel>Debate & speech</SectionLabel>
+            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
               Loud & Fearless Showcases
             </h2>
           </motion.div>
@@ -87,7 +87,7 @@ export default function ArtsCulture() {
               <motion.div
                 key={i}
                 variants={scaleIn}
-                className="aspect-video bg-dark rounded-2xl flex items-center justify-center"
+                className="aspect-video bg-cocoa rounded-2xl flex items-center justify-center"
               >
                 <span className="text-white font-body text-sm">
                   Video #{i} coming soon

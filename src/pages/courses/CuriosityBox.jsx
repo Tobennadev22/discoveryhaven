@@ -3,7 +3,7 @@ import CourseLandingPage from "./CourseLandingPage";
 const FAQ_COMMON = [
   {
     q: "Is this in-person or virtual?",
-    a: "Fully virtual, live on Zoom — your child can join from anywhere in the world.",
+    a: "Fully virtual, live on Zoom, so your child can join from anywhere in the world.",
   },
   {
     q: "What if my child misses a session?",
@@ -11,7 +11,7 @@ const FAQ_COMMON = [
   },
   {
     q: "What if I'm not sure this is the right fit?",
-    a: "Book a free 15-minute call with our founder before enrolling — we'll help you decide.",
+    a: "Book a free 15-minute call with our founder before enrolling and we'll help you decide.",
   },
 ];
 
@@ -25,15 +25,15 @@ const COURSE = {
   headline:
     "The Curiosity Box: Where Your Child Thinks Like a Detective and Creates Like an Artist.",
   subheadline:
-    "A 4-week exploration lab for ages 7–16. Classes are grouped by age — 7 to 11 and 12 to 16 — so every investigation is pitched at the right level. Your child will discover that the most powerful ideas live at the intersection of science and art.",
+    "A 4-week exploration lab for ages 7–16. Classes are grouped by age, 7 to 11 and 12 to 16, so every investigation is pitched at the right level. Your child will discover that the most powerful ideas live at the intersection of science and art.",
   smallText: "Limited spots · February 2027 Cohort · Starts Soon",
   problemHeading:
     "Does your child think science is boring or that creativity and logic don't belong together?",
   problemBody:
-    "Most children are taught to keep science and art in separate boxes. Science is facts, formulas, and right answers. Art is feelings, colours, and free expression. They are never shown what happens when the two collide. The Curiosity Box tears down that wall. Here, a child who loves drawing becomes a better logical thinker. A child who loves maths becomes a more expressive creator. Because the truth is — the greatest scientists were artists, and the greatest artists were scientists.",
+    "Most children are taught to keep science and art in separate boxes. Science is facts, formulas, and right answers. Art is feelings, colours, and free expression. They are never shown what happens when the two collide. The Curiosity Box tears down that wall. Here, a child who loves drawing becomes a better logical thinker. A child who loves maths becomes a more expressive creator. Because the truth is that the greatest scientists were artists, and the greatest artists were scientists.",
   whatItIsHeading: "A virtual investigation lab where logic meets imagination.",
   whatItIsBody:
-    "The Curiosity Box is a hands-on virtual exploration lab built on one powerful idea ${`the Science of Arts`}. Each session your child works as both a detective and a creator. They investigate real-world mysteries using logic, deduction, and scientific questioning. They analyse iconic works of art through a scientific lens and explore how the world's greatest creators were also its greatest thinkers. Every week your child leaves with sharper thinking, a broader perspective, and documented evidence of what they discovered.",
+    "The Curiosity Box is a hands-on virtual exploration lab built on one powerful idea, which is the Science of Arts. Each session your child works as both a detective and a creator. They investigate real-world mysteries using logic, deduction, and scientific questioning. They analyse iconic works of art through a scientific lens and explore how the world's greatest creators were also its greatest thinkers. Every week your child leaves with sharper thinking, a broader perspective, and documented evidence of what they discovered.",
   outcomesHeading: "By the end of 4 weeks, your child will have:",
   outcomes: [
     "Investigated real-world mysteries using logic, deduction, and scientific reasoning",
@@ -44,7 +44,7 @@ const COURSE = {
   ],
   bonusHeading: "A digital portfolio that proves how they think.",
   bonusBody:
-    "Every Curiosity Box scholar leaves with a digital portfolio documenting their 4-week journey investigation notes, art analysis pieces, creative thinking maps, and ideas inspired by what they discovered. Not just a certificate. A real record of how their mind works — something they can look back on, build from, and be proud of.",
+    "Every Curiosity Box scholar leaves with a digital portfolio documenting their 4-week journey, including investigation notes, art analysis pieces, creative thinking maps, and ideas inspired by what they discovered. Not just a certificate. A real record of how their mind works and something they can look back on, build from, and be proud of.",
   schedule: {
     course: "The Curiosity Box",
     month: "February 2027",
@@ -52,12 +52,12 @@ const COURSE = {
     sessionSchedule: "Saturdays · 1.5 hours per session",
     ages: "7–16",
     grouping: "Classes grouped by age: 7–11 and 12–16",
-    format: "Virtual live Zoom sessions",
+    format: "Virtual via live Zoom sessions",
     investment: "₦50,000",
   },
   testimonial: {
     quote:
-      "I honestly didn't expect my son to connect with this programme the way he did. He's always been the artsy one in the family we never thought of him as a science kid. After The Curiosity Box he told me science and art are the same thing. I didn't even know how to respond to that. He was absolutely right.",
+      "I honestly didn't expect my son to connect with this programme the way he did. He's always been the artsy one in the family, so we never thought of him as a science kid. After The Curiosity Box he told me science and art are the same thing. I didn't even know how to respond to that. He was absolutely right.",
     author: "Parent, Discovery Haven",
   },
   faqSpecific: [
@@ -67,11 +67,11 @@ const COURSE = {
     },
     {
       q: "Does my child need to be good at art?",
-      a: "No. Art in The Curiosity Box is a tool for analysis and expression, not a performance. There are no grades on how well they draw only on how boldly they explore and express their thinking.",
+      a: "No. Art in The Curiosity Box is a tool for analysis and expression, not a performance. There are no grades on how well they draw, only on how boldly they explore and express their thinking.",
     },
     {
       q: "How are the age groups structured?",
-      a: "Classes are split into two batches ages 7 to 11 and ages 12 to 16. Your child will be placed in the right group after enrolment.",
+      a: "Classes are split into two batches, one for ages 7 to 11 and one for ages 12 to 16. Your child will be placed in the right group after enrolment.",
     },
   ],
   faqCommon: FAQ_COMMON,
