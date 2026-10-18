@@ -2,7 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Lapsus Pro (licensed display font) for headings. Put the font file(s) in
+   public/fonts/ with these names; any one format is enough, woff2 is best.
+   Until a file is there, headings fall back to Cherry Bomb One. */
+@font-face {
+  font-family: "Lapsus Pro";
+  src: url("/fonts/LapsusPro.woff2") format("woff2"),
+       url("/fonts/LapsusPro.woff") format("woff"),
+       url("/fonts/LapsusPro.otf") format("opentype"),
+       url("/fonts/LapsusPro.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 @layer base {
+  /* Heading font. Other options tried:
+     Cherry Bomb One: 'Cherry Bomb One', cursive / 400 / 0
+     Helvetica Neue:  "Helvetica Neue", Helvetica, Arial, sans-serif / 700 / -0.02em */
+  :root {
+    --font-heading: "Lapsus Pro", "Cherry Bomb One", cursive;
+    --font-heading-weight: 400;
+    --font-heading-tracking: 0;
+  }
   * { box-sizing: border-box; }
   html {
     -webkit-text-size-adjust: 100%;
@@ -52,11 +79,30 @@
 }
 
 @layer utilities {
+  /* Headings and display text (see --font-heading above). */
   .font-cherry {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: var(--font-heading-tracking);
+  }
+  /* The "Discovery Haven" wordmark always stays in the brand face. */
+  .font-logo {
     font-family: 'Cherry Bomb One', cursive;
     font-weight: 400;
   }
   .text-shadow {
     text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  /* Endless horizontal scroll (Home reach strip). */
+  .marquee-track {
+    animation: marquee 40s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
   }
 }

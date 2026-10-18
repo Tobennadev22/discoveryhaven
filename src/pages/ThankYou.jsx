@@ -55,7 +55,7 @@ export default function ThankYou() {
             alt="Discovery Haven"
             className="w-9 h-9"
           />
-          <span className="font-cherry text-xl text-white">
+          <span className="font-logo text-xl text-white">
             Discovery Haven
           </span>
         </Link>

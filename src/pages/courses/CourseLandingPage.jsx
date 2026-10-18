@@ -319,7 +319,7 @@ export default function CourseLandingPage({ course }) {
               alt=""
               className="h-9 w-9 object-contain"
             />
-            <span className="font-cherry text-xl text-dark">
+            <span className="font-logo text-xl text-dark">
               Discovery Haven
             </span>
           </Link>

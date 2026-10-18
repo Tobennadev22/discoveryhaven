@@ -22,7 +22,7 @@ export function Navbar() {
             alt=""
             className="h-9 w-9 object-contain"
           />
-          <span className="font-cherry text-xl text-dark">Discovery Haven</span>
+          <span className="font-logo text-xl text-dark">Discovery Haven</span>
         </Link>
 
         <div className="hidden items-center gap-0.5 lg:flex">

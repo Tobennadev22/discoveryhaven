@@ -248,17 +248,28 @@ export default function Home() {
         </div>
 
         {/* ── REACH STRIP ── */}
-        <div className="mt-16 lg:mt-20 bg-dark py-7">
-          <motion.p
-            className="font-cherry text-h3 text-center text-white px-5"
-            variants={fadeIn}
-            initial="hidden"
-            whileInView="show"
-            viewport={useViewport}
-          >
-            <span className="text-yellow">2,400+</span> children reached since
-            launch
-          </motion.p>
+        <div className="marquee mt-16 lg:mt-20 bg-dark py-7 overflow-hidden">
+          <p className="sr-only">2,400+ children reached since launch</p>
+          {/* Two identical halves: the track slides left by exactly one half,
+              so the loop is seamless. */}
+          <div className="marquee-track flex w-max" aria-hidden="true">
+            {[0, 1].map((half) => (
+              <div key={half} className="flex shrink-0">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="flex items-center gap-8 pr-8 font-cherry text-h3 whitespace-nowrap text-white"
+                  >
+                    <span>
+                      <span className="text-yellow">2,400+</span> children
+                      reached since launch
+                    </span>
+                    <span className="text-aqua">✦</span>
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

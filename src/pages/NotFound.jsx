@@ -58,7 +58,7 @@ export default function NotFound() {
       {/* <header className="py-4 px-6 bg-white border-b border-gray-100">
         <Link to="/" className="inline-flex items-center gap-2">
           <img src={discoveryHavenLogo} alt="Discovery Haven" className="w-9 h-9" />
-          <span className="font-cherry text-xl text-slate-900">Discovery Haven</span>
+          <span className="font-logo text-xl text-slate-900">Discovery Haven</span>
         </Link>
       </header> */}
 

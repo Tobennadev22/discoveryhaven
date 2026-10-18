@@ -50,7 +50,7 @@ export function Footer() {
           <div>
             <div className="mb-5 flex items-center gap-2">
               <img src={discoveryHavenLogo} alt="" className="h-9 w-9 object-contain" />
-              <span className="font-cherry text-xl">Discovery Haven</span>
+              <span className="font-logo text-xl">Discovery Haven</span>
             </div>
             <p className="mb-6 max-w-xs font-body text-[0.9375rem] leading-relaxed text-white/60">
               {BRAND.tagline}
