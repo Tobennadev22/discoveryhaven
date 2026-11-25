@@ -1,5 +1,4 @@
-import { Timer, MonitorSmartphone, Gift } from "lucide-react";
-import { Button } from "../components/ui/Button";
+import { MonitorSmartphone, Gift } from "lucide-react";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import {
   motion,
@@ -8,35 +7,33 @@ import {
   scaleIn,
   useViewport,
 } from "../components/ui/Motion";
+import { Seo } from "../components/Seo";
+import { SITE } from "../data/site";
 
 export default function CommunityHour() {
   return (
     <>
-      <section className="bg-dark pt-36 pb-20 lg:pt-44 lg:pb-28">
+      <Seo title="Book a call" description={"Want help choosing a programme or exploring a partnership? Pick a time to talk with us."} />
+      <section className="bg-cream pt-36 pb-12 lg:pt-44 lg:pb-16">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">Community Hour</SectionLabel>
-          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-4">
-            Access the Sanctuary
-          </h1>
-          <p className="font-cherry text-2xl text-aqua mb-6">
-            A Private, 20-Minute Conversation with Our Founder
-          </p>
-          <p className="text-gray-300 font-body text-lead">
-            No sales pitch. No pressure. Just an honest conversation about your
-            child's learning journey and how we can help.
+          <SectionLabel>Book a call</SectionLabel>
+          <h1 className="font-cherry text-h1 text-dark mb-6">Book a call.</h1>
+          <p className="text-dark/80 font-body text-lead">
+            Want help choosing a programme or exploring a partnership? Pick a
+            time to talk with us.
           </p>
         </motion.div>
       </section>
 
-      <section className="py-16 md:py-24 bg-cream">
+      <section className="pb-16 md:pb-24 bg-cream">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
-            className="grid md:grid-cols-3 gap-6 mb-16"
+            className="grid md:grid-cols-2 gap-6 mb-16 max-w-2xl mx-auto"
             variants={stagger}
             initial="hidden"
             whileInView="show"
@@ -44,30 +41,25 @@ export default function CommunityHour() {
           >
             {[
               {
-                Icon: Timer,
-                title: "20 Minutes",
-                desc: "A focused, purposeful conversation with no fluff.",
-              },
-              {
                 Icon: MonitorSmartphone,
-                title: "Zoom or Phone",
+                title: "Zoom or phone",
                 desc: "Whatever works best for you.",
               },
               {
                 Icon: Gift,
-                title: "Completely Free",
+                title: "Free",
                 desc: "No obligation, no follow-up pressure.",
               },
             ].map((f, i) => (
               <motion.div
                 key={i}
                 variants={scaleIn}
-                className="bg-white rounded-2xl p-7 text-center shadow-sm"
+                className="bg-white rounded-3xl border-2 border-dark p-7 text-center"
               >
                 <div className="flex justify-center mb-3">
-                  <f.Icon size={40} className="text-aqua" />
+                  <f.Icon size={40} className="text-aqua" aria-hidden="true" />
                 </div>
-                <h3 className="font-cherry text-h3 text-slate-900 mb-2">
+                <h3 className="font-cherry text-h3 text-dark mb-2">
                   {f.title}
                 </h3>
                 <p className="text-gray-500 font-body text-sm">{f.desc}</p>
@@ -76,29 +68,39 @@ export default function CommunityHour() {
           </motion.div>
 
           <motion.div
-            className="bg-white rounded-3xl p-10 shadow-sm text-center"
+            className="bg-white rounded-4xl border-2 border-dark p-5 sm:p-10 shadow-press text-center"
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
-            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
-              Book Your Slot
+            <h2 className="font-cherry text-h2 text-dark mb-4">
+              Pick a time
             </h2>
             <p className="text-gray-600 font-body mb-8 max-w-lg mx-auto">
-              Select a time that works for you. Stella will personally host the
-              call, with no assistants and no sales team.
+              Choose a time that works for you. Our founder, Stella, hosts each
+              call.
             </p>
             <div className="rounded-2xl overflow-hidden" style={{ minHeight: 660 }}>
               <iframe
-                src="https://calendly.com/stella-chibuikeezike"
+                src={SITE.calendlyUrl}
                 width="100%"
                 height="660"
                 frameBorder="0"
-                title="Book a Community Hour with Stella"
+                title="Book a call with Discovery Haven (Calendly)"
                 className="w-full"
               />
             </div>
+            <p className="mt-6 font-body text-sm text-dark/80">
+              Booking calendar not showing?{" "}
+              <a
+                href={SITE.calendlyUrl}
+                className="font-bold text-dark underline underline-offset-4"
+              >
+                Open the booking page
+              </a>
+              .
+            </p>
           </motion.div>
         </div>
       </section>

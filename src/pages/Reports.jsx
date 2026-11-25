@@ -10,6 +10,7 @@ import {
   useViewport,
 } from "../components/ui/Motion";
 import { REPORTS } from "../data/content";
+import { Seo } from "../components/Seo";
 
 function formatDate(isoDate) {
   return new Date(`${isoDate}T00:00:00`).toLocaleDateString("en-GB", {
@@ -24,6 +25,7 @@ export default function Reports() {
 
   return (
     <>
+      <Seo title="Impact reports" description={"Read and download Discovery Haven impact reports."} />
       {/* HERO */}
       <section className="bg-dark overflow-hidden pt-36 pb-20 lg:pt-44 lg:pb-28">
         <motion.div
@@ -35,7 +37,7 @@ export default function Reports() {
           <SectionLabel className="text-aqua">
             Discovery Haven · Impact Reports
           </SectionLabel>
-          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
+          <h1 className="font-cherry text-h1 bg-gradient-to-r from-yellow to-lilac bg-clip-text text-transparent mb-6">
             Our Impact, in Writing.
           </h1>
           <p className="text-gray-300 font-body text-lead">
@@ -64,7 +66,7 @@ export default function Reports() {
               Back to Impact
             </Link>
             <SectionLabel>All reports</SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900">
+            <h2 className="font-cherry text-h2 text-dark">
               Download a Report
             </h2>
           </motion.div>
@@ -101,7 +103,7 @@ export default function Reports() {
                       PDF
                     </span>
                   </div>
-                  <h3 className="font-cherry text-h3 text-slate-900 mb-1">
+                  <h3 className="font-cherry text-h3 text-dark mb-1">
                     {report.title}
                   </h3>
                   {report.period && (

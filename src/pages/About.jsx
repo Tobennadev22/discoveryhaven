@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Download, FileText } from "lucide-react";
-import { Button } from "../components/ui/Button";
+import { Button, ButtonLink } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import {
   motion,
@@ -16,6 +16,7 @@ import FaithImg from "../assets/faithjosephutuat.jpg";
 import ElizabethImg from "../assets/Elizabeth.jpeg";
 import companyProfilePdf from "../assets/Discovery Haven — Company Profile.pdf";
 import discoveryHavenLogo from "../assets/dh.png";
+import { Seo } from "../components/Seo";
 
 const VALUES = [
   {
@@ -83,7 +84,7 @@ function FounderStorySection() {
                 <p className="text-gray-300 font-body text-lead mb-8">
                   Stella is a family life educator, author of <span className="italic">Family Time Unplugged: Play, Connect, Explore</span>, and creator of the Shine Bright Affirmation Deck, which contains 150 identity-building cards for children aged 4 to 12. She has spent over a decade studying how children learn, grow, and discover themselves, and Discovery Haven is the fullest expression of that work.
                 </p>
-                <p className="text-aqua font-body text-sm italic mb-5">
+                <p className="text-lilac font-body text-sm italic mb-5">
                   Her story is not separate from her work. It is the reason for it.
                 </p>
               </>
@@ -91,7 +92,7 @@ function FounderStorySection() {
 
             <button
               onClick={() => setExpanded((e) => !e)}
-              className="font-cherry text-aqua text-lg hover:text-aqua/70 transition-colors"
+              className="font-cherry text-lilac text-lg hover:text-white transition-colors"
             >
               {expanded ? "See less ↑" : "See more ↓"}
             </button>
@@ -126,39 +127,71 @@ function FounderStorySection() {
 export default function About() {
   return (
     <>
+      <Seo title="Our Story" description={"Parents are children’s first teachers. Discovery Haven gives families more ways to keep curiosity alive at home, in our programmes and out in the world."} />
       {/* HERO */}
-      <section className="bg-dark pt-36 pb-20 lg:pt-44 lg:pb-28 overflow-hidden">
+      <section className="bg-cream pt-36 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
         <motion.div
           className="max-w-4xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">
-            Discovery Haven · Our Story, Mission &amp; People
-          </SectionLabel>
-          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
-            We Believe Every Child Carries Extraordinary Potential. Our Job Is to Help Them Find It.
+          <SectionLabel>Our Story</SectionLabel>
+          <h1 className="font-cherry text-h1 text-dark mb-6">
+            Learning starts with the people who know them best.
           </h1>
-          <p className="text-gray-300 font-body text-lead max-w-3xl mx-auto mb-10">
-            Discovery Haven was born out of a personal conviction. Stella Chibuike-Ezike was a true scholar, the child who read every book, studied every subject, and excelled academically. But she carried a quiet awareness that something was missing. The classroom gave her knowledge. It did not give her herself. It did not teach her who she was, what she stood for, or how to use her intelligence to make real change in the world. Discovery Haven exists so that no child has to wait until adulthood to discover those things. Every child has potential that deserves to be nurtured early, not just academically but wholly, so they can know their identity, dare to become whoever they are designed to be, and make real, lasting impact.
+          <p className="text-dark/80 font-body text-lead max-w-3xl mx-auto mb-10">
+            Parents are children’s first teachers. Discovery Haven gives
+            families more ways to keep curiosity alive at home, in our
+            programmes and out in the world.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               variant="primary"
               size="lg"
-              onClick={() => document.getElementById("founders-story").scrollIntoView({ behavior: "smooth" })}
+              onClick={() =>
+                document
+                  .getElementById("founders-story")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
             >
-              Meet Our Founder →
+              Meet our founder
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => (window.location.href = "/haven-academy")}
-            >
-              Explore Our Programmes →
-            </Button>
+            <ButtonLink to="/haven-academy" variant="outline-dark" size="lg">
+              Explore Haven Academy
+            </ButtonLink>
           </div>
+        </motion.div>
+      </section>
+
+      {/* WHY WE EXIST */}
+      <section className="bg-canvas py-16 md:py-24">
+        <motion.div
+          className="max-w-3xl mx-auto px-4"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={useViewport}
+        >
+          <h2 className="font-cherry text-h2 text-dark mb-6 text-center">
+            Why Discovery Haven exists
+          </h2>
+          <p className="text-dark/80 font-body text-lead">
+            Discovery Haven was born out of a personal conviction. Stella
+            Chibuike-Ezike was a true scholar, the child who read every book,
+            studied every subject and excelled academically. But she carried a
+            quiet awareness that something was missing. The classroom gave her
+            knowledge. It did not give her herself. It did not teach her who
+            she was, what she stood for, or how to use her intelligence to make
+            real change in the world.
+          </p>
+          <p className="text-dark/80 font-body text-lead mt-5">
+            Discovery Haven exists so that no child has to wait until adulthood
+            to discover those things. Every child has potential that deserves to
+            be nurtured early, not just academically but wholly, so they can
+            know their identity, dare to become whoever they are designed to be
+            and make real, lasting impact.
+          </p>
         </motion.div>
       </section>
 
@@ -173,7 +206,7 @@ export default function About() {
               viewport={useViewport}
             >
               <SectionLabel>Our mission</SectionLabel>
-              <h2 className="font-cherry text-h2 text-slate-900 mb-6 mt-2">
+              <h2 className="font-cherry text-h2 text-dark mb-6 mt-2">
                 Why We Exist
               </h2>
               <p className="text-gray-600 font-body text-lead">
@@ -187,7 +220,7 @@ export default function About() {
               viewport={useViewport}
             >
               <SectionLabel>Our vision</SectionLabel>
-              <h2 className="font-cherry text-h2 text-slate-900 mb-6 mt-2">
+              <h2 className="font-cherry text-h2 text-dark mb-6 mt-2">
                 Where We Are Going
               </h2>
               <p className="text-gray-600 font-body text-lead">
@@ -209,7 +242,7 @@ export default function About() {
             viewport={useViewport}
           >
             <SectionLabel>Our core values</SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900 mb-4 mt-2">
+            <h2 className="font-cherry text-h2 text-dark mb-4 mt-2">
               What We Stand For
             </h2>
           </motion.div>
@@ -245,7 +278,7 @@ export default function About() {
               viewport={useViewport}
             >
               <SectionLabel>Our company profile</SectionLabel>
-              <h2 className="font-cherry text-h2 text-slate-900 mb-6 mt-2">
+              <h2 className="font-cherry text-h2 text-dark mb-6 mt-2">
                 Discovery Haven in One Document
               </h2>
               <p className="text-gray-600 font-body text-lead max-w-prose mb-9">
@@ -256,7 +289,7 @@ export default function About() {
               <a
                 href={companyProfilePdf}
                 download="Discovery Haven - Company Profile.pdf"
-                className="inline-flex items-center gap-2 rounded-full border-2 border-dark bg-aqua px-7 py-3.5 font-body text-[1.0625rem] font-extrabold text-dark shadow-press transition-[transform,box-shadow] duration-150 hover:-translate-y-px active:translate-y-1 active:shadow-none"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-dark bg-aqua px-7 py-3.5 font-body text-[1.0625rem] font-extrabold text-white shadow-press transition-[transform,box-shadow] duration-150 hover:-translate-y-px active:translate-y-1 active:shadow-none"
               >
                 <Download size={20} />
                 Download company profile
@@ -283,7 +316,7 @@ export default function About() {
               <div className="relative flex aspect-[3/4] flex-col justify-between rounded-4xl border-2 border-dark bg-cocoa p-8 text-white transition-transform duration-300 group-hover:-rotate-1">
                 <img src={discoveryHavenLogo} alt="" className="h-14 w-14 object-contain" />
                 <div>
-                  <p className="font-body text-sm font-extrabold text-aqua mb-3">
+                  <p className="font-body text-sm font-extrabold text-lilac mb-3">
                     Discovery Haven Kids Co. Ltd
                   </p>
                   <p className="font-cherry text-h2 leading-none">
@@ -318,7 +351,7 @@ export default function About() {
             viewport={useViewport}
           >
             <SectionLabel>Meet the team</SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900 mb-4 mt-2">
+            <h2 className="font-cherry text-h2 text-dark mb-4 mt-2">
               The People Behind the Haven
             </h2>
           </motion.div>
@@ -347,7 +380,7 @@ export default function About() {
                     <span className="font-cherry text-2xl text-aqua">{member.name[0]}</span>
                   </div>
                 )}
-                <h3 className="font-cherry text-h3 text-slate-900 mb-1">{member.name}</h3>
+                <h3 className="font-cherry text-h3 text-dark mb-1">{member.name}</h3>
                 <p className="font-body text-xs font-bold text-aqua mb-4">{member.role}</p>
                 <p className="text-gray-600 font-body text-sm leading-relaxed">{member.bio}</p>
               </motion.div>
@@ -366,7 +399,7 @@ export default function About() {
           viewport={useViewport}
         >
           <SectionLabel>Who we serve</SectionLabel>
-          <h2 className="font-cherry text-h2 text-slate-900 mb-6 mt-2">
+          <h2 className="font-cherry text-h2 text-dark mb-6 mt-2">
             Built for Every Curious Child
           </h2>
           <p className="text-gray-600 font-body text-lead mb-5">

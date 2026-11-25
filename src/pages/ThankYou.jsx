@@ -78,7 +78,7 @@ export default function ThankYou() {
           </p>
 
           <div className="bg-white rounded-3xl p-8 text-left mb-8">
-            <h2 className="font-cherry text-h2 text-slate-900 mb-6 text-center">
+            <h2 className="font-cherry text-h2 text-dark mb-6 text-center">
               What Happens Next
             </h2>
             <div className="flex flex-col gap-4">

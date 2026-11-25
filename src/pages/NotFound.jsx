@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { fadeUp, stagger, scaleIn } from "../components/ui/Motion";
 import { Compass, ArrowRight } from "lucide-react";
 import discoveryHavenLogo from "../assets/dh.png";
+import { Seo } from "../components/Seo";
 
 const WOBBLE_CHARS = "404".split("");
 
@@ -34,7 +35,7 @@ const SUGGESTIONS = [
     text: "text-dark",
   },
   { label: "Explore", href: "/explore", bg: "bg-cocoa", text: "text-white" },
-  { label: "About Us", href: "/about", bg: "bg-cream", text: "text-slate-900" },
+  { label: "About Us", href: "/about", bg: "bg-cream", text: "text-dark" },
 ];
 
 const CLUES = [
@@ -54,11 +55,12 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen bg-cream flex flex-col">
+      <Seo title="Page not found" description={"This page could not be found."} />
       {/* minimal header */}
       {/* <header className="py-4 px-6 bg-white border-b border-gray-100">
         <Link to="/" className="inline-flex items-center gap-2">
           <img src={discoveryHavenLogo} alt="Discovery Haven" className="w-9 h-9" />
-          <span className="font-logo text-xl text-slate-900">Discovery Haven</span>
+          <span className="font-logo text-xl text-dark">Discovery Haven</span>
         </Link>
       </header> */}
 
@@ -85,7 +87,7 @@ export default function NotFound() {
         </motion.div>
 
         <motion.h1
-          className="font-cherry text-h1 text-slate-900 mb-4 max-w-xl"
+          className="font-cherry text-h1 text-dark mb-4 max-w-xl"
           variants={fadeUp}
           initial="hidden"
           animate="show"

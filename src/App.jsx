@@ -1,5 +1,11 @@
 import { useEffect, lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { MotionConfig } from "framer-motion";
 import ReactGA from "react-ga4";
 import { Layout } from "./components/layout/Layout";
@@ -10,11 +16,8 @@ const HavenAcademy = lazy(() => import("./pages/HavenAcademy"));
 const HavenTribe = lazy(() => import("./pages/HavenTribe"));
 const Explore = lazy(() => import("./pages/Explore"));
 const About = lazy(() => import("./pages/About"));
-const Explorers = lazy(() => import("./pages/Explorers"));
-const ArtsCulture = lazy(() => import("./pages/ArtsCulture"));
 const Impact = lazy(() => import("./pages/Impact"));
 const Reports = lazy(() => import("./pages/Reports"));
-const Advocacy = lazy(() => import("./pages/Advocacy"));
 const Partnership = lazy(() => import("./pages/Partnership"));
 const CommunityHour = lazy(() => import("./pages/CommunityHour"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -69,6 +72,25 @@ export default function App() {
             <Route path="/courses/loud-fearless" element={<LoudFearless />} />
             <Route path="/courses/curiosity-box" element={<CuriosityBox />} />
             <Route path="/courses/eq-lab" element={<EQLab />} />
+            {/* Campaign pages: dates, fee and checkout. Each redirects back
+                to its track page unless the course is marked "open" with a
+                campaign URL in data/content.js. */}
+            <Route
+              path="/courses/creative-quest/enrol"
+              element={<CreativeQuest mode="campaign" />}
+            />
+            <Route
+              path="/courses/loud-fearless/enrol"
+              element={<LoudFearless mode="campaign" />}
+            />
+            <Route
+              path="/courses/curiosity-box/enrol"
+              element={<CuriosityBox mode="campaign" />}
+            />
+            <Route
+              path="/courses/eq-lab/enrol"
+              element={<EQLab mode="campaign" />}
+            />
             <Route path="/thank-you/:slug" element={<ThankYou />} />
             <Route
               path="*"
@@ -80,11 +102,23 @@ export default function App() {
                     <Route path="/haven-tribe" element={<HavenTribe />} />
                     <Route path="/explore" element={<Explore />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/explorers" element={<Explorers />} />
-                    <Route path="/arts-culture" element={<ArtsCulture />} />
                     <Route path="/impact" element={<Impact />} />
                     <Route path="/impact/reports" element={<Reports />} />
-                    <Route path="/advocacy" element={<Advocacy />} />
+                    {/* Retired routes, redirected to the closest page so
+                        old links and bookmarks keep working. The page
+                        files are kept in src/pages for reference. */}
+                    <Route
+                      path="/explorers"
+                      element={<Navigate to="/explore" replace />}
+                    />
+                    <Route
+                      path="/arts-culture"
+                      element={<Navigate to="/explore" replace />}
+                    />
+                    <Route
+                      path="/advocacy"
+                      element={<Navigate to="/about" replace />}
+                    />
                     <Route path="/partnership" element={<Partnership />} />
                     <Route path="/community-hour" element={<CommunityHour />} />
                     <Route path="/contact" element={<Contact />} />

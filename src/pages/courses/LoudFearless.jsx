@@ -11,13 +11,12 @@ const FAQ_COMMON = [
   },
   {
     q: "What if I'm not sure this is the right fit?",
-    a: "Book a free 15-minute call with our founder before enrolling and we'll help you decide.",
+    a: "Book a call with us before enrolling and we'll help you decide.",
   },
 ];
 
 const COURSE = {
   slug: "loud-and-fearless",
-  paymentUrl: "https://paystack.com/pay/dh-loud-and-fearless-2026",
   title: "Loud & Fearless",
   cohort: "October 2026",
   price: 80000,
@@ -71,6 +70,6 @@ const COURSE = {
   finalCTA: "October cohort spots are filling. Reserve your child's place now.",
 };
 
-export default function LoudFearless() {
-  return <CourseLandingPage course={COURSE} />;
+export default function LoudFearless({ mode }) {
+  return <CourseLandingPage course={COURSE} mode={mode} />;
 }

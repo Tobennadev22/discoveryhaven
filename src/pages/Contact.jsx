@@ -1,250 +1,90 @@
-import { useState } from "react";
-import { Mail, CheckCircle } from "lucide-react";
-import { Button } from "../components/ui/Button";
+import { Mail, Phone, CalendarDays } from "lucide-react";
+import { ButtonLink } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
-import {
-  motion,
-  fadeUp,
-  slideLeft,
-  slideRight,
-  useViewport,
-} from "../components/ui/Motion";
+import { motion, fadeUp, stagger, scaleIn, useViewport } from "../components/ui/Motion";
+import { Seo } from "../components/Seo";
+import { BRAND, BOOK_A_CALL } from "../data/content";
 
-const ENQUIRY_TYPES = [
-  "General Enquiry",
-  "Media & Press",
-  "Partnership",
-  "Enrolment Support",
-];
+// The old message form showed "Message Received!" without sending anything.
+// Until an approved form destination is connected and delivery is tested,
+// this page offers only channels that are known to work.
+// Social links are left out until their exact profile URLs are confirmed.
+const phoneHref = `tel:+${BRAND.phoneNumber.replace(/\D/g, "").replace(/^2340/, "234")}`;
 
 export default function Contact() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    type: "",
-    message: "",
-  });
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSent(true);
-  };
+  const channels = [
+    {
+      Icon: Mail,
+      title: "Email",
+      body: "Write to us about programmes, partnerships, press or anything else.",
+      href: `mailto:${BRAND.email}`,
+      cta: BRAND.email,
+    },
+    {
+      Icon: Phone,
+      title: "Phone",
+      body: "Call or message us during working hours (WAT).",
+      href: phoneHref,
+      cta: BRAND.phoneNumber,
+    },
+    {
+      Icon: CalendarDays,
+      title: "Book a call",
+      body: "Want help choosing a programme or exploring a partnership? Pick a time to talk with us.",
+      href: BOOK_A_CALL.href,
+      cta: "Pick a time",
+    },
+  ];
 
   return (
     <>
-      <section className="bg-dark pt-36 pb-20 lg:pt-44 lg:pb-28">
+      <Seo title="Contact" description={"Get in touch with Discovery Haven by email or phone, or book a call."} />
+      <section className="bg-cream pt-36 pb-12 lg:pt-44 lg:pb-16">
         <motion.div
           className="max-w-2xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">Contact</SectionLabel>
-          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
-            Get in Touch
-          </h1>
-          <p className="text-gray-300 font-body text-lead">
-            We'd love to hear from you. Choose how you'd like to connect.
+          <SectionLabel>Contact</SectionLabel>
+          <h1 className="font-cherry text-h1 text-dark mb-6">Get in touch</h1>
+          <p className="text-dark/80 font-body text-lead">
+            We’d love to hear from you. Choose the way that suits you best.
           </p>
         </motion.div>
       </section>
 
-      <section className="py-16 md:py-24 bg-cream">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16">
-            <motion.div
-              variants={slideLeft}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
+      <section className="pb-20 md:pb-28 bg-cream">
+        <motion.ul
+          className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-5 md:grid-cols-3"
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={useViewport}
+        >
+          {channels.map(({ Icon, title, body, href, cta }) => (
+            <motion.li
+              key={title}
+              variants={scaleIn}
+              className="flex flex-col rounded-4xl border-2 border-dark bg-white p-7"
             >
-              <h2 className="font-cherry text-h2 text-slate-900 mb-8">
-                Send a Message
+              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-lilac text-dark">
+                <Icon size={22} aria-hidden="true" />
+              </span>
+              <h2 className="font-body font-extrabold text-h4 text-dark mb-2">
+                {title}
               </h2>
-              {sent ? (
-                <div className="bg-aqua/10 border border-aqua/30 rounded-2xl p-8 text-center">
-                  <div className="flex justify-center mb-4"><CheckCircle size={40} className="text-aqua" /></div>
-                  <h3 className="font-cherry text-h3 text-slate-900 mb-2">
-                    Message Received!
-                  </h3>
-                  <p className="text-gray-600 font-body">
-                    We'll get back to you within 24–48 hours.
-                  </p>
-                  <Button className="mt-6" onClick={() => setSent(false)}>
-                    Send Another
-                  </Button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-bold font-body text-slate-900 mb-2">
-                      Full Name
-                    </label>
-                    <input
-                      required
-                      className="w-full border border-gray-200 rounded-xl px-5 py-4 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua bg-white"
-                      value={form.name}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, name: e.target.value }))
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold font-body text-slate-900 mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      required
-                      type="email"
-                      className="w-full border border-gray-200 rounded-xl px-5 py-4 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua bg-white"
-                      value={form.email}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, email: e.target.value }))
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold font-body text-slate-900 mb-2">
-                      Enquiry Type
-                    </label>
-                    <select
-                      required
-                      className="w-full border border-gray-200 rounded-xl px-5 py-4 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua bg-white"
-                      value={form.type}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, type: e.target.value }))
-                      }
-                    >
-                      <option value="">Select…</option>
-                      {ENQUIRY_TYPES.map((t) => (
-                        <option key={t}>{t}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold font-body text-slate-900 mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      required
-                      rows={5}
-                      className="w-full border border-gray-200 rounded-xl px-5 py-4 font-body text-sm focus:outline-none focus:ring-2 focus:ring-aqua bg-white resize-none"
-                      value={form.message}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, message: e.target.value }))
-                      }
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="lg"
-                    className="w-full"
-                  >
-                    Send Message
-                  </Button>
-                </form>
-              )}
-            </motion.div>
-
-            <motion.div
-              className="space-y-8"
-              variants={slideRight}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
-            >
-              <div>
-                <h2 className="font-cherry text-h2 text-slate-900 mb-8">
-                  Connect Directly
-                </h2>
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-aqua/10 flex items-center justify-center text-aqua">
-                    <Mail size={22} />
-                  </div>
-                  <div>
-                    <p className="font-bold font-body text-slate-900 text-sm">
-                      Email
-                    </p>
-                    <a
-                      href="mailto:info@discoveryhaven.org"
-                      className="text-aqua font-body hover:underline"
-                    >
-                      info@discoveryhaven.org
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-2xl p-6 border border-gray-100">
-                <p className="font-bold font-body text-slate-900 mb-4">
-                  Follow Us
-                </p>
-                <div className="flex gap-4 flex-wrap">
-                  {[
-                    {
-                      label: "Instagram",
-                      href: "https://instagram.com/discoveryhavenkids",
-                      icon: (
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                          <circle cx="12" cy="12" r="4"/>
-                          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                        </svg>
-                      ),
-                    },
-                    {
-                      label: "Facebook",
-                      href: "https://facebook.com/discoveryhavenkids",
-                      icon: (
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                        </svg>
-                      ),
-                    },
-                    {
-                      label: "YouTube",
-                      href: "https://youtube.com/@discoveryhavenkids",
-                      icon: (
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-                          <polygon fill="currentColor" stroke="none" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
-                        </svg>
-                      ),
-                    },
-                  ].map((s) => (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-gray-50 hover:bg-aqua hover:text-white text-gray-600 px-4 py-2.5 rounded-xl transition-all font-body text-sm font-bold"
-                    >
-                      {s.icon} {s.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-cocoa rounded-2xl p-8 text-white">
-                <h3 className="font-cherry text-h3 mb-3">
-                  Not sure where to start?
-                </h3>
-                <p className="text-gray-400 font-body text-sm leading-relaxed mb-6">
-                  Book a free 20-minute call with our founder. It's the fastest
-                  way to find the right programme for your child.
-                </p>
-                <Button
-                  variant="ember"
-                  onClick={() => (window.location.href = "/community-hour")}
-                >
-                  Book Your Free Call →
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
+              <p className="font-body text-dark/80 mb-6">{body}</p>
+              <ButtonLink
+                to={href}
+                variant="outline-dark"
+                className="mt-auto w-full [overflow-wrap:anywhere]"
+              >
+                {cta}
+              </ButtonLink>
+            </motion.li>
+          ))}
+        </motion.ul>
       </section>
     </>
   );

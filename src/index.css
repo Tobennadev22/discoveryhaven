@@ -42,8 +42,8 @@
     font-family: 'Nunito', sans-serif;
     font-size: 1.0625rem;
     line-height: 1.7;
-    background-color: #fcf6f2;
-    color: #1a1a1a;
+    background-color: #fffaf3;
+    color: #2b1838;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     /* Scroll reveals start slightly off to the side; clip them so they
@@ -63,12 +63,21 @@
     text-wrap: pretty;
   }
   ::selection {
-    background: #ffec00;
-    color: #1a1a1a;
+    background: #ffc93c;
+    color: #2b1838;
   }
+  /* Visible keyboard focus everywhere: purple on light sections, sunflower
+     on dark ones (purple on plum would be too faint to see). */
   :focus-visible {
-    outline: 3px solid #05c3dd;
+    outline: 3px solid #6b2bd9;
     outline-offset: 3px;
+  }
+  .bg-dark :focus-visible,
+  .bg-cocoa :focus-visible,
+  .bg-aqua :focus-visible,
+  .bg-dark:focus-visible,
+  .bg-aqua:focus-visible {
+    outline-color: #ffc93c;
   }
 }
 

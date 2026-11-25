@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import {
   Check,
   Plus,
@@ -18,8 +18,20 @@ import {
   useViewport,
 } from "../../components/ui/Motion";
 import discoveryHavenLogo from "../../assets/dh.png";
-import { Button } from "../../components/ui/Button";
+import { Button, ButtonLink } from "../../components/ui/Button";
 import { SectionLabel } from "../../components/ui/SectionLabel";
+import { COURSES } from "../../data/content";
+import { SITE } from "../../data/site";
+import { enrolmentState, isCampaignOpen } from "../../lib/enrolment";
+import { Seo } from "../../components/Seo";
+
+// The practical activity for this track, shared with the Academy cards.
+function trackActivity(title) {
+  return COURSES.find((c) => c.title === title)?.activity;
+}
+
+// Book a call goes straight to the Calendly profile.
+const CALL_HREF = SITE.calendlyUrl;
 
 const COUNTRY_CODES = [
   { code: "+234", label: "🇳🇬 Nigeria (+234)" },
@@ -123,7 +135,7 @@ function EnrolModal({ isOpen, onClose, course }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="enrol-title"
-        className="relative bg-white rounded-4xl border-2 border-dark shadow-[0_8px_0_0_#1a1a1a] w-full max-w-md p-7 sm:p-8 z-10 my-auto"
+        className="relative bg-white rounded-4xl border-2 border-dark shadow-[0_8px_0_0_#2b1838] w-full max-w-md p-7 sm:p-8 z-10 my-auto"
       >
         <button
           onClick={onClose}
@@ -229,13 +241,17 @@ function EnrolModal({ isOpen, onClose, course }) {
             <input
               required
               type="number"
-              min="4"
-              max="18"
+              min="7"
+              max="16"
+              aria-describedby="enrol-childAge-hint"
               className={INPUT}
               value={form.childAge}
               onChange={updateField("childAge")}
                 id="enrol-childAge"
             />
+            <p id="enrol-childAge-hint" className="mt-1 font-body text-xs text-dark/70">
+              Courses are for ages 7 to 16.
+            </p>
           </div>
           {error && (
             <p role="alert" className="rounded-2xl bg-crimson/10 px-4 py-3 font-body text-sm font-semibold text-crimson">
@@ -245,7 +261,7 @@ function EnrolModal({ isOpen, onClose, course }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-full border-2 border-dark bg-aqua px-6 py-3.5 font-body text-[1.0625rem] font-extrabold text-dark shadow-press transition-[transform,box-shadow] duration-150 hover:-translate-y-px active:translate-y-1 active:shadow-none disabled:translate-y-0 disabled:opacity-60"
+            className="w-full rounded-full border-2 border-dark bg-aqua px-6 py-3.5 font-body text-[1.0625rem] font-extrabold text-white shadow-press transition-[transform,box-shadow] duration-150 hover:-translate-y-px active:translate-y-1 active:shadow-none disabled:translate-y-0 disabled:opacity-60"
           >
             {loading
               ? "Redirecting to secure checkout…"
@@ -287,30 +303,73 @@ function FAQ({ q, a, id }) {
   );
 }
 
-export default function CourseLandingPage({ course }) {
+// Two modes share this layout:
+//   "track"    (/courses/<track>): evergreen detail, available all year.
+//              No dates, fees or checkout. The CTA follows the course's
+//              enrolment state (notify me, campaign page, waitlist...).
+//   "campaign" (/courses/<track>/enrol): dates, fee and the existing
+//              Paystack checkout. Only renders while the course is "open"
+//              with a campaign URL; otherwise it redirects to the track.
+export default function CourseLandingPage({ course, mode = "track" }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const track = COURSES.find((c) => c.title === course.title);
+  const state = enrolmentState(track);
+  const campaign = mode === "campaign";
 
-  const enrolBtn = (variant = "yellow", label) => (
-    <Button
-      variant={variant === "yellow" ? "yellow" : "primary"}
-      size="lg"
-      onClick={() => setModalOpen(true)}
-    >
-      {label || `Enrol my child now for ₦${course.price.toLocaleString()}`}
-    </Button>
-  );
+  if (campaign && !isCampaignOpen(track)) {
+    return <Navigate to={track?.href || "/haven-academy"} replace />;
+  }
+
+  const enrolBtn = (variant = "yellow", label) =>
+    campaign ? (
+      <Button
+        variant={variant === "yellow" ? "yellow" : "primary"}
+        size="lg"
+        onClick={() => setModalOpen(true)}
+      >
+        {label || `Enrol my child now for ₦${course.price.toLocaleString()}`}
+      </Button>
+    ) : (
+      <ButtonLink
+        to={state.action.href}
+        variant={variant === "yellow" ? "yellow" : "primary"}
+        size="lg"
+      >
+        {state.action.label}
+      </ButtonLink>
+    );
+
+  // Dates line under the CTA: the campaign's own text, or the track's
+  // current enrolment state.
+  const statusLine = campaign ? course.smallText : state.label;
 
   const glance = [
-    { label: "Starts", value: course.schedule.month },
+    ...(campaign ? [{ label: "Starts", value: course.schedule.month }] : []),
     { label: "Duration", value: course.schedule.duration },
     { label: "Sessions", value: course.schedule.sessionSchedule },
     { label: "Ages", value: course.schedule.ages },
     { label: "Format", value: course.schedule.format },
   ];
 
+  // Flyer images (with dates or fees baked in) only show on the
+  // campaign page. Without them, the standard text sections are used.
+  const flyers = campaign || !course.campaignOnlyImages;
+  const showStandard = !course.hideStandardSections || !flyers;
+
+  const qanda = flyers && course.qanda
+    ? [...course.qanda, ...(campaign ? course.campaignQanda || [] : [])]
+    : null;
+
+  const seoDescription = `${trackActivity(course.title) || ""} ${course.title} is a Haven Academy course for ages 7 to 16, with separate groups for ages 7 to 11 and 12 to 16.`.trim();
+
   return (
     <div className="min-h-screen font-body">
-      {/* HEADER: logo plus an always-visible enrol button */}
+      <Seo
+        title={campaign ? `Enrol in ${course.title}` : course.title}
+        description={seoDescription}
+        path={campaign ? `${track.href}/enrol` : track?.href}
+      />
+      {/* HEADER: logo plus an always-visible CTA */}
       <header className="sticky top-0 z-40 border-b border-dark/10 bg-canvas/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
           <Link to="/" className="inline-flex items-center gap-2">
@@ -323,20 +382,32 @@ export default function CourseLandingPage({ course }) {
               Discovery Haven
             </span>
           </Link>
-          <div className="flex items-center gap-4">
-            <span className="hidden font-body font-extrabold text-dark sm:block">
-              ₦{course.price.toLocaleString()}
-            </span>
-            <Button size="sm" onClick={() => setModalOpen(true)}>
-              Enrol now
-            </Button>
-          </div>
+          {campaign ? (
+            <div className="flex items-center gap-4">
+              <span className="hidden font-body font-extrabold text-dark sm:block">
+                ₦{course.price.toLocaleString()}
+              </span>
+              <Button size="sm" onClick={() => setModalOpen(true)}>
+                Enrol now
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              <span className="hidden font-body text-sm font-bold text-dark/80 md:block">
+                {state.label}
+              </span>
+              <ButtonLink to={state.action.href} size="sm">
+                <span className="sm:hidden">Updates</span>
+                <span className="hidden sm:inline">{state.action.label}</span>
+              </ButtonLink>
+            </div>
+          )}
         </div>
       </header>
 
       {/* S1 — HERO */}
-      {course.heroImage ? (
-        <section className="bg-[#0D1B2A] py-20 md:py-28 px-4 text-white">
+      {flyers && course.heroImage ? (
+        <section className="bg-dark py-20 md:py-28 px-4 text-white">
           <motion.div
             className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center"
             variants={fadeUp}
@@ -345,15 +416,23 @@ export default function CourseLandingPage({ course }) {
           >
             <div className="text-center lg:text-left">
               <SectionLabel>{course.tag}</SectionLabel>
-              <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6 mt-2">
+              <h1 className="font-cherry text-h1 bg-gradient-to-r from-yellow to-lilac bg-clip-text text-transparent mb-6 mt-2">
                 {course.headline}
               </h1>
+              {trackActivity(course.title) && (
+                <p className="mb-5 inline-block rounded-2xl bg-white/10 px-5 py-3 font-body text-lead font-bold text-white">
+                  <span className="block text-sm font-extrabold uppercase tracking-wider text-yellow">
+                    What you’ll do
+                  </span>
+                  {trackActivity(course.title)}
+                </p>
+              )}
               <p className="font-body text-lead text-white/85 mb-10">
                 {course.subheadline}
               </p>
               {enrolBtn("yellow", course.heroCta)}
-              <p className="mt-5 text-white/60 font-body font-semibold text-sm">
-                {course.smallText}
+              <p className="mt-5 text-white/80 font-body font-bold text-sm">
+                {statusLine}
               </p>
             </div>
             <div className="flex justify-center">
@@ -363,9 +442,9 @@ export default function CourseLandingPage({ course }) {
                   alt={course.title}
                   className="w-full rounded-3xl shadow-2xl"
                 />
-                {course.schedule?.investment && (
+                {campaign && course.schedule?.investment && (
                   <motion.div
-                    className="absolute -rotate-6 flex flex-col items-center justify-center bg-[#FDAE35] shadow-lg rounded-[60%_40%_55%_45%/55%_45%_60%_40%]"
+                    className="absolute -rotate-6 flex flex-col items-center justify-center bg-yellow shadow-lg rounded-[60%_40%_55%_45%/55%_45%_60%_40%]"
                     style={{
                       left: "70%",
                       top: "32%",
@@ -379,10 +458,10 @@ export default function CourseLandingPage({ course }) {
                       ease: "easeInOut",
                     }}
                   >
-                    <span className="font-body font-bold text-white text-[9px] sm:text-[11px]">
+                    <span className="font-body font-bold text-dark text-[9px] sm:text-[11px]">
                       Investment
                     </span>
-                    <span className="font-cherry text-white text-base sm:text-xl leading-none">
+                    <span className="font-cherry text-dark text-base sm:text-xl leading-none">
                       {course.schedule.investment}
                     </span>
                   </motion.div>
@@ -396,23 +475,31 @@ export default function CourseLandingPage({ course }) {
           <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
             <motion.div variants={fadeUp} initial="hidden" animate="show">
               <SectionLabel>{course.tag}</SectionLabel>
-              <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6 mt-2">
+              <h1 className="font-cherry text-h1 bg-gradient-to-r from-yellow to-lilac bg-clip-text text-transparent mb-6 mt-2">
                 {course.headline}
               </h1>
+              {trackActivity(course.title) && (
+                <p className="mb-5 inline-block rounded-2xl bg-white/10 px-5 py-3 font-body text-lead font-bold text-white">
+                  <span className="block text-sm font-extrabold uppercase tracking-wider text-yellow">
+                    What you’ll do
+                  </span>
+                  {trackActivity(course.title)}
+                </p>
+              )}
               <p className="font-body text-lead text-white/80 max-w-prose mb-10">
                 {course.subheadline}
               </p>
               <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-7">
                 {enrolBtn("yellow")}
-                <Link
-                  to="/community-hour"
-                  className="font-body font-extrabold text-white underline decoration-aqua decoration-[3px] underline-offset-[6px] hover:text-aqua transition-colors"
+                <a
+                  href={CALL_HREF}
+                  className="inline-flex min-h-[44px] items-center font-body font-extrabold text-white underline decoration-lilac decoration-[3px] underline-offset-[6px] hover:text-lilac transition-colors"
                 >
-                  Book a free call first
-                </Link>
+                  Book a call
+                </a>
               </div>
-              <p className="mt-6 text-white/55 font-body font-semibold text-sm">
-                {course.smallText}
+              <p className="mt-6 text-white/80 font-body font-bold text-sm">
+                {statusLine}
               </p>
             </motion.div>
 
@@ -438,6 +525,7 @@ export default function CourseLandingPage({ course }) {
                   </div>
                 ))}
               </dl>
+              {campaign && (
               <div className="mt-3 flex items-end justify-between gap-4 border-t border-white/10 pt-6">
                 <div>
                   <p className="font-body text-sm font-semibold text-white/60">
@@ -451,13 +539,14 @@ export default function CourseLandingPage({ course }) {
                   per child
                 </span>
               </div>
+              )}
             </motion.div>
           </div>
         </section>
       )}
 
       {/* S1.5 — CENTER STAGE */}
-      {course.centerStageImage && (
+      {flyers && course.centerStageImage && (
         <section className="bg-canvas py-16 md:py-24 px-4 text-center overflow-hidden">
           <motion.div
             className="relative max-w-4xl mx-auto"
@@ -533,7 +622,7 @@ export default function CourseLandingPage({ course }) {
                 alt={course.title}
                 className="w-full rounded-3xl shadow-2xl mb-8"
               />
-              <p className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-slate-900 leading-tight">
+              <p className="font-cherry text-3xl sm:text-4xl lg:text-5xl text-dark leading-tight">
                 {course.centerStageRemark}
               </p>
             </div>
@@ -542,7 +631,7 @@ export default function CourseLandingPage({ course }) {
       )}
 
       {/* S1.6 — WHAT & WHY SPLIT */}
-      {course.splitLeftImage && course.splitRightImage && (
+      {flyers && course.splitLeftImage && course.splitRightImage && (
         <section className="bg-cream py-16 md:py-24 px-4">
           <motion.div
             className="max-w-5xl mx-auto"
@@ -577,8 +666,8 @@ export default function CourseLandingPage({ course }) {
       )}
 
       {/* S1.7 — STORYBOOK SHOWCASE */}
-      {course.showcaseImage && (
-        <section className="bg-[#0D1B2A] py-16 md:py-24 overflow-hidden">
+      {flyers && course.showcaseImage && (
+        <section className="bg-dark py-16 md:py-24 overflow-hidden">
           <motion.div
             className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center px-4 mb-16"
             variants={fadeUp}
@@ -586,7 +675,7 @@ export default function CourseLandingPage({ course }) {
             whileInView="show"
             viewport={useViewport}
           >
-            <h2 className="font-cherry text-h2 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent text-center lg:text-left">
+            <h2 className="font-cherry text-h2 bg-gradient-to-r from-yellow to-lilac bg-clip-text text-transparent text-center lg:text-left">
               {course.showcaseHeadline}
             </h2>
             <img
@@ -652,7 +741,7 @@ export default function CourseLandingPage({ course }) {
       )}
 
       {/* S1.8 — JOURNEY & GAINS SPLIT */}
-      {course.journeyLeftImage && course.journeyRightImage && (
+      {flyers && course.journeyLeftImage && course.journeyRightImage && (
         <section className="bg-cream py-16 md:py-24 px-4">
           <motion.div
             className="max-w-5xl mx-auto"
@@ -682,7 +771,7 @@ export default function CourseLandingPage({ course }) {
       )}
 
       {/* S1.9 — INVESTMENT & ABOUT */}
-      {course.investmentImage && course.aboutImage && (
+      {flyers && course.aboutImage && (
         <section className="bg-cream py-16 md:py-24 px-4">
           <motion.div
             className="max-w-md mx-auto flex flex-col gap-8"
@@ -691,11 +780,13 @@ export default function CourseLandingPage({ course }) {
             whileInView="show"
             viewport={useViewport}
           >
-            <img
-              src={course.investmentImage}
-              alt={course.investmentAlt || course.title}
-              className="w-full rounded-3xl shadow-2xl"
-            />
+            {campaign && course.investmentImage && (
+              <img
+                src={course.investmentImage}
+                alt={course.investmentAlt || course.title}
+                className="w-full rounded-3xl shadow-2xl"
+              />
+            )}
             <img
               src={course.aboutImage}
               alt={course.aboutAlt || course.title}
@@ -706,7 +797,7 @@ export default function CourseLandingPage({ course }) {
       )}
 
       {/* S1.95 — Q&A */}
-      {course.qanda && (
+      {qanda && (
         <section className="bg-canvas">
           <div className="h-4 bg-yellow" />
           <motion.div
@@ -728,7 +819,7 @@ export default function CourseLandingPage({ course }) {
             </div>
 
             <ol className="divide-y divide-dark/10 border-y border-dark/10">
-              {course.qanda.map((item, i) => (
+              {qanda.map((item, i) => (
                 <li key={item.q} className="flex gap-5 py-7">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-orange-400 font-body text-sm font-extrabold text-dark">
                     {i + 1}
@@ -737,7 +828,7 @@ export default function CourseLandingPage({ course }) {
                     <h4 className="font-body font-extrabold text-h4 text-dark mb-2">
                       {item.q}
                     </h4>
-                    <p className="font-body text-[1.0625rem] text-dark/75 leading-relaxed">
+                    <p className="font-body text-[1.0625rem] text-dark/80 leading-relaxed [overflow-wrap:anywhere]">
                       {item.a}
                     </p>
                   </div>
@@ -755,7 +846,7 @@ export default function CourseLandingPage({ course }) {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
-                    className="text-slate-900 mb-3"
+                    className="text-dark mb-3"
                     aria-hidden="true"
                   >
                     {Array.from({ length: 12 }).map((_, i) => {
@@ -790,7 +881,7 @@ export default function CourseLandingPage({ course }) {
         </section>
       )}
 
-      {!course.hideStandardSections && (
+      {showStandard && (
         <>
           {/* S2–S3 — THE CHALLENGE & OUR APPROACH */}
           <section className="bg-canvas px-5 py-20 sm:px-8 md:py-28">
@@ -872,7 +963,7 @@ export default function CourseLandingPage({ course }) {
           {/* S5 — BONUS */}
           <section className="bg-canvas px-5 py-20 sm:px-8 md:py-28">
             <motion.div
-              className="mx-auto max-w-5xl rounded-4xl border-2 border-dark bg-yellow p-8 shadow-[0_8px_0_0_#1a1a1a] sm:p-12 lg:p-16"
+              className="mx-auto max-w-5xl rounded-4xl border-2 border-dark bg-yellow p-8 shadow-[0_8px_0_0_#2b1838] sm:p-12 lg:p-16"
               variants={fadeUp}
               initial="hidden"
               whileInView="show"
@@ -902,7 +993,7 @@ export default function CourseLandingPage({ course }) {
               >
                 <SectionLabel>{course.schedule.course}</SectionLabel>
                 <h2 className="font-cherry text-h2 text-dark mt-2">
-                  Schedule & Investment
+                  {campaign ? "Schedule and fee" : "What to expect"}
                 </h2>
               </motion.div>
               <motion.div
@@ -914,7 +1005,9 @@ export default function CourseLandingPage({ course }) {
               >
                 <dl className="divide-y divide-dark/10 rounded-4xl border border-dark/10 bg-white px-6 py-2 sm:px-8">
                   {[
-                    { label: "Month", value: course.schedule.month },
+                    ...(campaign
+                      ? [{ label: "Month", value: course.schedule.month }]
+                      : []),
                     { label: "Duration", value: course.schedule.duration },
                     { label: "Schedule", value: course.schedule.sessionSchedule },
                     { label: "Ages", value: course.schedule.ages },
@@ -935,6 +1028,28 @@ export default function CourseLandingPage({ course }) {
                   ))}
                 </dl>
 
+                {!campaign ? (
+                  <div className="flex flex-col rounded-4xl bg-cocoa p-8 text-white sm:p-10">
+                    <p className="font-body text-sm font-extrabold text-yellow">
+                      Enrolment
+                    </p>
+                    <p className="font-cherry text-h3 mt-2">{state.label}</p>
+                    <p className="mt-2 font-body font-semibold text-white/80">
+                      Dates, times in WAT and fees are shared when a group
+                      opens.
+                    </p>
+                    <div className="mt-auto pt-10">
+                      <ButtonLink
+                        to={state.action.href}
+                        variant="ember"
+                        size="lg"
+                        className="w-full"
+                      >
+                        {state.action.label}
+                      </ButtonLink>
+                    </div>
+                  </div>
+                ) : (
                 <div className="flex flex-col rounded-4xl bg-cocoa p-8 text-white sm:p-10">
                   <p className="font-body text-sm font-extrabold text-yellow">
                     Investment
@@ -959,6 +1074,7 @@ export default function CourseLandingPage({ course }) {
                     </p>
                   </div>
                 </div>
+                )}
               </motion.div>
             </div>
           </section>
@@ -1012,16 +1128,15 @@ export default function CourseLandingPage({ course }) {
                 <h2 className="font-cherry text-h2 text-dark mb-5 mt-2">
                   Common questions
                 </h2>
-                <p className="font-body text-dark/70 mb-6 max-w-sm">
-                  Can't find your answer? Talk to our founder before you
-                  enrol.
+                <p className="font-body text-dark/80 mb-6 max-w-sm">
+                  Can't find your answer? Pick a time to talk with us.
                 </p>
-                <Link
-                  to="/community-hour"
-                  className="font-body font-extrabold text-dark underline decoration-aqua decoration-[3px] underline-offset-[6px] hover:text-aqua transition-colors"
+                <a
+                  href={CALL_HREF}
+                  className="inline-flex min-h-[44px] items-center font-body font-extrabold text-dark underline decoration-aqua decoration-[3px] underline-offset-[6px] hover:text-aqua transition-colors"
                 >
-                  Book a free call
-                </Link>
+                  Book a call
+                </a>
               </motion.div>
               <div className="flex flex-col gap-3">
                 {[
@@ -1046,17 +1161,20 @@ export default function CourseLandingPage({ course }) {
               viewport={useViewport}
             >
               <h2 className="font-cherry text-h2 text-white mb-10">
-                {course.finalCTA}
+                {campaign
+                  ? course.finalCTA
+                  : state.status === "open"
+                    ? "Enrolment is open."
+                    : "Hear when the next group opens."}
               </h2>
               {enrolBtn("yellow")}
               <div className="mt-8">
-                <Link
-                  to="/community-hour"
-                  className="font-body font-bold text-white/70 underline decoration-aqua decoration-2 underline-offset-4 hover:text-white transition-colors"
+                <a
+                  href={CALL_HREF}
+                  className="inline-flex min-h-[44px] items-center font-body font-bold text-white/80 underline decoration-lilac decoration-2 underline-offset-4 hover:text-white transition-colors"
                 >
-                  Not sure yet? Book a free 15-minute call with our founder
-                  first
-                </Link>
+                  Not sure yet? Book a call
+                </a>
               </div>
             </motion.div>
           </section>
@@ -1064,8 +1182,8 @@ export default function CourseLandingPage({ course }) {
       )}
 
       {/* S10 — CLOSING */}
-      {course.closingImage && (
-        <section className="bg-[#0D1B2A] py-20 md:py-28 px-4 text-center text-white overflow-hidden">
+      {flyers && course.closingImage && (
+        <section className="bg-dark py-20 md:py-28 px-4 text-center text-white overflow-hidden">
           <motion.div
             className="max-w-md mx-auto"
             variants={fadeUp}
@@ -1112,11 +1230,13 @@ export default function CourseLandingPage({ course }) {
         </section>
       )}
 
-      <EnrolModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        course={course}
-      />
+      {campaign && (
+        <EnrolModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          course={course}
+        />
+      )}
     </div>
   );
 }

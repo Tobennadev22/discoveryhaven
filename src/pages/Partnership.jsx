@@ -1,16 +1,11 @@
-import { useState } from "react";
 import campingNigeriaLogo from "../assets/campingNigerialogo.png";
 import socLogo from "../assets/soc.png";
 import schoolofconfidenceLogo from "../assets/schoolofconfidence.png";
 import nigeriaMagazineLogo from "../assets/Nigeriamagazine.png";
-import {
-  Users,
-  Landmark,
-  Handshake,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { Users, Landmark, Handshake } from "lucide-react";
 import { Button } from "../components/ui/Button";
+import { BRAND } from "../data/content";
+import { SITE } from "../data/site";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import {
   motion,
@@ -19,6 +14,13 @@ import {
   scaleIn,
   useViewport,
 } from "../components/ui/Motion";
+import { Seo } from "../components/Seo";
+
+// Partnership enquiries go to the brand inbox. Change this if a
+// different enquiry destination is approved.
+const PARTNERSHIP_ENQUIRY_HREF = `mailto:${BRAND.email}?subject=${encodeURIComponent(
+  "Partnership enquiry",
+)}`;
 
 const TIERS = [
   {
@@ -50,269 +52,11 @@ const TIERS = [
   },
 ];
 
-function FormFriend({ onClose }) {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    plugIn: [],
-    message: "",
-  });
-  const options = [
-    "Sponsor a child's studio track",
-    "Attend or speak at our events and summits",
-    "Provide an official institutional endorsement",
-  ];
-  const toggle = (opt) =>
-    setForm((f) => ({
-      ...f,
-      plugIn: f.plugIn.includes(opt)
-        ? f.plugIn.filter((o) => o !== opt)
-        : [...f.plugIn, opt],
-    }));
-  return (
-    <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          required
-          placeholder="Full Name / Institutional Contact"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className="input-field"
-        />
-        <input
-          required
-          type="email"
-          placeholder="Email Address"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="input-field"
-        />
-      </div>
-      <input
-        placeholder="Phone Number"
-        value={form.phone}
-        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-        className="input-field"
-      />
-      <div>
-        <p className="font-bold font-body text-slate-900 text-sm mb-3">
-          How would you like to plug in?
-        </p>
-        <div className="flex flex-col gap-2">
-          {options.map((opt) => (
-            <label key={opt} className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={form.plugIn.includes(opt)}
-                onChange={() => toggle(opt)}
-                className="w-4 h-4 accent-aqua"
-              />
-              <span className="font-body text-sm text-gray-700">{opt}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-      <textarea
-        rows={4}
-        placeholder="Tell us why you're passionate about Discovery Haven..."
-        value={form.message}
-        onChange={(e) => setForm({ ...form, message: e.target.value })}
-        className="input-field resize-none"
-      />
-      <Button variant="primary" size="lg" type="submit">
-        Submit →
-      </Button>
-    </form>
-  );
-}
-
-function FormFund({ onClose }) {
-  const [form, setForm] = useState({
-    org: "",
-    contact: "",
-    email: "",
-    website: "",
-    area: "",
-    message: "",
-    budget: "",
-  });
-  return (
-    <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          required
-          placeholder="Organisation / Foundation Name"
-          value={form.org}
-          onChange={(e) => setForm({ ...form, org: e.target.value })}
-          className="input-field"
-        />
-        <input
-          required
-          placeholder="Primary Contact Person & Title"
-          value={form.contact}
-          onChange={(e) => setForm({ ...form, contact: e.target.value })}
-          className="input-field"
-        />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          required
-          type="email"
-          placeholder="Email Address"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="input-field"
-        />
-        <input
-          placeholder="Corporate Website"
-          value={form.website}
-          onChange={(e) => setForm({ ...form, website: e.target.value })}
-          className="input-field"
-        />
-      </div>
-      <div>
-        <p className="font-bold font-body text-slate-900 text-sm mb-3">
-          Funding Area of Interest
-        </p>
-        <div className="flex flex-col gap-2">
-          {[
-            "Core Programme Sponsorship (Studios, Curricula)",
-            "Regional Outreach & Tournament Expansion",
-            "Printing & Open Educational Resources (OER) Distribution",
-          ].map((opt) => (
-            <label key={opt} className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="radio"
-                name="area"
-                value={opt}
-                checked={form.area === opt}
-                onChange={() => setForm({ ...form, area: opt })}
-                className="w-4 h-4 accent-aqua"
-              />
-              <span className="font-body text-sm text-gray-700">{opt}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-      <textarea
-        rows={4}
-        placeholder="What would you like to fund? Tell us why you're passionate about Discovery Haven..."
-        value={form.message}
-        onChange={(e) => setForm({ ...form, message: e.target.value })}
-        className="input-field resize-none"
-      />
-      <input
-        placeholder="Estimated Budget / Grant Range (optional)"
-        value={form.budget}
-        onChange={(e) => setForm({ ...form, budget: e.target.value })}
-        className="input-field"
-      />
-      <Button variant="primary" size="lg" type="submit">
-        Submit →
-      </Button>
-    </form>
-  );
-}
-
-function FormCollaborate({ onClose }) {
-  const [form, setForm] = useState({
-    company: "",
-    contact: "",
-    email: "",
-    website: "",
-    pathways: [],
-    idea: "",
-  });
-  const options = [
-    "Host youth internships or offer mentor placements",
-    "Co-create studio content / Brand activations",
-    "Media, publishing, or research collaboration",
-    "Industry hosting and co-hosting",
-  ];
-  const toggle = (opt) =>
-    setForm((f) => ({
-      ...f,
-      pathways: f.pathways.includes(opt)
-        ? f.pathways.filter((o) => o !== opt)
-        : [...f.pathways, opt],
-    }));
-  return (
-    <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          required
-          placeholder="Company / Creative Collective Name"
-          value={form.company}
-          onChange={(e) => setForm({ ...form, company: e.target.value })}
-          className="input-field"
-        />
-        <input
-          required
-          placeholder="Contact Person & Designation"
-          value={form.contact}
-          onChange={(e) => setForm({ ...form, contact: e.target.value })}
-          className="input-field"
-        />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          required
-          type="email"
-          placeholder="Email Address"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="input-field"
-        />
-        <input
-          placeholder="Portfolio / Website Link"
-          value={form.website}
-          onChange={(e) => setForm({ ...form, website: e.target.value })}
-          className="input-field"
-        />
-      </div>
-      <div>
-        <p className="font-bold font-body text-slate-900 text-sm mb-3">
-          Collaboration Pathway
-        </p>
-        <div className="flex flex-col gap-2">
-          {options.map((opt) => (
-            <label key={opt} className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={form.pathways.includes(opt)}
-                onChange={() => toggle(opt)}
-                className="w-4 h-4 accent-aqua"
-              />
-              <span className="font-body text-sm text-gray-700">{opt}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-      <textarea
-        rows={4}
-        placeholder="Briefly describe your idea for collaboration..."
-        value={form.idea}
-        onChange={(e) => setForm({ ...form, idea: e.target.value })}
-        className="input-field resize-none"
-      />
-      <Button variant="primary" size="lg" type="submit">
-        Submit →
-      </Button>
-    </form>
-  );
-}
-
-const FORMS = {
-  friend: FormFriend,
-  fund: FormFund,
-  collaborate: FormCollaborate,
-};
-
+// The interest forms here used to discard what people typed. Until an
+// approved enquiry destination is connected, each path links to email and
+// Book a call instead.
 function TierCard({ tier }) {
-  const [open, setOpen] = useState(false);
   const Icon = tier.icon;
-  const Form = FORMS[tier.id];
   return (
     <motion.div
       variants={scaleIn}
@@ -322,7 +66,7 @@ function TierCard({ tier }) {
         <div className="w-12 h-12 rounded-2xl bg-aqua/10 flex items-center justify-center mb-5">
           <Icon size={24} className="text-aqua" />
         </div>
-        <h3 className="font-cherry text-h3 text-slate-900 mb-1">
+        <h3 className="font-cherry text-h3 text-dark mb-1">
           {tier.title}
         </h3>
         <p className="font-body text-xs font-bold text-aqua mb-4">
@@ -332,25 +76,25 @@ function TierCard({ tier }) {
           {tier.desc}
         </p>
         <p className="text-gray-500 font-body text-xs leading-relaxed italic">
-          <span className="font-bold not-italic text-slate-700">
+          <span className="font-bold not-italic text-dark/80">
             How you can engage:{" "}
           </span>
           {tier.engage}
         </p>
       </div>
-      <div className="border-t border-gray-100 px-8 py-4">
-        <button
-          onClick={() => setOpen((o) => !o)}
-          className="w-full flex items-center justify-between font-cherry text-lg text-aqua hover:text-aqua/80 transition-colors"
+      <div className="flex flex-col gap-2 border-t border-dark/10 px-8 py-5 sm:flex-row sm:items-center sm:gap-6">
+        <a
+          href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`Partnership enquiry: ${tier.title}`)}`}
+          className="inline-flex min-h-[44px] items-center font-body font-extrabold text-dark underline decoration-aqua decoration-[3px] underline-offset-[6px] hover:text-aqua"
         >
-          <span>{open ? "Close Form" : "Express Interest →"}</span>
-          {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {open && (
-          <div className="mt-6 pb-2">
-            <Form />
-          </div>
-        )}
+          Discuss a partnership<span className="sr-only">: {tier.title}</span>
+        </a>
+        <a
+          href={SITE.calendlyUrl}
+          className="inline-flex min-h-[44px] items-center font-body font-bold text-dark/80 underline underline-offset-4 hover:text-dark"
+        >
+          Book a call
+        </a>
       </div>
     </motion.div>
   );
@@ -366,38 +110,36 @@ const PARTNERS = [
 export default function Partnership() {
   return (
     <>
+      <Seo title="Partnerships" description={"We work with schools and organisations that want children to explore, create and lead beyond the classroom."} />
       {/* HERO */}
-      <section className="bg-dark overflow-hidden pt-36 pb-20 lg:pt-44 lg:pb-28">
+      <section className="bg-cream overflow-hidden pt-36 pb-16 lg:pt-44 lg:pb-24">
         <motion.div
           className="max-w-4xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">
-            Friends of Discovery Haven · Partnerships & Collaborations
-          </SectionLabel>
-          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
-            Build the Future of Learning. With Us.
+          <SectionLabel>Partnerships</SectionLabel>
+          <h1 className="font-cherry text-h1 text-dark mb-6">
+            Let’s create something children will remember.
           </h1>
-          <p className="text-gray-300 font-body text-lead max-w-3xl mx-auto mb-6">
-            Discovery Haven does not grow in isolation. Every child we reach,
-            every studio we run, every publication we produce, and every summit
-            we host is made possible by a growing network of visionary
-            individuals, forward-thinking organisations, and purpose-driven
-            institutions who believe that the next generation deserves something
-            better than ordinary education. This is your invitation to be part
-            of that network.
+          <p className="text-dark/80 font-body text-lead max-w-3xl mx-auto mb-6">
+            We work with schools and organisations that want children to
+            explore, create and lead beyond the classroom.
           </p>
-          <p className="text-gray-500 font-body text-sm max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-dark/70 font-body text-sm max-w-2xl mx-auto mb-10 leading-relaxed">
             We are aligned with UN SDG 4 (Quality Education) and SDG 17
-            (Partnerships for the Goals). Our partners include cultural
-            institutes, publishing houses, civic organisations, and educational
-            bodies across Africa and beyond.
+            (Partnerships for the Goals).
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={PARTNERSHIP_ENQUIRY_HREF}
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border-2 border-dark bg-aqua px-7 py-3.5 font-body text-[1.0625rem] font-extrabold text-white shadow-press transition-[transform,box-shadow,background-color] duration-150 hover:-translate-y-px hover:bg-aquaDark active:translate-y-1 active:shadow-none"
+            >
+              Discuss a partnership
+            </a>
             <Button
-              variant="primary"
+              variant="outline-dark"
               size="lg"
               onClick={() =>
                 document
@@ -405,10 +147,7 @@ export default function Partnership() {
                   .scrollIntoView({ behavior: "smooth" })
               }
             >
-              Become a Partner Today →
-            </Button>
-            <Button variant="outline" size="lg">
-              Download Our Sponsorship Kit →
+              See ways to partner
             </Button>
           </div>
         </motion.div>
@@ -417,7 +156,7 @@ export default function Partnership() {
       {/* PARTNER LOGOS STRIP */}
       <section className="bg-canvas py-14 border-b border-gray-100">
         <div className="max-w-5xl mx-auto px-4 text-center">
-          <SectionLabel className="text-aqua mb-6">
+          <SectionLabel className="mb-6">
             Our current partners and collaborators
           </SectionLabel>
           <motion.div
@@ -444,7 +183,7 @@ export default function Partnership() {
                     // }}
                   />
                 ) : (
-                  <span className="font-bold font-body text-slate-700 text-sm">
+                  <span className="font-bold font-body text-dark/80 text-sm">
                     {p.name}
                   </span>
                 )}
@@ -468,7 +207,7 @@ export default function Partnership() {
             viewport={useViewport}
           >
             <SectionLabel>Partnership paths</SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
+            <h2 className="font-cherry text-h2 text-dark mb-4">
               How We Can Work Together
             </h2>
             <p className="text-gray-500 font-body text-lead max-w-xl mx-auto">

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FileText, ArrowRight } from "lucide-react";
-import { Button } from "../components/ui/Button";
+import { Button, ButtonLink } from "../components/ui/Button";
+import { IMPACT_METRICS } from "../data/content";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import {
   motion,
@@ -9,14 +10,7 @@ import {
   scaleIn,
   useViewport,
 } from "../components/ui/Motion";
-
-const METRICS = [
-  { number: "200+", label: "Children Reached" },
-  { number: "12+", label: "Programmes Delivered" },
-  { number: "4", label: "Studio Tracks" },
-  { number: "3+", label: "Countries Represented" },
-  { number: "2", label: "Years of Measurable Impact" },
-];
+import { Seo } from "../components/Seo";
 
 const SDGS = [
   {
@@ -115,54 +109,49 @@ const FUNDERS = [
 export default function Impact() {
   return (
     <>
+      <Seo title="Impact" description={`${IMPACT_METRICS.map((m) => `${m.number} ${m.label.toLowerCase()}`).join(", ")}. See how Discovery Haven measures and reports its work.`} />
       {/* HERO */}
-      <section className="bg-dark overflow-hidden pt-36 pb-20 lg:pt-44 lg:pb-28">
+      <section className="bg-cream overflow-hidden pt-36 pb-16 lg:pt-44 lg:pb-24">
         <motion.div
           className="max-w-4xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">
-            Discovery Haven · Impact, Advocacy & Global Alignment
-          </SectionLabel>
-          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
-            We Do Not Just Believe in What We Build. We Measure It.
+          <SectionLabel>Impact</SectionLabel>
+          <h1 className="font-cherry text-h1 text-dark mb-6">
+            {IMPACT_METRICS.map((m, i) => (
+              <span key={m.label} className="inline-block">
+                {m.number} {m.label.toLowerCase()}
+                {i < IMPACT_METRICS.length - 1 && (
+                  <span aria-hidden="true" className="mx-3 text-aqua">
+                    ·
+                  </span>
+                )}
+              </span>
+            ))}
           </h1>
-          <p className="text-gray-300 font-body text-lead max-w-3xl mx-auto mb-8">
-            Discovery Haven is not a feel-good programme. It is a measurable,
-            evidence-based learning institute whose work is anchored in global
-            standards, driven by real data, and accountable to the children,
-            families, and communities it serves. Every studio we run, every
-            scholar we develop, and every community we enter is tracked,
-            evaluated, and reported with full transparency.
+          <p className="text-dark/80 font-body text-lead max-w-3xl mx-auto mb-8">
+            Every programme we run is tracked, evaluated and reported, so
+            families, schools and partners can see what children are gaining.
           </p>
-          {/* SDG positioning strip */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 mb-10 max-w-3xl mx-auto text-left">
-            <p className="font-body text-yellow text-sm font-bold mb-1">
-              Primary Alignment: SDG 4: Quality Education · SDG 17:
-              Partnerships for the Goals
+          <div className="rounded-2xl border-2 border-dark bg-white px-6 py-4 mb-10 max-w-3xl mx-auto text-left">
+            <p className="font-body text-dark text-sm font-bold mb-1">
+              Primary alignment: SDG 4 Quality Education · SDG 17 Partnerships
+              for the Goals
             </p>
-            <p className="font-body text-white/60 text-sm">
-              Secondary Alignment: SDG 5: Gender Equality · SDG 10: Reduced
-              Inequalities · SDG 16: Peace, Justice and Strong Institutions
+            <p className="font-body text-dark/70 text-sm">
+              Secondary alignment: SDG 5 Gender Equality · SDG 10 Reduced
+              Inequalities · SDG 16 Peace, Justice and Strong Institutions
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => (window.location.href = "/impact/reports")}
-            >
-              Download Our Latest Impact Report →
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => (window.location.href = "/partnership")}
-            >
-              View Our SDG Mapping →
-            </Button>
+            <ButtonLink to="/impact/reports" variant="primary" size="lg">
+              Read our impact reports
+            </ButtonLink>
+            <ButtonLink to="/partnership" variant="outline-dark" size="lg">
+              Explore partnerships
+            </ButtonLink>
           </div>
         </motion.div>
       </section>
@@ -176,7 +165,7 @@ export default function Impact() {
           whileInView="show"
           viewport={useViewport}
         >
-          <h2 className="font-cherry text-h2 text-slate-900 mb-6">
+          <h2 className="font-cherry text-h2 text-dark mb-6">
             Impact, advocacy, and global alignment are three parts of one mission.
           </h2>
           <p className="text-gray-600 font-body text-lead">
@@ -195,13 +184,13 @@ export default function Impact() {
       <section className="bg-aqua py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="grid grid-cols-2 lg:grid-cols-5 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-8"
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={useViewport}
           >
-            {METRICS.map((m) => (
+            {IMPACT_METRICS.map((m) => (
               <motion.div
                 key={m.label}
                 variants={scaleIn}
@@ -229,7 +218,7 @@ export default function Impact() {
             viewport={useViewport}
           >
             <SectionLabel>Part one: Impact reports and insights</SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900 mb-3 mt-4">
+            <h2 className="font-cherry text-h2 text-dark mb-3 mt-4">
               Data That Proves the Work.
             </h2>
             <p className="font-body text-lead text-aqua font-bold mb-6">
@@ -261,7 +250,7 @@ export default function Impact() {
             whileInView="show"
             viewport={useViewport}
           >
-            <h3 className="font-cherry text-h3 text-slate-900 mb-6">
+            <h3 className="font-cherry text-h3 text-dark mb-6">
               What Our Reports Contain
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -310,7 +299,7 @@ export default function Impact() {
             <SectionLabel>
               Part two: Global alignment and SDG mapping
             </SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900 mb-3 mt-4">
+            <h2 className="font-cherry text-h2 text-dark mb-3 mt-4">
               Local Execution. Global Standards. Measurable Impact.
             </h2>
             <p className="font-body text-lead text-aqua font-bold mb-6">
@@ -357,17 +346,17 @@ export default function Impact() {
                   <span className="bg-aqua text-white font-bold font-body text-xs px-3 py-1.5 rounded-full">
                     {sdg.number}
                   </span>
-                  <span className="font-cherry text-xl text-slate-900">
+                  <span className="font-cherry text-xl text-dark">
                     {sdg.label}
                   </span>
                 </div>
-                <h3 className="font-cherry text-h3 text-slate-900 mb-3">
+                <h3 className="font-cherry text-h3 text-dark mb-3">
                   {sdg.heading}
                 </h3>
                 <p className="text-gray-600 font-body text-base leading-relaxed mb-6">
                   {sdg.body}
                 </p>
-                <p className="font-bold font-body text-slate-900 text-sm mb-3">
+                <p className="font-bold font-body text-dark text-sm mb-3">
                   How we advance {sdg.number}:
                 </p>
                 <ul className="flex flex-col gap-2 mb-6">
@@ -424,7 +413,7 @@ export default function Impact() {
             className="mb-12"
           >
             <SectionLabel>Part three: Advocacy and outreach</SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900 mb-3 mt-4">
+            <h2 className="font-cherry text-h2 text-dark mb-3 mt-4">
               Advocacy That Goes Beyond the Classroom.
             </h2>
             <p className="font-body text-lead text-aqua font-bold mb-6">
@@ -461,7 +450,7 @@ export default function Impact() {
             whileInView="show"
             viewport={useViewport}
           >
-            <h3 className="font-cherry text-h3 text-slate-900 mb-6">
+            <h3 className="font-cherry text-h3 text-dark mb-6">
               Our Advocacy Work Includes
             </h3>
             <div className="flex flex-col gap-3">

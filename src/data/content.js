@@ -1,41 +1,67 @@
 import genesisReport from "../assets/20-Page Report Design Template.pdf";
+import { SITE } from "./site";
 
 export const BRAND = {
   name: "Discovery Haven Kids Co.",
   tagline: "Where Intellectual Curiosity Meets Radical Confidence.",
-  taglineShort: "Where Children Come Alive.",
-  email: " info@discoveryhaven.org ",
+  taglineShort: "Big ideas. Brave voices.",
+  legalName: "Discovery Haven Kids Co. Ltd",
+  email: "info@discoveryhaven.org",
   website: "discoveryhaven.org",
   phoneNumber: "(+234) 0916-399-2614",
 };
 
 export const COLORS = {
-  aqua: "#05c3dd",
-  yellow: "#ffec00",
-  dark: "#1a1a1a",
-  red: "#de2d10",
+  purple: "#6b2bd9",
+  plum: "#2b1838",
+  sunflower: "#ffc93c",
+  cream: "#fbf6ee",
+  mint: "#9be3c4",
+  peach: "#ffb894",
+  lilac: "#c8b5ff",
+  sun: "#ffe14d",
 };
 
+// Main navigation. The same labels are used in the mobile menu.
+// "Book a call" is a separate, secondary action (see BOOK_A_CALL).
 export const NAV_LINKS = [
-  { label: "About Us", href: "/about" },
   { label: "Haven Academy", href: "/haven-academy" },
-  { label: "Explore", href: "/explore" },
-  { label: "Haven Tribe", href: "/haven-tribe" },
-  { label: "Partnerships", href: "/partnership" },
-  { label: "Impact", href: "/impact" },
+  { label: "Experiences", href: "/explore" },
+  { label: "Our Story", href: "/about" },
+  { label: "Parent Community", href: "/haven-tribe" },
 ];
 
+// Every Book a call CTA goes straight to the Calendly profile.
+export const BOOK_A_CALL = { label: "Book a call", href: SITE.calendlyUrl };
+
+// The four Haven Academy tracks, always shown in this order.
+// `activity` is the practical thing children do, shown first on cards.
+// `color` is the track colour (one accent per card).
+// `enrolment` drives the course CTA (see src/lib/enrolment.js):
+//   status:      "between" | "open" | "full" | "finished"
+//   campaignUrl: the campaign page with dates, fee and registration.
+//                Required for "open". The built-in campaign page for a
+//                track is `${href}/enrol` (existing Paystack checkout).
+//   notifyUrl:   track-specific Systeme.io form, if one exists.
+//   waitlistUrl: operational waitlist for a full group, if one exists.
+// Dates in the course files are listings to verify. Only set "open"
+// once the owner confirms the group and its campaign URL.
 export const COURSES = [
   {
     id: "curiosity-box",
+    activity:
+      "Try a small experiment, compare what happens and explain what you would change next time.",
+    href: "/courses/curiosity-box",
+    cta: "Explore Curiosity Box",
+    enrolment: { status: "between", campaignUrl: "", notifyUrl: "", waitlistUrl: "" },
     title: "The Curiosity Box",
     subtitle: "Science, Art & Critical Thinking",
     description:
       "A programme built for young investigators and creators. Where scientific thinking meets artistic expression, children explore logic, deduction, and problem-solving through the lens of art and design. Classes grouped by age: 7–11 and 12–16.",
-    ages: "7–11 & 12–16",
+    ages: "7 to 16",
     duration: "4 Weeks",
     format: "Virtual · Saturdays",
-    color: "#05c3dd",
+    color: "#9be3c4",
     icon: "SearchCheck",
     image: "",
     outcomes: [
@@ -48,14 +74,19 @@ export const COURSES = [
   },
   {
     id: "eq-lab",
+    activity:
+      "Work through everyday situations, practise listening and take turns leading the group.",
+    href: "/courses/eq-lab",
+    cta: "Explore EQ Lab",
+    enrolment: { status: "between", campaignUrl: "", notifyUrl: "", waitlistUrl: "" },
     title: "The EQ Lab",
     subtitle: "Emotional Intelligence & Leadership",
     description:
       "A programme that builds self-awareness, empathy, and peaceful communication for young leaders. Classes grouped by age: 7–11 and 12–16.",
-    ages: "7–11 & 12–16",
+    ages: "7 to 16",
     duration: "4 Weeks",
     format: "Virtual · Saturdays",
-    color: "#05c3dd",
+    color: "#ffb894",
     icon: "Brain",
     image: "",
     outcomes: [
@@ -69,14 +100,19 @@ export const COURSES = [
 
   {
     id: "creative-quest",
+    activity:
+      "Create a character, draft a scene and use feedback to make your story stronger.",
+    href: "/courses/creative-quest",
+    cta: "Explore Creative Quest",
+    enrolment: { status: "between", campaignUrl: "", notifyUrl: "", waitlistUrl: "" },
     title: "Creative Quest",
     subtitle: "Writing & Storytelling Studio",
     description:
       "A programme for young storytellers. Children write, edit, and publish creative fiction, non-fiction, and flash fiction pieces. Classes grouped by age: 7–11 and 12–16.",
-    ages: "7–11 & 12–16",
+    ages: "7 to 16",
     duration: "6 Weeks",
     format: "Virtual · Fridays",
-    color: "#05c3dd",
+    color: "#c8b5ff",
     icon: "PenLine",
     image: "",
     outcomes: [
@@ -89,14 +125,19 @@ export const COURSES = [
   },
   {
     id: "loud-fearless",
+    activity:
+      "Prepare a short speech, think on your feet in Table Topics and take a turn in a club role.",
+    href: "/courses/loud-fearless",
+    cta: "Explore Loud & Fearless",
+    enrolment: { status: "between", campaignUrl: "", notifyUrl: "", waitlistUrl: "" },
     title: "Loud & Fearless",
     subtitle: "Public Speaking & Debate",
     description:
       "A programme that transforms shy children into confident communicators. Voice modulation, debate, and public speaking. Classes grouped by age: 7–11 and 12–16.",
-    ages: "7–11 & 12–16",
+    ages: "7 to 16",
     duration: "6 Weeks",
     format: "Virtual · Saturdays",
-    color: "#05c3dd",
+    color: "#ffe14d",
     icon: "Mic2",
     image: "",
     outcomes: [
@@ -118,8 +159,8 @@ export const EVENTS = [
     duration: "6 Weeks",
     description:
       "Six weeks of story-building, character creation, and world-building. Final stories published in the DH Youth Anthology.",
-    dateBarColor: "#ffec00",
-    dateBarTextColor: "#1a1a1a",
+    dateBarColor: "#c8b5ff",
+    dateBarTextColor: "#2b1838",
     price: 45000,
     type: "cohort",
     gcalStart: "20260801",
@@ -133,8 +174,8 @@ export const EVENTS = [
     duration: "4 Weeks",
     description:
       "A programme that transforms shy children into confident communicators. Voice modulation, debate, and public speaking. Classes grouped by age: 7–11 and 12–16.",
-    dateBarColor: "#de2d10",
-    dateBarTextColor: "#1a1a1a",
+    dateBarColor: "#ffe14d",
+    dateBarTextColor: "#2b1838",
     price: 40000,
     type: "cohort",
     gcalStart: "20260606",
@@ -149,8 +190,8 @@ export const EVENTS = [
     duration: "Annual Flagship",
     description:
       "Our annual flagship summit. Virtual and Abuja. Performances, panels, awards, and the Little Voices book launch.",
-    dateBarColor: "#ffec00",
-    dateBarTextColor: "#1a1a1a",
+    dateBarColor: "#ffc93c",
+    dateBarTextColor: "#2b1838",
     price: 15000,
     type: "summit",
     gcalStart: "20261101",
@@ -158,6 +199,16 @@ export const EVENTS = [
     location: "Virtual & Abuja, Nigeria",
   },
 ];
+
+// Only events that haven't ended yet (by gcalEnd, YYYYMMDD) are shown as
+// open for registration. When none are left, pages show the empty state.
+export function getUpcomingEvents(today = new Date()) {
+  const y = today.getFullYear();
+  const m = String(today.getMonth() + 1).padStart(2, "0");
+  const d = String(today.getDate()).padStart(2, "0");
+  const todayKey = `${y}${m}${d}`;
+  return EVENTS.filter((ev) => !ev.gcalEnd || ev.gcalEnd >= todayKey);
+}
 
 export const TESTIMONIALS = [
   {
@@ -180,12 +231,13 @@ export const TESTIMONIALS = [
   },
 ];
 
+// Single source of truth for headline impact figures. Every page that
+// shows these numbers reads them from here. Confirm with the owner before
+// changing.
 export const IMPACT_METRICS = [
-  { number: "200+", label: "Children Reached" },
-  { number: "12+", label: "Programmes Delivered" },
-  { number: "4", label: "Studio Tracks" },
-  { number: "3+", label: "Countries Represented" },
-  { number: "2", label: "Years of Measurable Impact" },
+  { number: "200+", label: "Children reached" },
+  { number: "12+", label: "Programmes" },
+  { number: "3+", label: "Countries" },
 ];
 
 export const VALUES = [
@@ -209,18 +261,22 @@ export const VALUES = [
   },
 ];
 
+// The privacy link appears automatically once SITE.privacyUrl is set.
 export const FOOTER_LINKS = {
   programmes: [
     { label: "Haven Academy", href: "/haven-academy" },
-    { label: "Haven Tribe", href: "/haven-tribe" },
-    // { label: "Events", href: "/events" },
-    { label: "Explore", href: "/explore" },
+    { label: "Experiences", href: "/explore" },
+    { label: "Parent Community", href: "/haven-tribe" },
   ],
   organisation: [
-    { label: "About Us", href: "/about" },
-    { label: "Partnerships", href: "/partnership" },
+    { label: "Our Story", href: "/about" },
     { label: "Impact", href: "/impact" },
+    { label: "Partnerships", href: "/partnership" },
     { label: "Contact", href: "/contact" },
+    { label: "Book a call", href: SITE.calendlyUrl },
+    ...(SITE.privacyUrl
+      ? [{ label: "Privacy notice", href: SITE.privacyUrl }]
+      : []),
   ],
 };
 

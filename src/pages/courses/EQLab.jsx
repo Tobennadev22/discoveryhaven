@@ -11,7 +11,7 @@ const FAQ_COMMON = [
   },
   {
     q: "What if I'm not sure this is the right fit?",
-    a: "Book a free 15-minute call with our founder before enrolling and we'll help you decide.",
+    a: "Book a call with us before enrolling and we'll help you decide.",
   },
 ];
 
@@ -20,7 +20,6 @@ const COURSE = {
   title: "The EQ Lab",
   cohort: "June 2027",
   price: 50000,
-  paymentUrl: "https://paystack.com/pay/dh-eq-lab-2027",
   tag: "Haven Academy · Emotional Intelligence & Leadership",
   headline: "The EQ Lab: Where Your Child Learns to Lead from the Inside Out.",
   subheadline:
@@ -72,6 +71,6 @@ const COURSE = {
   finalCTA: "June spots are limited. Give your child the skills that last a lifetime.",
 };
 
-export default function EQLab() {
-  return <CourseLandingPage course={COURSE} />;
+export default function EQLab({ mode }) {
+  return <CourseLandingPage course={COURSE} mode={mode} />;
 }

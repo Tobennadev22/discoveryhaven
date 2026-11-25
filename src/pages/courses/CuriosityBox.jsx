@@ -11,13 +11,12 @@ const FAQ_COMMON = [
   },
   {
     q: "What if I'm not sure this is the right fit?",
-    a: "Book a free 15-minute call with our founder before enrolling and we'll help you decide.",
+    a: "Book a call with us before enrolling and we'll help you decide.",
   },
 ];
 
 const COURSE = {
   slug: "curiosity-box",
-  paymentUrl: "https://paystack.com/pay/dh-curiosity-box-2027",
   title: "The Curiosity Box",
   cohort: "February 2027",
   price: 50000,
@@ -79,6 +78,6 @@ const COURSE = {
     "February spots are limited. Give your child the tools to think and create like no one else.",
 };
 
-export default function CuriosityBox() {
-  return <CourseLandingPage course={COURSE} />;
+export default function CuriosityBox({ mode }) {
+  return <CourseLandingPage course={COURSE} mode={mode} />;
 }

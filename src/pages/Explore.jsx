@@ -8,11 +8,12 @@ import {
   BookOpen,
   ChevronDown,
 } from "lucide-react";
-import { Button } from "../components/ui/Button";
+import { Button, ButtonLink } from "../components/ui/Button";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Card } from "../components/ui/Card";
 import { EnrollModal } from "../components/ui/EnrollModal";
-import { EVENTS } from "../data/content";
+import { getUpcomingEvents } from "../data/content";
+import { buildGoogleCalendarUrl } from "../lib/calendar";
 import eventImg1 from "../assets/EventImg1.jpg";
 import eventImg2 from "../assets/EventImg2.jpg";
 import eventImg3 from "../assets/EventImg3.jpg";
@@ -31,17 +32,8 @@ import {
   scaleIn,
   useViewport,
 } from "../components/ui/Motion";
-
-function buildGoogleCalendarUrl(ev) {
-  const base = "https://calendar.google.com/calendar/render?action=TEMPLATE";
-  const params = new URLSearchParams({
-    text: ev.title,
-    dates: `${ev.gcalStart}/${ev.gcalEnd}`,
-    details: ev.description,
-    location: ev.location || "",
-  });
-  return `${base}&${params.toString()}`;
-}
+import { Seo } from "../components/Seo";
+import { COMMUNITY_HREF } from "../data/site";
 
 const GALLERY_IMAGES = [
   eventImg1,
@@ -108,184 +100,214 @@ function PhotoGallery() {
 
 export default function Explore() {
   const [enrollEvent, setEnrollEvent] = useState(null);
+  const upcoming = getUpcomingEvents();
+  const summit = upcoming.find((ev) => ev.type === "summit");
+  const otherEvents = upcoming.filter((ev) => ev.type !== "summit");
 
   return (
     <>
-      <section className="bg-dark pt-36 pb-20 lg:pt-44 lg:pb-28">
+      <Seo title="Experiences" description={"Field trips and experiences from Discovery Haven. Selected experiences welcome children from age 4. Check the age range on each event before registering."} />
+      <section className="bg-cream pt-36 pb-16 lg:pt-44 lg:pb-20">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">Events</SectionLabel>
-          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
-            What's Coming Up
+          <SectionLabel>Experiences</SectionLabel>
+          <h1 className="font-cherry text-h1 text-dark mb-6">
+            Little explorers welcome.
           </h1>
-          <p className="text-gray-300 font-body text-lead">
-            From weekly cohorts to our annual Children's Summit, every event is
-            designed to spark something extraordinary in your child.
+          <p className="text-dark/80 font-body text-lead">
+            Selected field trips and experiences welcome children from age 4.
+            Check the age range on each event before registering.
           </p>
         </motion.div>
       </section>
 
+      {summit && (
+        <section className="py-16 md:py-24 bg-canvas">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                variants={slideLeft}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                <SectionLabel>Annual flagship</SectionLabel>
+                <h2 className="font-cherry text-h2 text-dark mb-4">
+                  Discovery Haven Children's Summit
+                </h2>
+                <p className="inline-block bg-peach text-dark border-2 border-dark px-4 py-2 rounded-full font-bold font-body text-sm mb-6">
+                  Theme: The Confident Generation
+                </p>
+                <p className="text-dark/80 font-body text-lead mb-8">
+                  Our annual flagship summit brings young people together for
+                  performances, panels, competitions and the Little Voices
+                  book launch. Virtual and in Abuja.
+                </p>
+                <h3 className="font-body font-extrabold text-h4 text-dark mb-4">
+                  What happens at the Summit
+                </h3>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    "School pitch competition with debate elements",
+                    "Children's published stories showcase and the Little Voices Book Series Vol. 1 launch",
+                    "Live performances, panels and awards",
+                    "Guest speakers and institutional partners",
+                    "Parent and community networking",
+                  ].map((item) => (
+                    <li key={item} className="flex gap-3 items-start">
+                      <CheckCircle
+                        size={18}
+                        className="text-aqua flex-shrink-0 mt-0.5"
+                        aria-hidden="true"
+                      />
+                      <span className="text-dark/80 font-body">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    onClick={() => setEnrollEvent(summit)}
+                  >
+                    Register for the Summit
+                  </Button>
+                  <a
+                    href={buildGoogleCalendarUrl(summit)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-[44px] items-center gap-2 text-dark/75 hover:text-dark font-body font-bold text-sm transition-colors"
+                  >
+                    <Calendar size={16} aria-hidden="true" /> Add the Summit
+                    to Google Calendar
+                  </a>
+                </div>
+              </motion.div>
+              <motion.div
+                className="bg-dark rounded-4xl p-10 text-center text-white"
+                variants={slideRight}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                <div className="flex justify-center mb-6">
+                  <Trophy size={72} className="text-yellow" aria-hidden="true" />
+                </div>
+                <p className="font-cherry text-h3 mb-3">{summit.date}</p>
+                <p className="font-body text-white/80 mb-2">
+                  {summit.duration} · {summit.location}
+                </p>
+                <p className="font-body text-yellow font-bold">
+                  ₦{summit.price?.toLocaleString()} per delegate
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              variants={slideLeft}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
-            >
-              <SectionLabel>Explorers Festival</SectionLabel>
-              <h2 className="font-cherry text-h2 text-slate-900 mb-4">
-                Discovery Haven Children's Summit
-              </h2>
-              <div className="inline-block bg-crimson text-white px-4 py-2 rounded-full font-bold font-body text-sm mb-6">
-                Theme: The Confident Generation
-              </div>
-              <p className="text-gray-600 font-body text-lead mb-8">
-                Our annual flagship summit brings together the brightest young
-                minds in Nigeria for a day of performances, panels,
-                competitions, and the Little Voices book launch. Virtual and
-                Abuja.
-              </p>
-              <h4 className="font-body font-extrabold text-h4 text-slate-900 mb-4">
-                What Happens at the Summit:
-              </h4>
-              <ul className="space-y-3 mb-8">
-                {[
-                  "School pitch competition with debate elements",
-                  "Children's published stories showcase and the Little Voices Book Series Vol. 1 launch",
-                  "Live performances, panels, and awards",
-                  "Guest speakers and institutional partners",
-                  "Parent and community networking",
-                ].map((item, i) => (
-                  <li key={i} className="flex gap-3 items-start">
-                    <span className="w-5 h-5 rounded-full bg-aqua text-white flex-shrink-0 mt-0.5 flex items-center justify-center">
-                      <CheckCircle size={12} />
-                    </span>
-                    <span className="text-gray-600 font-body text-sm">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <div className="flex flex-wrap gap-4 items-center">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  onClick={() => setEnrollEvent(EVENTS[2])}
-                >
-                  Register Your Interest
-                </Button>
-                <a
-                  href={buildGoogleCalendarUrl(EVENTS[2])}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-600 hover:text-slate-900 font-body font-bold text-sm transition-colors"
-                >
-                  <Calendar size={16} /> Add to Google Calendar
-                </a>
-              </div>
-            </motion.div>
-            <motion.div
-              className="bg-cocoa rounded-3xl p-10 text-center text-white"
-              variants={slideRight}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
-            >
-              <div className="flex justify-center mb-6">
-                <Trophy size={72} className="text-yellow" />
-              </div>
-              <h3 className="font-cherry text-h3 mb-3">November 2026</h3>
-              <p className="font-body text-gray-300 mb-2">
-                Annual Flagship · Virtual & Abuja
-              </p>
-              <p className="font-body text-aqua font-bold">
-                ₦{EVENTS[2].price?.toLocaleString()} per delegate
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24 bg-canvas">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-14"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={useViewport}
-          >
-            <SectionLabel>Upcoming cohorts</SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
-              Book Your Child's Spot
-            </h2>
-            <p className="text-gray-600 font-body text-lead">
-              Cohorts are capped at 15 learners. Spaces fill fast.
-            </p>
-          </motion.div>
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={useViewport}
-          >
-            {EVENTS.map((ev) => (
-              <motion.div key={ev.id} variants={scaleIn}>
-                <Card className="hover:shadow-lg transition-all duration-300 h-full">
-                  <div
-                    className="px-6 py-3 font-bold font-body text-sm flex justify-between"
-                    style={{
-                      backgroundColor: ev.dateBarColor,
-                      color: ev.dateBarTextColor,
-                    }}
-                  >
-                    <span>{ev.date}</span>
-                    <span>{ev.duration}</span>
-                  </div>
-                  <div className="p-7">
-                    <h3 className="font-cherry text-h3 text-slate-900 mb-3">
-                      {ev.title}
-                    </h3>
-                    <p className="text-gray-500 font-body text-sm leading-relaxed mb-5">
-                      {ev.description}
-                    </p>
-                    {ev.price && (
-                      <p className="text-aqua font-bold font-body mb-5">
-                        ₦{ev.price.toLocaleString()}
-                      </p>
-                    )}
-                    <div className="flex flex-col gap-2">
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        className="w-full"
-                        onClick={() => setEnrollEvent(ev)}
-                      >
-                        {ev.type === "summit"
-                          ? "Register Interest"
-                          : "Register & Pay"}
-                      </Button>
-                      <a
-                        href={buildGoogleCalendarUrl(ev)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 w-full text-gray-400 hover:text-slate-900 font-body font-bold text-sm py-2 rounded-full transition-colors"
-                      >
-                        <Calendar size={14} /> Add to Google Calendar
-                      </a>
-                    </div>
-                  </div>
-                </Card>
+          {otherEvents.length > 0 ? (
+            <>
+              <motion.div
+                className="text-center mb-14"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                <SectionLabel>Coming up</SectionLabel>
+                <h2 className="font-cherry text-h2 text-dark mb-4">
+                  Book your child's place
+                </h2>
+                <p className="text-dark/80 font-body text-lead">
+                  Check the age range on each event before registering.
+                </p>
               </motion.div>
-            ))}
-          </motion.div>
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                variants={stagger}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                {otherEvents.map((ev) => (
+                  <motion.div key={ev.id} variants={scaleIn}>
+                    <Card className="h-full">
+                      <div
+                        className="px-6 py-3 font-bold font-body text-sm flex justify-between"
+                        style={{
+                          backgroundColor: ev.dateBarColor,
+                          color: ev.dateBarTextColor,
+                        }}
+                      >
+                        <span>{ev.date}</span>
+                        <span>{ev.duration}</span>
+                      </div>
+                      <div className="p-7">
+                        <h3 className="font-cherry text-h3 text-dark mb-3">
+                          {ev.title}
+                        </h3>
+                        <p className="text-dark/75 font-body text-sm leading-relaxed mb-5">
+                          {ev.description}
+                        </p>
+                        {ev.price && (
+                          <p className="text-dark font-extrabold font-body mb-5">
+                            ₦{ev.price.toLocaleString()}
+                          </p>
+                        )}
+                        <div className="flex flex-col gap-2">
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            className="w-full"
+                            onClick={() => setEnrollEvent(ev)}
+                          >
+                            Register for {ev.title.split(":")[0]}
+                          </Button>
+                          <a
+                            href={buildGoogleCalendarUrl(ev)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex min-h-[44px] items-center justify-center gap-2 w-full text-dark/75 hover:text-dark font-body font-bold text-sm rounded-full transition-colors"
+                          >
+                            <Calendar size={14} aria-hidden="true" /> Add to
+                            Google Calendar
+                          </a>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </>
+          ) : (
+            !summit && (
+              <motion.div
+                className="mx-auto max-w-3xl rounded-4xl border-2 border-dark bg-white p-8 text-center shadow-press sm:p-12"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={useViewport}
+              >
+                <h2 className="font-cherry text-h2 text-dark mb-4">
+                  More adventures are in the works.
+                </h2>
+                <p className="font-body text-lead text-dark/80 max-w-prose mx-auto mb-8">
+                  Join the parent community to hear when our next experience
+                  opens.
+                </p>
+                <ButtonLink to={COMMUNITY_HREF} variant="primary" size="lg">
+                  Join the parent community
+                </ButtonLink>
+              </motion.div>
+            )
+          )}
         </div>
       </section>
 
@@ -300,7 +322,7 @@ export default function Explore() {
             viewport={useViewport}
           >
             <SectionLabel>Past events</SectionLabel>
-            <h2 className="font-cherry text-h2 text-slate-900 mb-4">
+            <h2 className="font-cherry text-h2 text-dark mb-4">
               What We've Done Together
             </h2>
             <p className="text-gray-600 font-body text-lead max-w-xl mx-auto">
@@ -320,37 +342,37 @@ export default function Explore() {
                 title: "Creative Quest: Cohort 1",
                 date: "March 2024",
                 tag: "Writing Studio",
-                color: "#05c3dd",
+                color: "#c8b5ff",
               },
               {
                 title: "Loud & Fearless: Cohort 3",
                 date: "October 2024",
                 tag: "Public Speaking",
-                color: "#de2d10",
+                color: "#ffe14d",
               },
               {
                 title: "Discovery Haven Children's Summit 2024",
                 date: "November 2024",
                 tag: "Annual Summit",
-                color: "#1a1a1a",
+                color: "#ffc93c",
               },
               {
                 title: "The Curiosity Box: Cohort 2",
                 date: "January 2025",
                 tag: "Critical Thinking",
-                color: "#ffec00",
+                color: "#9be3c4",
               },
               {
                 title: "The EQ Lab: Cohort 1",
                 date: "April 2025",
                 tag: "Emotional Intelligence",
-                color: "#7c3aed",
+                color: "#ffb894",
               },
               {
                 title: "Creative Quest: Cohort 4",
                 date: "June 2025",
                 tag: "Writing Studio",
-                color: "#05c3dd",
+                color: "#c8b5ff",
               },
             ].map((ev, i) => (
               <motion.div
@@ -367,8 +389,8 @@ export default function Explore() {
                     <span
                       className="text-xs font-bold font-body px-3 py-1 rounded-full"
                       style={{
-                        backgroundColor: ev.color + "20",
-                        color: ev.color === "#ffec00" ? "#b45309" : ev.color,
+                        backgroundColor: ev.color,
+                        color: "#2b1838",
                       }}
                     >
                       {ev.tag}
@@ -377,7 +399,7 @@ export default function Explore() {
                       Past Event
                     </span>
                   </div>
-                  <h3 className="font-cherry text-h3 text-slate-900 mb-1">
+                  <h3 className="font-cherry text-h3 text-dark mb-1">
                     {ev.title}
                   </h3>
                   <p className="text-gray-400 font-body text-sm">{ev.date}</p>
@@ -439,7 +461,7 @@ export default function Explore() {
                   <div className="text-center">
                     <PlayCircle
                       size={40}
-                      className="text-white/30 group-hover:text-aqua transition-colors mx-auto mb-2"
+                      className="text-white/40 group-hover:text-lilac transition-colors mx-auto mb-2"
                     />
                     <p className="text-white/30 font-body text-xs group-hover:text-white/60 transition-colors">
                       Video #{i}: Coming Soon
@@ -464,7 +486,7 @@ export default function Explore() {
           >
             <div className="flex items-center gap-3 mb-8">
               <div className="w-10 h-10 rounded-xl bg-aqua/20 flex items-center justify-center">
-                <BookOpen size={22} className="text-aqua" />
+                <BookOpen size={22} className="text-lilac" aria-hidden="true" />
               </div>
               <div>
                 <h3 className="font-cherry text-h3 text-white">
@@ -482,7 +504,7 @@ export default function Explore() {
                   className="aspect-[3/4] bg-gradient-to-br from-aqua/20 to-aqua/5 rounded-2xl flex items-center justify-center border border-white/10 hover:border-aqua/40 transition-colors"
                 >
                   <div className="text-center px-4">
-                    <BookOpen size={36} className="text-aqua/50 mx-auto mb-2" />
+                    <BookOpen size={36} className="text-lilac/60 mx-auto mb-2" aria-hidden="true" />
                     <p className="text-white/30 font-body text-xs">
                       Book cover #{i}
                     </p>

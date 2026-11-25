@@ -1,17 +1,21 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  CheckCircle,
-  Gift,
-  PenLine,
-  Mic2,
-  SearchCheck,
-  Brain,
-} from "lucide-react";
+import { CheckCircle, Phone } from "lucide-react";
 import imgCreativeQuest from "../assets/creative_quest.png";
 import imgLoudFearless from "../assets/loud_&_fearless.png";
 import imgCuriosityBox from "../assets/curiosity_box.png";
 import imgEQLab from "../assets/The_EQ_lab.png";
+import { ButtonLink } from "../components/ui/Button";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { TrackCard } from "../components/ui/TrackCard";
+import { COURSES, BOOK_A_CALL } from "../data/content";
+import { enrolmentState } from "../lib/enrolment";
+import {
+  motion,
+  fadeUp,
+  slideLeft,
+  slideRight,
+  useViewport,
+} from "../components/ui/Motion";
+import { Seo } from "../components/Seo";
 
 const COURSE_IMAGES = {
   "creative-quest": imgCreativeQuest,
@@ -20,179 +24,156 @@ const COURSE_IMAGES = {
   "eq-lab": imgEQLab,
 };
 
-const COURSE_ICONS = { PenLine, Mic2, SearchCheck, Brain };
-const COURSE_ROUTES = {
-  "creative-quest": "/courses/creative-quest",
-  "loud-fearless": "/courses/loud-fearless",
-  "curiosity-box": "/courses/curiosity-box",
-  "eq-lab": "/courses/eq-lab",
-};
-import { Button } from "../components/ui/Button";
-import { SectionLabel } from "../components/ui/SectionLabel";
-import { Card } from "../components/ui/Card";
-import { EnrollModal } from "../components/ui/EnrollModal";
-import { COURSES } from "../data/content";
-import {
-  motion,
-  fadeUp,
-  fadeIn,
-  stagger,
-  slideLeft,
-  slideRight,
-  scaleIn,
-  useViewport,
-} from "../components/ui/Motion";
-
-function CourseSection({ course, reverse = false, index }) {
-  const navigate = useNavigate();
-  const courseRoute = COURSE_ROUTES[course.id] || "/haven-academy";
+// Track detail: activity and learning outcome first, then age bands,
+// format and what to expect. Dates and fees live on the campaign page,
+// reached only when a group is open with a campaign URL.
+function CourseSection({ course, reverse = false }) {
+  const state = enrolmentState(course);
   return (
-    <>
-      <section className="border-b border-gray-100 pt-36 pb-20 lg:pt-44 lg:pb-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div
-            className={`grid lg:grid-cols-2 gap-16 items-center ${reverse ? "lg:grid-flow-col-dense" : ""}`}
+    <section
+      id={course.id}
+      aria-labelledby={`${course.id}-title`}
+      className="border-b border-dark/10 py-20 lg:py-28 scroll-mt-24"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <motion.div
+            className={reverse ? "lg:order-2" : ""}
+            variants={reverse ? slideRight : slideLeft}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
           >
-            <motion.div
-              className={reverse ? "lg:col-start-2" : ""}
-              variants={reverse ? slideRight : slideLeft}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
+            <p
+              className="inline-block rounded-full border-2 border-dark px-4 py-1.5 mb-4 text-sm font-extrabold font-body text-dark"
+              style={{ backgroundColor: course.color }}
             >
-              <div
-                className="inline-block px-4 py-2 rounded-2xl mb-4 text-sm font-bold font-body"
-                style={{
-                  backgroundColor: course.color + "20",
-                  color: course.color === "#ffec00" ? "#b45309" : course.color,
-                }}
-              >
-                {course.subtitle}
-              </div>
-              <h2 className="font-cherry text-h2 text-slate-900 mb-4">
-                {course.title}
-              </h2>
-              <div className="flex gap-3 flex-wrap mb-6">
-                <span className="bg-gray-100 rounded-full px-3 py-1.5 text-xs font-bold font-body text-gray-600">
-                  Ages {course.ages}
-                </span>
-                <span className="bg-gray-100 rounded-full px-3 py-1.5 text-xs font-bold font-body text-gray-600">
-                  {course.duration}
-                </span>
-                <span className="bg-gray-100 rounded-full px-3 py-1.5 text-xs font-bold font-body text-gray-600">
-                  {course.format}
-                </span>
-              </div>
-              <p className="text-gray-600 font-body text-lead mb-6">
-                {course.description}
-              </p>
-              <h4 className="font-body font-extrabold text-h4 text-slate-900 mb-3">
-                What Your Child Will Do:
-              </h4>
-              <ul className="space-y-2 mb-6">
-                {course.outcomes.map((o, i) => (
-                  <li key={i} className="flex gap-3 items-start">
-                    <CheckCircle
-                      size={18}
-                      className="text-aqua flex-shrink-0 mt-0.5"
-                    />
-                    <span className="text-gray-600 font-body text-sm">{o}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="bg-cream rounded-2xl p-4 mb-8">
-                <p className="text-sm font-bold font-body text-slate-900 flex items-center gap-2">
-                  <Gift size={16} className="text-aqua" /> Bonus Outcome
-                </p>
-                <p className="text-sm font-body text-gray-600 mt-1">
-                  {course.bonus}
-                </p>
-              </div>
-              <div className="flex items-center gap-4">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  onClick={() => navigate(courseRoute)}
-                >
-                  Enrol in {course.title} →
-                </Button>
-                <span className="font-bold font-body text-aqua text-lg">
-                  ₦{course.price?.toLocaleString()}
-                </span>
-              </div>
-            </motion.div>
-            <motion.div
-              className={`${reverse ? "lg:col-start-1 lg:row-start-1" : ""}`}
-              variants={reverse ? slideLeft : slideRight}
-              initial="hidden"
-              whileInView="show"
-              viewport={useViewport}
+              {course.subtitle}
+            </p>
+            <h2
+              id={`${course.id}-title`}
+              className="font-cherry text-h2 text-dark mb-5"
             >
-              <div className="relative rounded-3xl overflow-hidden aspect-[3/4] bg-cocoa">
-                {course.image ? (
-                  <img
-                    src={course.image}
-                    alt={course.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
+              {course.title}
+            </h2>
+
+            <p className="font-body text-lead font-semibold text-dark mb-6">
+              {course.activity}
+            </p>
+
+            <h3 className="font-body font-extrabold text-h5 text-dark mb-3">
+              What your child will learn
+            </h3>
+            <ul className="space-y-2.5 mb-7">
+              {course.outcomes.map((o) => (
+                <li key={o} className="flex gap-3 items-start">
+                  <CheckCircle
+                    size={18}
+                    className="text-aqua flex-shrink-0 mt-1"
+                    aria-hidden="true"
                   />
-                ) : (
-                  <div
-                    className="w-full h-full flex items-center justify-center"
-                    style={{
-                      background: `linear-gradient(135deg, ${course.color}20, ${course.color}40)`,
-                    }}
-                  >
-                    <p className="text-gray-400 font-body text-sm text-center px-8">
-                      Image coming soon
-                    </p>
-                  </div>
-                )}
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="bg-white/95 backdrop-blur rounded-2xl p-4">
-                    <p className="font-cherry text-lg text-slate-900">
-                      {course.title}
-                    </p>
-                    <p className="text-gray-500 font-body text-sm">
-                      {course.ages} · {course.duration}
-                    </p>
-                  </div>
-                </div>
+                  <span className="text-dark/80 font-body">{o}</span>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="font-body font-extrabold text-h5 text-dark mb-3">
+              What to expect
+            </h3>
+            <ul className="flex gap-2 flex-wrap mb-4">
+              {[
+                "Separate groups for ages 7 to 11 and 12 to 16",
+                course.duration,
+                course.format,
+              ].map((tag) => (
+                <li
+                  key={tag}
+                  className="bg-cream rounded-full px-3 py-1.5 text-sm font-bold font-body text-dark/80"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
+            <p className="text-dark/80 font-body mb-8">{course.bonus}</p>
+
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <ButtonLink to={course.href} variant="primary" size="lg">
+                {course.cta}
+              </ButtonLink>
+              <div className="font-body text-sm">
+                <p className="font-bold text-dark/80">{state.label}</p>
+                <ButtonLink
+                  to={state.action.href}
+                  variant="ghost"
+                  size="sm"
+                  className="-ml-4 underline underline-offset-4"
+                >
+                  {state.action.label}
+                  <span className="sr-only"> for {course.title}</span>
+                </ButtonLink>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className={reverse ? "lg:order-1" : ""}
+            variants={reverse ? slideLeft : slideRight}
+            initial="hidden"
+            whileInView="show"
+            viewport={useViewport}
+          >
+            <div
+              className="relative rounded-4xl overflow-hidden aspect-[4/5] border-2 border-dark"
+              style={{ backgroundColor: course.color }}
+            >
+              {course.image && (
+                <img
+                  src={course.image}
+                  alt=""
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+            </div>
+          </motion.div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
 export default function HavenAcademy() {
   return (
     <>
-      <section className="bg-dark py-28 overflow-hidden">
+      <Seo title="Haven Academy" description={"Haven Academy courses for ages 7 to 16 in critical thinking, emotional intelligence, creative writing and public speaking, with separate groups for ages 7 to 11 and 12 to 16."} />
+      <section className="bg-cream pt-36 pb-16 lg:pt-44 lg:pb-20 overflow-hidden">
         <motion.div
           className="max-w-4xl mx-auto px-4 text-center"
           variants={fadeUp}
           initial="hidden"
           animate="show"
         >
-          <SectionLabel className="text-aqua">Haven Academy</SectionLabel>
-          <h1 className="font-cherry text-h1 bg-gradient-to-r from-amber-200 to-cyan-400 bg-clip-text text-transparent mb-6">
-            Four Tracks.
-            <br />
-            One Confident Child.
+          <SectionLabel>Haven Academy</SectionLabel>
+          <h1 className="font-cherry text-h1 text-dark mb-6">
+            Find their next adventure.
           </h1>
-          <p className="text-gray-300 font-body text-lead max-w-2xl mx-auto mb-10">
-            Each programme is carefully structured to unlock a specific
-            dimension of your child's potential, such as communication, creativity,
-            logic, and emotional intelligence.
+          <p className="text-dark/80 font-body text-lead max-w-2xl mx-auto">
+            Our courses are for ages 7 to 16, with separate groups for ages 7
+            to 11 and 12 to 16.
           </p>
-          {/* <Button variant="primary" size="lg">
-            View Courses & Enrol
-          </Button> */}
         </motion.div>
+      </section>
+
+      <section aria-labelledby="tracks-heading" className="bg-cream pb-20 lg:pb-28">
+        <h2 id="tracks-heading" className="sr-only">
+          The four tracks
+        </h2>
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {COURSES.map((course) => (
+            <TrackCard key={course.id} course={course} />
+          ))}
+        </div>
       </section>
 
       {COURSES.map((course, i) => (
@@ -200,11 +181,10 @@ export default function HavenAcademy() {
           key={course.id}
           course={{ ...course, image: COURSE_IMAGES[course.id] || course.image }}
           reverse={i % 2 !== 0}
-          index={i}
         />
       ))}
 
-      <section className="py-20 md:py-28 bg-cream">
+      <section className="py-20 md:py-28 bg-canvas">
         <motion.div
           className="max-w-3xl mx-auto px-4 text-center"
           variants={fadeUp}
@@ -212,29 +192,15 @@ export default function HavenAcademy() {
           whileInView="show"
           viewport={useViewport}
         >
-          <h2 className="font-cherry text-h2 text-slate-900 mb-4">
-            Ready to Begin?
+          <h2 className="font-cherry text-h2 text-dark mb-4">
+            Not sure which track fits?
           </h2>
-          <p className="text-gray-600 font-body text-lead mb-10">
-            Enrol your child in the programme that matches their spark. Each
-            cohort is limited, so don't miss the next intake.
+          <p className="text-dark/80 font-body text-lead mb-10">
+            Want help choosing a programme? Pick a time to talk with us.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => window.scrollTo({ top: 400, behavior: "smooth" })}
-            >
-              Enrol Now
-            </Button>
-            <Button
-              variant="outline-dark"
-              size="lg"
-              onClick={() => (window.location.href = "/community-hour")}
-            >
-              Book a Free 20-Minute Call First
-            </Button>
-          </div>
+          <ButtonLink to={BOOK_A_CALL.href} variant="outline-dark" size="lg">
+            <Phone size={18} aria-hidden="true" /> Book a call
+          </ButtonLink>
         </motion.div>
       </section>
     </>

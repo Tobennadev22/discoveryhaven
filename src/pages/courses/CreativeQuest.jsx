@@ -26,7 +26,7 @@ const FAQ_COMMON = [
   },
   {
     q: "What if I'm not sure this is the right fit?",
-    a: "Book a free 15-minute call with our founder before enrolling and we'll help you decide.",
+    a: "Book a call with us before enrolling and we'll help you decide.",
   },
 ];
 
@@ -35,10 +35,13 @@ const COURSE = {
   title: "Creative Quest",
   cohort: "August 2026",
   price: 75000,
-  paymentUrl: "https://paystack.com/pay/dh-creative-quest-2026",
   tag: "Haven Academy · Writing & Storytelling Studio",
-  headline: "ChatGPT can write an essay. It cannot invent a universe.",
-  subheadline: "This August, your child becomes a published author.",
+  headline: "Write a story only you could tell.",
+  subheadline:
+    "A 6-week writing and storytelling studio for ages 7 to 16, with separate groups for ages 7 to 11 and 12 to 16. Children build worlds, create characters and take one story from idea to final draft.",
+  // The images below are campaign flyers with dates, fee and offer
+  // text baked in. They only appear on the campaign page.
+  campaignOnlyImages: true,
   heroImage: heroImg,
   heroCta: "Secure Your Child's Spot for ₦75,000",
   smallText: "Limited spots · August 2026 Cohort · Starts Soon",
@@ -77,7 +80,6 @@ const COURSE = {
       gradient: "from-violet-500 to-fuchsia-600",
     },
   ],
-  showcaseRemark: "Your child's name belongs on a cover this August!",
   journeyLeftImage: journeyLeftImg,
   journeyLeftAlt: "The 6-Week Journey",
   journeyRightImage: journeyRightImg,
@@ -89,11 +91,11 @@ const COURSE = {
   qanda: [
     {
       q: "What age is Creative Quest for?",
-      a: "Ages 7–16. We run two tracks, with Track 1 for ages 7–11 and Track 2 for ages 12–16.",
+      a: "Ages 7 to 16, with separate groups for ages 7 to 11 and 12 to 16.",
     },
     {
       q: "How long is the programme?",
-      a: "6 weeks. Sessions hold every Friday starting August 7th, 2026.",
+      a: "6 weeks, with one live session each week.",
     },
     {
       q: "How long is each session?",
@@ -109,19 +111,15 @@ const COURSE = {
     },
     {
       q: "What does my child produce at the end?",
-      a: "Every child receives a Certificate of Completion and has their own published story in the Discovery Haven Youth Literary Anthology, which is a real book with their name in it.",
+      a: "Every child takes one story from idea to final draft and receives a Certificate of Completion.",
     },
     {
       q: "How many children are in each group?",
       a: "Groups are kept intentionally small to ensure every child gets attention and interaction.",
     },
     {
-      q: "What is the fee?",
-      a: "₦75,000 per child for the full 6-week programme.",
-    },
-    {
       q: "How do I enrol?",
-      a: "Visit discoveryhaven.org/courses/creative-quest to secure your child's spot.",
+      a: "When a group opens, this page links to its dates, fee and registration. Join the parent community to hear when the next group opens.",
     },
     {
       q: "What if I have more questions?",
@@ -142,6 +140,17 @@ const COURSE = {
       ),
     },
   ],
+  // Shown only on the campaign page, with the campaign's dates and fee.
+  campaignQanda: [
+    {
+      q: "When does this group start?",
+      a: "Sessions run every Friday from August 7th, 2026.",
+    },
+    {
+      q: "What is the fee?",
+      a: "₦75,000 per child for the full 6-week programme.",
+    },
+  ],
   founder: {
     name: "Stella Chibuike-Ezike",
     role: "Founder & Lead Architect",
@@ -160,9 +169,9 @@ const COURSE = {
     "Built a complete story from idea to final draft",
     "Discovered their own voice as a writer rather than just following a formula",
   ],
-  bonusHeading: "Your child's story will be published. For real.",
+  bonusHeading: "A finished story, shared and celebrated.",
   bonusBody:
-    "At the end of the course, your child's final story will be officially published in the Discovery Haven Youth Literary Anthology, which is a permanent book in The Discovery Haven Book Series. Not a certificate. Not a printout. A real published book with their name in it, something they will treasure for the rest of their life.",
+    "By the final session, every child has taken one story from first idea to final draft, shared it with the group and earned a Certificate of Completion.",
   schedule: {
     course: "Creative Quest",
     month: "August 2026",
@@ -180,7 +189,11 @@ const COURSE = {
   },
   faqSpecific: [
     {
-      q: "Does my child need to already be a good writer?",
+      q: "What does my child need?",
+      a: "A device with a stable internet connection, a notebook and pen, and a quiet space to take part.",
+    },
+    {
+      q: "Does my child need to be a good writer already?",
       a: "Not at all. Creative Quest is built for beginners and confident writers alike. Every child grows at their own pace.",
     },
     {
@@ -192,12 +205,12 @@ const COURSE = {
   finalCTA: "Spots for August are limited. Secure your child's place today.",
   closingImage: closingImg,
   closingHook:
-    "Don't let their ideas stay locked away. Slots are strictly limited!",
+    "Don't let their ideas stay locked away.",
   closingCta: "ENROLL IN CREATIVE QUEST NOW",
   whatsappNumber: "2349167723140",
   hideStandardSections: true,
 };
 
-export default function CreativeQuest() {
-  return <CourseLandingPage course={COURSE} />;
+export default function CreativeQuest({ mode }) {
+  return <CourseLandingPage course={COURSE} mode={mode} />;
 }
